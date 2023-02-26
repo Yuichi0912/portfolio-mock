@@ -1,9 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Dialogues } from "../components/Dialogues";
+import { Dialogues } from "../components/dialogues/Dialogues";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
-import { Home } from "../components/Home";
-import { Notifications } from "../components/Notifications";
+import { Home } from "../components/home/Home";
+import { PostRecruitment } from "../components/home/PostRecruitment.jsx";
+import { Notifications } from "../components/notifications/Notifications";
+import { MyPage } from "../components/user/MyPage";
 
 export const Router = () => {
   return (
@@ -11,9 +13,10 @@ export const Router = () => {
       <Header />
       <Routes>
         <Route path="/home" element={<Home />} />
+        <Route path="/home/post" element={<PostRecruitment />} />
         <Route path="/dialogues" element={<Dialogues />} />
         <Route path="/notifications" element={<Notifications />} />
-
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
