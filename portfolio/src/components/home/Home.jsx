@@ -1,11 +1,11 @@
 import "./Home.scss"
-// import { RecruitmentList } from "./RecruitmentList"
+import { HomeTabs } from "./HomeTabs"
 
 export const Home = () =>{
     return(
-        <main>
-        <h1>HOME</h1>
-        {/* <RecruitmentList /> */}
+        <main className="home">
+            <HomeTabs />
+
         <button className="post-button">
         <img src="../images/pencil.svg" alt="投稿アイコン" />
         </button>

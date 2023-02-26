@@ -1,26 +1,26 @@
+import { Link } from "react-router-dom";
 import "./Footer.scss";
 
 export const Footer = () => {
   return (
     <div className="footer">
       <footer>
-        <button>
+        <Link to={"/home"}>
           {" "}
           <img src="../images/home-2.svg" alt="ホームアイコン" />
-        </button>
-        <button>
+        </Link>
+        <Link to={"/dialogues"}>
           {" "}
           <img src="../images/message-2.svg" alt="メッセージアイコン" />
-        </button>
-        <button>
+        </Link>
+        <Link to={"/notifications"}>
           {" "}
           <img src="../images/bell.svg" alt="通知アイコン" />
-        </button>
-        <button>
+        </Link>
+        <Link to={"/mypage"}>
           {" "}
           <img src="../images/user.svg" alt="ユーザーアイコン" />
-        </button>
-
+        </Link>
       </footer>
     </div>
   );

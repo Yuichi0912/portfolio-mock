@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+.home{
+  padding-top: 80px;
+}
+
 .post-button {
   background-color: #edb886;
   width: 70px;
@@ -8,4 +12,7 @@
   border: none;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  position: fixed;
+bottom: 100px;
+right: 20px;
 }
