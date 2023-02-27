@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import "./RecruitmentList.scss"
 
 export const RecruitmentList = () => {
+
+const navigate = useNavigate();
+
   return (
-    <div className="list">
+    <div className="list" onClick={()=>navigate("")}>
       <h3 className="list__level">Lv. 8</h3>
       <img
         src="../images/takkyu_tabletennis_man.png"
