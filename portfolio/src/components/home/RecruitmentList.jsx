@@ -6,7 +6,7 @@ export const RecruitmentList = () => {
 const navigate = useNavigate();
 
   return (
-    <div className="list" onClick={()=>navigate("")}>
+    <div className="list" onClick={()=>navigate("/detail")}>
       <h3 className="list__level">Lv. 8</h3>
       <img
         src="../images/takkyu_tabletennis_man.png"
