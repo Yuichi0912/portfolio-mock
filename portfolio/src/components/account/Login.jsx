@@ -9,7 +9,9 @@ export const Login = () => {
   const [user] = useAuthState(auth);
 
   const loginWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).catch((err) => alert(err.message));
+    signInWithPopup(auth, googleProvider)
+      .then(() => navigate("/home"))
+      .catch((err) => alert(err.message));
 
     if (user) return navigate("/home");
   };
@@ -18,11 +20,10 @@ export const Login = () => {
     e.preventDefault();
     const { email, password } = e.target.elements;
     console.log(email.value, password.value);
-    signInWithEmailAndPassword(auth, email.value,password.value).catch((err) =>
+    signInWithEmailAndPassword(auth, email.value, password.value).catch((err) =>
       alert(err.message)
     );
     if (user) return navigate("/home");
-
   };
 
   const handleLogout = () => {
