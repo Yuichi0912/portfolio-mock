@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Dialogues } from "../components/dialogues/Dialogues";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
@@ -9,22 +9,41 @@ import { Notifications } from "../components/notifications/Notifications";
 import { MyPage } from "../components/user/MyPage";
 import { Signup } from "../components/account/Signup";
 import { DetailRecruitment } from "../components/home/DetailRecruitment";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export const Router = () => {
+  const [user] = useAuthState(auth);
+
   return (
     <BrowserRouter>
-      <Header />
+      {user ? (
+        <>
+          {" "}
+          <Header />
+          <Footer />
+        </>
+      ) : (
+        <></>
+      )}
+
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/detail" element={<DetailRecruitment />} />
-        <Route path="/post" element={<PostRecruitment />} />
-        <Route path="/dialogues" element={<Dialogues />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/mypage" element={<MyPage />} />
+
+        {user ? (
+          <>
+            <Route path="/home" element={<Home />} />
+            <Route path="/detail" element={<DetailRecruitment />} />
+            <Route path="/post" element={<PostRecruitment />} />
+            <Route path="/dialogues" element={<Dialogues />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/mypage" element={<MyPage />} />
+          </>
+        ) : (
+          <Route element={<Navigate to="/signin" />} />
+        )}
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 };
