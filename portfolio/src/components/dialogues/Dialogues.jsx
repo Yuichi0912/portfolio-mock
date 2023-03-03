@@ -6,8 +6,6 @@ export const Dialogues =()=>{
     return(
         <div className="dialogues">
         <h2>やりとり</h2>
-        <RecruitmentList />
-        <RecruitmentList />
 
         </div>
     )
