@@ -3,41 +3,29 @@ import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecruitmentList.scss";
+import dayjs from "dayjs";
 
 export const RecruitmentList = () => {
-  const [recruitmentId, setRecruitmentId] = useState("");
   const [recruitmentsData, setRecruitmentsData] = useState([]);
   const detailData = collection(db, "recruitments");
-
+  const arrList = [];
   useEffect(() => {
     getDocs(detailData).then((querySnapshot) => {
-      console.log(querySnapshot.docs[0].id); // ドキュメント🆔の取得
-      console.log(querySnapshot.docs);
-      setRecruitmentsData(
-        querySnapshot.docs.map((doc) => {
-          const docData = doc.data()
-          docData.id = doc.id;
-          console.log(docData);
-        }) // 配列内のオブジェクトが分解されてる、分解せずにidを追加したい
-      );
-      console.log(recruitmentsData);
-
       setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const navigate = useNavigate();
-  console.log(recruitmentsData);
-
+  // console.log(recruitmentsData);
 
   return (
     <>
       {recruitmentsData.map((data) => {
         return (
           <div
-            key={data.title}
+            key={data.id}
             className="list"
-            onClick={() => navigate("/detail")}
+            onClick={() => navigate(`/detail/${data.id}`)}
           >
             <h3 className="list__level">Lv. 8</h3>
             <img
@@ -46,7 +34,7 @@ export const RecruitmentList = () => {
               className="list__image"
             />
             <p className="list__title">{data.title}</p>
-            <p className="list__detail"> | 京都 | </p>
+            <p className="list__detail">{dayjs(data.date.toDate()).format("YYYY-MM-DD")} | 京都 | </p>
             <p className="list__tag"># ワイワイしたい</p>
             <p className="list__deadline">あと7日</p>
           </div>
@@ -55,3 +43,18 @@ export const RecruitmentList = () => {
     </>
   );
 };
+
+// useEffect(() => {
+//   getDocs(detailData).then((querySnapshot) => {
+//     querySnapshot.docs.map((doc) => {
+//       const docData = doc.data();
+//       docData.id = doc.id;
+//       arrList.push(docData)
+//       console.log(arrList);
+//       // console.log(arrList);
+//       setRecruitmentsData(arrList);
+//     });
+//     // setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
+//   });
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, []);

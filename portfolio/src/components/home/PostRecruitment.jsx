@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {collection, addDoc} from "firebase/firestore"
+import {collection, addDoc, updateDoc,Timestamp} from "firebase/firestore"
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -17,8 +17,17 @@ const handleSubmit=(e)=>{
     number:number,
     image:"",
     description:description,
-    date:new Date(date),
+    date:Timestamp.fromDate(new Date(date)),
+    id:"",
     // id:newDoc,
+  })
+  .then(docRef =>{
+    updateDoc(docRef,{
+      id:docRef.id
+    })
+  })
+  .catch(err =>{
+    console.log(err);
   })
   navigate("/home")
 }

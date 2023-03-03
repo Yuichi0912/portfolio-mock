@@ -34,7 +34,7 @@ export const Router = () => {
         {user ? (
           <>
             <Route path="/home" element={<Home />} />
-            <Route path="/detail" element={<DetailRecruitment />} />
+            <Route path="/detail/:id" element={<DetailRecruitment />} />
             <Route path="/post" element={<PostRecruitment />} />
             <Route path="/dialogues" element={<Dialogues />} />
             <Route path="/notifications" element={<Notifications />} />
