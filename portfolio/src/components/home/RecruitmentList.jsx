@@ -27,9 +27,9 @@ export const RecruitmentList = () => {
             className="list"
             onClick={() => navigate(`/detail/${data.id}`)}
           >
-            <h3 className="list__level">Lv. 8</h3>
+            <h3 className="list__level">Lv. {data.level}</h3>
             <img
-              src="../images/takkyu_tabletennis_man.png"
+              src={data.image}
               alt="プロフィール画像"
               className="list__image"
             />

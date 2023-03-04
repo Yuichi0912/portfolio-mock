@@ -17,7 +17,7 @@ export const MyPage = () => {
   const [word, setWord] = useState("");
   const [introduction, setIntroduction] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
   const docRef = doc(db, "usersData", `${id}`);
 
   // 登録したユーザー情報をブラウザに表示する
@@ -38,7 +38,7 @@ export const MyPage = () => {
       age: age,
       word: word,
       introduction: introduction,
-      id: `${id}`,
+      userId: `${id}`,
       // residence
     }).catch((err) => {
       console.log(err);
@@ -72,9 +72,9 @@ export const MyPage = () => {
       <h2>マイページ</h2>
 
       {userData.map(
-        ({ userName, image, id, level, age, word, introduction }) => {
+        ({ userName, image, userId, level, age, word, introduction }) => {
           return (
-            <div key={id}>
+            <div key={userId}>
               <p>{userName}</p>
               <img src={image} />
               <p>{level}</p>

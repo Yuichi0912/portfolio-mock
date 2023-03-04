@@ -11,6 +11,7 @@ import { Signup } from "../components/account/Signup";
 import { DetailRecruitment } from "../components/home/DetailRecruitment";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { ChatWithUsers } from "../components/home/ChatWithUsers";
 
 export const Router = () => {
   const [user] = useAuthState(auth);
@@ -39,6 +40,7 @@ export const Router = () => {
             <Route path="/dialogues" element={<Dialogues />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/mypage/:id" element={<MyPage />} />
+            <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
           </>
         ) : (
           <Route element={<Navigate to="/signin" />} />
