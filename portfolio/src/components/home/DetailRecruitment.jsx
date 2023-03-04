@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
-    const {id} = useParams();
+    const {id} = useParams(); // 投稿に付与されている🆔を出力
   const docRef = doc(db, "recruitments",`${id}`);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ export const DetailRecruitment = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 console.log(recruitmentsData);
-  // ひとまずでkeyの値を設定しているので、ユニークな🆔を追加してかぶらないようにする
 
   return (
     <div>
