@@ -2,23 +2,24 @@ import { db } from "../../firebase";
 import { collection, getDoc, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
-    const {id} = useParams(); // 投稿に付与されている🆔を出力
-  const docRef = doc(db, "recruitments",`${id}`);
+  const navigate = useNavigate();
+  const { id } = useParams(); // 投稿に付与されている🆔を出力
+  const docRef = doc(db, "recruitments", `${id}`);
 
   useEffect(() => {
-    getDoc(docRef).then((querySnapshot)=>{
+    getDoc(docRef).then((querySnapshot) => {
       const arrList = [querySnapshot.data()];
       // arrList.push(querySnapshot.data())
-      setRecruitmentsData(arrList)
+      setRecruitmentsData(arrList);
       // setRecruitmentsData(querySnapshot.data())
-    })
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-console.log(recruitmentsData);
+  console.log(recruitmentsData);
 
   return (
     <div>
@@ -40,6 +41,9 @@ console.log(recruitmentsData);
           </div>
         );
       })}
+      <button onClick={() => navigate(`/detail/${id}/chat`)}>
+        チャット画面に進む
+      </button>
     </div>
   );
 };
