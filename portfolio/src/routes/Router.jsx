@@ -38,7 +38,7 @@ export const Router = () => {
             <Route path="/post" element={<PostRecruitment />} />
             <Route path="/dialogues" element={<Dialogues />} />
             <Route path="/notifications" element={<Notifications />} />
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/mypage/:id" element={<MyPage />} />
           </>
         ) : (
           <Route element={<Navigate to="/signin" />} />

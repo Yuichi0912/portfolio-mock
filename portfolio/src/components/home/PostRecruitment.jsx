@@ -9,17 +9,17 @@ export const PostRecruitment = () => {
   const [number, setNumber] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  // const newDoc = collection.doc().id
+  
 const handleSubmit=(e)=>{
   e.preventDefault();
-  addDoc(collection(db,"recruitments"),{
+  addDoc(collection(db,"recruitments"),{ 
     title:title,
     number:number,
     image:"",
+    level:"",
     description:description,
     date:Timestamp.fromDate(new Date(date)),
     id:"",
-    // id:newDoc,
   })
   .then(docRef =>{
     updateDoc(docRef,{
