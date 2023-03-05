@@ -7,7 +7,6 @@ export const SearchModal = ({ showSearch, setShowSearch }) => {
         <div className="search__content">
           <h2>モーダル画面</h2>
           <p>検索</p>
-          <button onClick={() => setShowSearch(false)}/>
         </div>
 
       </div>
