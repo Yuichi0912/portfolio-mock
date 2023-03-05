@@ -35,9 +35,9 @@ export const RecruitmentList = () => {
             />
             <p className="list__title">{data.title}</p>
             <p className="list__detail">
-              {dayjs(data.date.toDate()).format("YYYY-MM-DD")} | {data.place} |{" "}
+              {dayjs(data.date.toDate()).format("MM/DD")} | {data.place} |{data.number}人
             </p>
-            <p className="list__tag">{data.hashtag}</p>
+            <p className="list__tag">#{data.hashtag}</p>
             <p className="list__deadline">あと7日</p>
           </div>
         );
