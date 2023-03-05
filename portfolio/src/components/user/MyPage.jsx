@@ -6,6 +6,8 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { storage } from "../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import axios from "axios";
+import { residenceKey } from "../../const";
 
 export const MyPage = () => {
   const [userData, setUserData] = useState([]);
@@ -13,12 +15,25 @@ export const MyPage = () => {
   const [image, setImage] = useState("");
   const [level, setLevel] = useState("");
   const [age, setAge] = useState("");
-  // const [residence, setResidence] = useState("");
+  const [residence, setResidence] = useState([]);
+  const [selectedResidence, setSelectedResidence] = useState("");
   const [word, setWord] = useState("");
   const [introduction, setIntroduction] = useState("");
   const navigate = useNavigate();
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
   const docRef = doc(db, "usersData", `${id}`);
+
+
+  // 都道府県の情報を取得
+  useEffect(() => {
+    axios
+      .get("https://opendata.resas-portal.go.jp/api/v1/prefectures", {
+        headers: { "X-API-KEY": `${residenceKey} ` }, // 文字列で送るっぽい
+      })
+      .then((res) => {
+        setResidence(res.data.result);
+      });
+  },[]);
 
   // 登録したユーザー情報をブラウザに表示する
   useEffect(() => {
@@ -36,6 +51,7 @@ export const MyPage = () => {
       image: image,
       level: level,
       age: age,
+      residence: selectedResidence,
       word: word,
       introduction: introduction,
       userId: `${id}`,
@@ -72,13 +88,14 @@ export const MyPage = () => {
       <h2>マイページ</h2>
 
       {userData.map(
-        ({ userName, image, userId, level, age, word, introduction }) => {
+        ({ userName, image, userId, level, age, word, introduction,residence }) => {
           return (
             <div key={userId}>
               <p>{userName}</p>
               <img src={image} />
               <p>{level}</p>
               <p>{age}</p>
+              <p>{residence}</p>
               <p>{word}</p>
               <p>{introduction}</p>
             </div>
@@ -120,6 +137,15 @@ export const MyPage = () => {
           onChange={(e) => setAge(e.target.value)}
           placeholder="年齢"
         />
+        <select onChange={(e)=>setSelectedResidence(e.target.value)}>
+          {residence.map((data) => {
+            return (
+              <option key={data.prefCode} value={data.prefName} >
+                {data.prefName}
+              </option>
+            );
+          })}
+        </select>
         <p>フォローフォロワー</p>
         <p>ひとこと</p>
         <input type="text" onChange={(e) => setWord(e.target.value)} />
