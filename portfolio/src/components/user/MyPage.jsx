@@ -19,7 +19,7 @@ export const MyPage = () => {
       const arrList = [querySnapshot.data()];
       setUserData(arrList);
     });
-  },[]);
+  }, []);
 
   // ログアウト
   const handleLogout = () => {
@@ -27,45 +27,66 @@ export const MyPage = () => {
     navigate("/login");
   };
 
+  // ユーザーの情報が登録されたら表示する。
+
   return (
     <div className="mypage">
-
-      {userData.map(
-        ({
-          userName,
-          image,
-          userId,
-          level,
-          age,
-          word,
-          introduction,
-          residence,
-        }) => {
-          return (
-            <div key={userId}>
-              <img src={image} alt="プロフィール画像"/>
-              <p>{userName}</p>
-              <p>{level}</p>
-              <p>{age}</p>
-              <p>{residence}</p>
-              <p>ひとこと</p>
-              <p>{word}</p>
-              <p>自己紹介</p>
-              <p>{introduction}</p>
-            </div>
-          );
-        }
+      {userData != undefined ? (
+        <>
+          {" "}
+          {userData.map(
+            ({
+              userName,
+              image,
+              userId,
+              level,
+              age,
+              word,
+              introduction,
+              residence,
+            }) => {
+              return (
+                <div key={userId} className="profile">
+                  <img
+                    src={image}
+                    alt="プロフィール画像"
+                    className="profile__image"
+                  />
+                  <p className="profile__username">{userName}</p>
+                  <p className="profile__level">Lv. {level}</p>
+                  <p className="profile__age-residence">
+                    {age}歳 | {residence}
+                  </p>
+                  <p>ひとこと</p>
+                  <p className="profile__word">{word}</p>
+                  <p>自己紹介</p>
+                  <p className="profile__introduction">{introduction}</p>
+                </div>
+              );
+            }
+          )}
+          <button onClick={() => setShowEditPage(true)}>
+            プロフィールを編集する
+          </button>
+          <EditProfile
+            showEditPage={showEditPage}
+            setShowEditPage={setShowEditPage}
+          />
+          <button onClick={handleLogout}>ログアウトする</button>
+        </>
+      ) : (
+        <>
+          {" "}
+          <button onClick={() => setShowEditPage(true)}>
+            プロフィールを編集する
+          </button>
+          <EditProfile
+            showEditPage={showEditPage}
+            setShowEditPage={setShowEditPage}
+          />
+          <button onClick={handleLogout}>ログアウトする</button>
+        </>
       )}
-
-      <button onClick={() => setShowEditPage(true)}>
-        プロフィールを編集する
-      </button>
-      <EditProfile
-        showEditPage={showEditPage}
-        setShowEditPage={setShowEditPage}
-      />
-
-      <button onClick={handleLogout}>ログアウトする</button>
     </div>
   );
 };

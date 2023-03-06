@@ -95,6 +95,7 @@ export const PostRecruitment = () => {
           onChange={(e) => setDate(e.target.value)}
         ></input>
         <p>募集人数</p>
+        <p>{number}</p>
         <input type="range" onChange={(e) => setNumber(e.target.value)}></input>
         <p>タグの選択</p>
         <select onChange={(e)=> setHashtag(e.target.value)}>

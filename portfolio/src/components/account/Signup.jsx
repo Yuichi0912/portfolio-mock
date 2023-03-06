@@ -6,7 +6,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 export const Signup = () => {
   const [user] = useAuthState(auth);
-
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,12 +14,14 @@ export const Signup = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email.value, password.value);
+      navigate("/home")
     } catch (error) {
       alert("正しく入力してください");
     }
 
-    if(user) return navigate("/home")
   };
+
+  if(user) return navigate("/home")
 
   return (
     <div>

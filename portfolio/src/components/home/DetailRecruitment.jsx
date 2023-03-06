@@ -1,42 +1,69 @@
-import { db } from "../../firebase";
-import { collection, getDoc, doc } from "firebase/firestore";
+import { db, auth } from "../../firebase";
+import { collection, getDoc, doc, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useNavigate, useParams } from "react-router-dom";
+import "./DetailRecruitment.scss";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
+  const [toJoinData, setToJoinData] = useState("");
+  const [userData, setUserData] = useState("");
   const navigate = useNavigate();
   const { id } = useParams(); // 投稿に付与されている🆔を出力
   const docRef = doc(db, "recruitments", `${id}`);
+  
+  // ログインしているユーザーのID取得
+  const uid = auth.currentUser.uid;
+  const userRef = doc(db, "usersData", `${uid}`);
 
+    // 登録したユーザー情報の取得
+  useEffect(() => {
+    getDoc(userRef).then((querySnapshot) => {
+      setUserData(querySnapshot.data());
+    });
+  }, []);
+
+  // 投稿の情報取得
   useEffect(() => {
     getDoc(docRef).then((querySnapshot) => {
+      // フォローリクエスト用に取得
+      setToJoinData(querySnapshot.data());
+
       const arrList = [querySnapshot.data()];
-      // arrList.push(querySnapshot.data())
       setRecruitmentsData(arrList);
-      // setRecruitmentsData(querySnapshot.data())
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(recruitmentsData);
+  // console.log(recruitmentsData);
+  console.log(toJoinData);
+  console.log(userData);
+  const onRequestJoin = () => {
+    addDoc(collection(db, "joinRequest"), {
+      hostUid: toJoinData.userId,
+      title:toJoinData.title,
+      name: userData.userName,
+      image: userData.image,
+      id:userData.userId,
+      // 今ログインしているユーザーの名前、写真、ユーザーIDを入力する
+    }).then(()=>{
+      alert("リクエストを送信しました！")
+    }).catch((err) => {
+      console.log(err);
+    });;
+  };
 
   return (
-    <div>
-      <h2>詳細ページだよ</h2>
-      <h2>詳細ページだよ</h2>
-      {/* <p>{recruitmentsData.title}</p>
-      <p>{recruitmentsData.number}</p>
-      <img src={recruitmentsData.image} alt="プロフィール画像" />
-            <p>{dayjs(recruitmentsData.date.toDate()).format("YYYY-MM-DD HH:mm:ss")}</p>
-            <p>{recruitmentsData.description}</p> */}
+    <div className="detail-page">
       {recruitmentsData.map((data) => {
         return (
           <div key={data.title}>
             <p>{data.title}</p>
             <p>{data.number}</p>
             <img src={data.image} alt="プロフィール画像" />
-            <p>{dayjs(data.date.toDate()).format("YYYY-MM-DD HH:mm:ss")}</p>
+            <p>{data.place}</p>
+            <p>{dayjs(data.date.toDate()).format("MM/DD")}</p>
+            <p>{data.number}人</p>
             <p>{data.description}</p>
           </div>
         );
@@ -44,6 +71,7 @@ export const DetailRecruitment = () => {
       <button onClick={() => navigate(`/detail/${id}/chat`)}>
         チャット画面に進む
       </button>
+      <button onClick={onRequestJoin}>参加リクエストを送る</button>
     </div>
   );
 };
