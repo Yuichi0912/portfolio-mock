@@ -12,24 +12,22 @@ export const Login = () => {
     signInWithPopup(auth, googleProvider)
       .then(() => navigate("/home"))
       .catch((err) => alert(err.message));
-
-    if (user) return navigate("/home");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = e.target.elements;
-    console.log(email.value, password.value);
-    signInWithEmailAndPassword(auth, email.value, password.value).catch((err) =>
-      alert(err.message)
-    );
-    if (user) return navigate("/home");
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(() => navigate("/home"))
+      .catch((err) => alert(err.message));
   };
 
   const handleLogout = () => {
     auth.signOut();
     navigate("/login");
   };
+
+  if (user) return navigate("/home");
 
   return (
     <div>

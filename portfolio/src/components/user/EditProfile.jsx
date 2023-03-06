@@ -18,9 +18,21 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   const [residence, setResidence] = useState([]);
   const [selectedResidence, setSelectedResidence] = useState("");
   const [image, setImage] = useState("../images/user-circle.svg");
+  const [userData, setUserData] = useState([]);
 
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
   const docRef = doc(db, "usersData", `${id}`);
+
+  // 登録したユーザー情報をブラウザに表示する
+  useEffect(() => {
+    getDoc(docRef).then((querySnapshot) => {
+    //   const arrList = [querySnapshot.data()];
+    //   setUserData(arrList);
+    setUserData(querySnapshot.data())
+    });
+  }, []);
+
+console.log(userData);
 
   // 都道府県の情報を取得
   useEffect(() => {
@@ -81,7 +93,7 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
           <button onClick={() => setShowEditPage(false)}>×</button>
           <form onSubmit={handleSubmit}>
             <img
-              src="../images/user-circle.svg"
+              src={image}
               alt="プロフィール画像"
               className="list__image"
             />
@@ -95,24 +107,30 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
             <p>名前</p>
             <input
               type="text"
+              defaultValue={userData.userName}
               onChange={(e) => setUserName(e.target.value)}
               placeholder="名前"
             />
             <p>レベル</p>
+            <p>{userData.level}</p>
             <p>{level}</p>
             <input
               type="range"
               min="1"
               max="10"
+              defaultValue={userData.level}
               onChange={(e) => setLevel(e.target.value)}
             />
             <p>年齢|居住地</p>
+            <p>{userData.age}</p>
             <p>{age}</p>
             <input
               type="range"
+              defaultValue={userData.age}
               onChange={(e) => setAge(e.target.value)}
               placeholder="年齢"
             />
+            <p>{userData.residence}</p>
             <select onChange={(e) => setSelectedResidence(e.target.value)}>
               {residence.map((data) => {
                 return (
@@ -124,10 +142,11 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
             </select>
             <p>フォローフォロワー</p>
             <p>ひとこと</p>
-            <input type="text" onChange={(e) => setWord(e.target.value)} />
+            <input type="text" defaultValue={userData.word} onChange={(e) => setWord(e.target.value)} />
             <p>自己紹介</p>
             <input
               type="text"
+              defaultValue={userData.introduction}
               onChange={(e) => setIntroduction(e.target.value)}
             />
             <button>更新する</button>
