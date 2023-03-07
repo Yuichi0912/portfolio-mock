@@ -22,9 +22,10 @@ export const MyPage = () => {
   }, []);
 
   // ログアウト
-  const handleLogout = () => {
-    auth.signOut();
+  const handleLogout = (e) => {
+    e.preventDefault();
     navigate("/login");
+    auth.signOut();
   };
 
   // ユーザーの情報が登録されたら表示する。
@@ -61,11 +62,7 @@ export const MyPage = () => {
                   <p className="profile__word">{word}</p>
                   <p>自己紹介</p>
                   <p className="profile__introduction">{introduction}</p>
-                </div>
-              );
-            }
-          )}
-          <button onClick={() => setShowEditPage(true)}>
+                  <button onClick={() => setShowEditPage(true)}>
             プロフィールを編集する
           </button>
           <EditProfile
@@ -73,6 +70,19 @@ export const MyPage = () => {
             setShowEditPage={setShowEditPage}
           />
           <button onClick={handleLogout}>ログアウトする</button>
+
+                </div>
+              );
+            }
+          )}
+          {/* <button onClick={() => setShowEditPage(true)}>
+            プロフィールを編集する
+          </button>
+          <EditProfile
+            showEditPage={showEditPage}
+            setShowEditPage={setShowEditPage}
+          />
+          <button onClick={handleLogout}>ログアウトする</button> */}
         </>
       ) : (
         <>
