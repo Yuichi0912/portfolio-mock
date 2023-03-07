@@ -43,7 +43,7 @@ export const Router = () => {
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
           </>
         ) : (
-          <Route element={<Navigate to="/signin" />} />
+          <Route element={<Navigate to="/login" />} />
         )}
       </Routes>
     </BrowserRouter>

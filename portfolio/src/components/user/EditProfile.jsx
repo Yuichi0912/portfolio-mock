@@ -26,13 +26,9 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   // 登録したユーザー情報をブラウザに表示する
   useEffect(() => {
     getDoc(docRef).then((querySnapshot) => {
-    //   const arrList = [querySnapshot.data()];
-    //   setUserData(arrList);
     setUserData(querySnapshot.data())
     });
   }, []);
-
-console.log(userData);
 
   // 都道府県の情報を取得
   useEffect(() => {

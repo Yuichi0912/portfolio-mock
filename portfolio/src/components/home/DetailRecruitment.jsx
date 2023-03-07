@@ -1,5 +1,5 @@
 import { db, auth } from "../../firebase";
-import { collection, getDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDoc, doc, addDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useNavigate, useParams } from "react-router-dom";
@@ -35,18 +35,20 @@ export const DetailRecruitment = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(recruitmentsData);
-  console.log(toJoinData);
-  console.log(userData);
+
+// 参加リクエストの送信
   const onRequestJoin = () => {
     addDoc(collection(db, "joinRequest"), {
-      hostUid: toJoinData.userId,
+      hostUid: toJoinData.userId, // 投稿者のユーザーID
       title:toJoinData.title,
       name: userData.userName,
       image: userData.image,
-      id:userData.userId,
-      // 今ログインしているユーザーの名前、写真、ユーザーIDを入力する
-    }).then(()=>{
+      id:userData.userId, // リクエストした人のユーザーID
+      docId:"",
+    }).then((docRef)=>{
+      updateDoc(docRef,{
+        docId:docRef.id
+      })
       alert("リクエストを送信しました！")
     }).catch((err) => {
       console.log(err);
