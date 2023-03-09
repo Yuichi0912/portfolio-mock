@@ -1,10 +1,11 @@
 @charset "utf-8";
 
-.login-page {
+.signup-page {
   padding-top: 50px;
   text-align: center;
 
-  .login__title {
+  .signup__title {
+    // font-family: 'Inter';
     font-weight: 800;
     font-size: 32px;
     line-height: 39px;
@@ -12,59 +13,32 @@
     padding-bottom: 30px;
   }
 
-  .login__description {
+  .signup__description {
     padding-bottom: 20px;
-    font-weight: 800;
-    font-size: 24px;
-    line-height: 29px;
-    letter-spacing: 0.3em;
   }
-
-  .login__google {
-    width: 310px;
-    height: 51px;
-    background: #ffffff;
-    border: 2px solid #d9d9d9;
-    border-radius: 35px;
-    margin-bottom: 40px;
-    cursor: pointer;
-
-
-    p {
-      font-weight: 500;
-      font-size: 20px;
-      text-align: center;
-      line-height: 10px;
-      letter-spacing: 0.1em;
-    }
-  }
-  .login__form {
+  .signup__form {
     display: flex;
     flex-direction: column;
     width: 310px;
     margin-left: auto;
     margin-right: auto;
     gap: 40px;
-
-    .login__email {
+    .signup__email {
       height: 36px;
       background-color: #ffffff;
       border: 2px solid #d9d9d9;
       border-radius: 5px;
       cursor: pointer;
-
     }
-
-    .login__password {
+    .signup__password {
       height: 36px;
       background-color: #ffffff;
       border: 2px solid #d9d9d9;
       border-radius: 5px;
       cursor: pointer;
-
     }
 
-    .login__subumit-button {
+    .signup__subumit-button {
       color: #edb886;
       background-color: #ffffff;
       font-weight: 800;
@@ -79,12 +53,11 @@
       transition: all 0.3s;
       cursor: pointer;
 
-
       p {
         padding-left: 5px;
       }
     }
-    .login__subumit-button:hover {
+    .signup__subumit-button:hover {
       color: #ffffff;
       background-color: #edb886;
 
@@ -93,7 +66,7 @@
     }
   }
 
-  .login__navigate-signup {
+  .signup__navigate-login {
     padding-top: 20px;
     border: none;
     background-color: #ffffff;

@@ -1,11 +1,19 @@
 import "./EditProfile.scss";
 import axios from "axios";
 import { residenceKey } from "../../const";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../../firebase";
 
@@ -19,17 +27,20 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   const [selectedResidence, setSelectedResidence] = useState("");
   const [image, setImage] = useState("../images/user-circle.svg");
   const [userData, setUserData] = useState([]);
-
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
-  const docRef = doc(db, "usersData", `${id}`);
+  const docRef = query(
+    collection(db, "usersData"),
+    where("userId", "==", `${id}`)
+  );
 
-  // 登録したユーザー情報をブラウザに表示する
+  // 登録したユーザー情報をブラウザに表示する(defaultvalue用)
   useEffect(() => {
-    getDoc(docRef).then((querySnapshot) => {
-    setUserData(querySnapshot.data())
+    getDocs(docRef).then((querySnapshot) => {
+      setUserData(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
+  // console.log(userData[0].userId);
   // 都道府県の情報を取得
   useEffect(() => {
     axios
@@ -59,14 +70,16 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   // プロフィールの更新
   const handleSubmit = (e) => {
     e.preventDefault();
-    setDoc(docRef, {
-      userName: userName,
-      image: image,
-      level: level,
-      age: age,
-      residence: selectedResidence,
-      word: word,
-      introduction: introduction,
+    setDoc(doc(db, "usersData", `${id}`), {
+      userName: userName == "" ? userData[0].userName : userName,
+      image: image == "" ? userData[0].image : image,
+      level: level == "" ? userData[0].level : level,
+      age: age == "" ? userData[0].age : age,
+      residence:
+        selectedResidence == "" ? userData[0].residence : selectedResidence,
+      word: word == "" ? userData[0].word : word,
+      introduction:
+        introduction == "" ? userData[0].introduction : introduction,
       userId: `${id}`,
       // residence
     })
@@ -78,6 +91,8 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
       });
   };
 
+  // console.log(userData);
+
   if (showEditPage) {
     return (
       <div
@@ -86,67 +101,142 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
       >
         <div className="edit-page__content">
           <h2>編集画面</h2>
-          <button onClick={() => setShowEditPage(false)}>×</button>
-          <form onSubmit={handleSubmit}>
-            <img
-              src={image}
-              alt="プロフィール画像"
-              className="list__image"
-            />
-            <input
-              type="file"
-              accept=".png, .jpeg, .jpg"
-              onChange={onImageUpload}
-            />
-            {/* <button onClick={onPhotoUpload}>画像アップロード</button> */}
-            <p>@ユーザー🆔</p>
-            <p>名前</p>
-            <input
-              type="text"
-              defaultValue={userData.userName}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="名前"
-            />
-            <p>レベル</p>
-            <p>{userData.level}</p>
-            <p>{level}</p>
-            <input
-              type="range"
-              min="1"
-              max="10"
-              defaultValue={userData.level}
-              onChange={(e) => setLevel(e.target.value)}
-            />
-            <p>年齢|居住地</p>
-            <p>{userData.age}</p>
-            <p>{age}</p>
-            <input
-              type="range"
-              defaultValue={userData.age}
-              onChange={(e) => setAge(e.target.value)}
-              placeholder="年齢"
-            />
-            <p>{userData.residence}</p>
-            <select onChange={(e) => setSelectedResidence(e.target.value)}>
-              {residence.map((data) => {
+          {userData.length == 1 ? (
+            <form onSubmit={handleSubmit}>
+              {userData.map((userData) => {
                 return (
-                  <option key={data.prefCode} value={data.prefName}>
-                    {data.prefName}
-                  </option>
+                  <div key={userData.userId}>
+                    <p>更新後の画面</p>
+
+                    <img
+                      src={image}
+                      alt="プロフィール画像"
+                      className="list__image"
+                    />
+                    <input
+                      type="file"
+                      accept=".png, .jpeg, .jpg"
+                      onChange={onImageUpload}
+                    />
+                    <p>名前</p>
+                    <input
+                      type="text"
+                      defaultValue={userData.userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      placeholder="名前"
+                    />
+                    <p>レベル</p>
+                    {userData && <p>{userData.level}</p>}
+                    <p>{level}</p>
+                    <input
+                      type="range"
+                      min="1"
+                      max="10"
+                      defaultValue={userData.level}
+                      onChange={(e) => setLevel(e.target.value)}
+                    />
+                    <p>年齢|居住地</p>
+                    <p>{userData.age}</p>
+                    <p>{age}</p>
+                    <input
+                      type="range"
+                      defaultValue={userData.age}
+                      onChange={(e) => setAge(e.target.value)}
+                      placeholder="年齢"
+                    />
+                    <p>{userData.residence}</p>
+                    <select
+                      onChange={(e) => setSelectedResidence(e.target.value)}
+                    >
+                      {residence.map((data) => {
+                        return (
+                          <option key={data.prefCode} value={data.prefName}>
+                            {data.prefName}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <p>フォローフォロワー</p>
+                    <p>ひとこと</p>
+                    <input
+                      type="text"
+                      defaultValue={userData.word}
+                      onChange={(e) => setWord(e.target.value)}
+                    />
+                    <p>自己紹介</p>
+                    <textarea
+                      type="text"
+                      defaultValue={userData.introduction}
+                      onChange={(e) => setIntroduction(e.target.value)}
+                    />
+                    <button>更新する</button>
+                  </div>
                 );
               })}
-            </select>
-            <p>フォローフォロワー</p>
-            <p>ひとこと</p>
-            <input type="text" defaultValue={userData.word} onChange={(e) => setWord(e.target.value)} />
-            <p>自己紹介</p>
-            <input
-              type="text"
-              defaultValue={userData.introduction}
-              onChange={(e) => setIntroduction(e.target.value)}
-            />
-            <button>更新する</button>
-          </form>
+            </form>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <img src={image} alt="プロフィール画像" className="list__image" />
+              <input
+                type="file"
+                accept=".png, .jpeg, .jpg"
+                onChange={onImageUpload}
+              />
+              {/* <button onClick={onPhotoUpload}>画像アップロード</button> */}
+              <p>@ユーザー🆔</p>
+              <p>名前</p>
+              <input
+                type="text"
+                // defaultValue={userData.userName || ""}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="名前"
+              />
+              <p>レベル</p>
+              {/* {userData && <p>{userData.level}</p>} */}
+              <p>{level}</p>
+              <input
+                type="range"
+                min="1"
+                max="10"
+                // defaultValue={userData.level}
+                onChange={(e) => setLevel(e.target.value)}
+              />
+              <p>年齢|居住地</p>
+              {/* <p>{userData.age}</p> */}
+              <p>{age}</p>
+              <input
+                type="range"
+                // defaultValue={userData.age}
+                onChange={(e) => setAge(e.target.value)}
+                placeholder="年齢"
+              />
+              {/* <p>{userData.residence}</p> */}
+              <select onChange={(e) => setSelectedResidence(e.target.value)}>
+                {residence.map((data) => {
+                  return (
+                    <option key={data.prefCode} value={data.prefName}>
+                      {data.prefName}
+                    </option>
+                  );
+                })}
+              </select>
+              <p>フォローフォロワー</p>
+              <p>ひとこと</p>
+              <input
+                type="text"
+                // defaultValue={userData.word}
+                onChange={(e) => setWord(e.target.value)}
+              />
+              <p>自己紹介</p>
+              <input
+                type="text"
+                // defaultValue={userData.introduction}
+                onChange={(e) => setIntroduction(e.target.value)}
+              />
+              <button>更新する</button>
+            </form>
+          )}
+          <button onClick={() => setShowEditPage(false)}>×</button>
         </div>
       </div>
     );

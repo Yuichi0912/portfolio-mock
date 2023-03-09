@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { collection, addDoc, updateDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, updateDoc, Timestamp, serverTimestamp } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -29,6 +29,8 @@ export const PostRecruitment = () => {
     });
   }, []);
 
+  // console.log(userData);
+
   // 都道府県の情報を取得
   useEffect(() => {
     axios
@@ -52,10 +54,14 @@ export const PostRecruitment = () => {
       level: userData.level,
       userId: userData.userId,
       description: description,
-      hashtag:hashtag,
+      hashtag: hashtag,
       date: Timestamp.fromDate(new Date(date)),
       place: selectedPlace,
       id: "",
+      hostName: userData.userName,
+      hostAge: userData.age,
+      hostResidence: userData.residence,
+      timestamp:serverTimestamp(),
     })
       .then((docRef) => {
         updateDoc(docRef, {
@@ -98,7 +104,8 @@ export const PostRecruitment = () => {
         <p>{number}</p>
         <input type="range" onChange={(e) => setNumber(e.target.value)}></input>
         <p>タグの選択</p>
-        <select onChange={(e)=> setHashtag(e.target.value)}>
+        <select onChange={(e) => setHashtag(e.target.value)}>
+        <option value="▼選択する">▼選択する</option>
           <option value="ワイワイしたい">ワイワイしたい</option>
           <option value="ガチ練したい">ガチ練したい</option>
           <option value="試合に出たい">試合に出たい</option>
@@ -106,11 +113,11 @@ export const PostRecruitment = () => {
           <option value="教えてほしい">教えてほしい</option>
         </select>
         <p>説明文</p>
-        <input
+        <textarea
           type="text"
           placeholder="説明文を入力してください"
           onChange={(e) => setDescription(e.target.value)}
-        ></input>
+        />
         <button>投稿する</button>
       </form>
       {/* <HashtagList /> */}

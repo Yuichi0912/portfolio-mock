@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter,Route, Routes, Navigate } from "react-router-dom";
 import { Dialogues } from "../components/dialogues/Dialogues";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
@@ -18,7 +18,7 @@ export const Router = () => {
 
   return (
     <BrowserRouter>
-      {user ? (
+      {/* {user ? (
         <>
           {" "}
           <Header />
@@ -26,7 +26,7 @@ export const Router = () => {
         </>
       ) : (
         <></>
-      )}
+      )} */}
 
       <Routes>
         <Route path="/signup" element={<Signup />} />
