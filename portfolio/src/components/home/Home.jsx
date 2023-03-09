@@ -6,11 +6,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
-// import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 export const Home = () => {
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
+
+  // useEffect(()=>{
+  //   if (!user) return navigate("/login");
+  // },[user])
+
 
   return (
     <>
@@ -35,6 +41,7 @@ export const Home = () => {
         </main>
       ) : (
         <>
+        {navigate("/login")}
           {/* <Navigate replace to="/login" />{" "} */}
         </>
       )}

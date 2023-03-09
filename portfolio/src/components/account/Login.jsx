@@ -2,8 +2,8 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.scss";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import {useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export const Login = () => {
 
   // Googleでのログイン
   const loginWithGoogle = () => {
-    signInWithPopup(auth, googleProvider)
+     signInWithPopup(auth, googleProvider)
       .then(() => navigate("/home"))
       .catch((err) => alert(err.message));
   };
@@ -29,7 +29,9 @@ export const Login = () => {
   };
 
   // ログイン中は/homeに遷移
-  if (user) return navigate("/home");
+  useEffect(()=>{
+    if (user) return navigate("/home");
+  },[user])
 
   return (
     <div className="login-page">

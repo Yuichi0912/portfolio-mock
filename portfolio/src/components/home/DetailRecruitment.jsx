@@ -122,10 +122,10 @@ export const DetailRecruitment = () => {
         className="button__navigate-chat"
         onClick={() => navigate(`/detail/${id}/chat`)}
       >
-        チャット画面に進む
+        <img src="../images/message-circle-2.svg" alt="チャットアイコン" />
       </button>
       <button className="button__request-join" onClick={onRequestJoin}>
-        参加リクエストを送る
+      <img src="../images/send (1).svg" alt="リクエストアイコン" />参加リクエストを送る
       </button>
     </div>
   );

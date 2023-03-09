@@ -1,12 +1,16 @@
 import { auth, db } from "../../firebase";
-import { useNavigate } from "react-router";
+import { redirect, useNavigate } from "react-router";
 import "./MyPage.scss";
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { EditProfile } from "./EditProfile";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Header } from "../header/Header";
+import { Footer } from "../footer/Footer";
 
 export const MyPage = () => {
+  const [user] = useAuthState(auth)
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
@@ -15,27 +19,20 @@ export const MyPage = () => {
 
   // 登録したユーザー情報をブラウザに表示する (.lengthが0と1でreturn文の出しわけをするため) 
   useEffect(() => {
-    // getDocs(docRef).then((querySnapshot) => {
-    //   setUserData(querySnapshot.docs.map((doc) => doc.data()))
-    // });
     onSnapshot(docRef,(querySnapshot)=>{
       setUserData(querySnapshot.docs.map((doc) => doc.data())) 
     })
 
   }, []);
 
-console.log(userData);
-
   // ログアウト
-  const handleLogout = (e) => {
-    e.preventDefault();
-    auth.signOut();
+  const handleLogout = () => {
+auth.signOut().then(()=>navigate("/login"))
   };
-
-  // ユーザーの情報が登録されたら表示する。
-
+  
   return (
     <div className="mypage">
+      <Header />
       {userData.length == 1 && 
         userData.map(
           (data) => {
@@ -59,14 +56,11 @@ console.log(userData);
             );
           }
         )}
-      <button onClick={() => setShowEditPage(true)}>
+      <button onClick={() => navigate(`/mypage/${id}/chat`)}>
         プロフィールを編集する
       </button>
-      <EditProfile
-        showEditPage={showEditPage}
-        setShowEditPage={setShowEditPage}
-      />
       <button onClick={handleLogout}>ログアウトする</button>
+
     </div>
   );
 };

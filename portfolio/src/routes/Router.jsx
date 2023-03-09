@@ -1,7 +1,5 @@
 import { BrowserRouter,Route, Routes, Navigate } from "react-router-dom";
 import { Dialogues } from "../components/dialogues/Dialogues";
-import { Footer } from "../components/footer/Footer";
-import { Header } from "../components/header/Header";
 import { Home } from "../components/home/Home";
 import { Login } from "../components/account/Login";
 import { PostRecruitment } from "../components/home/PostRecruitment.jsx";
@@ -12,39 +10,46 @@ import { DetailRecruitment } from "../components/home/DetailRecruitment";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ChatWithUsers } from "../components/home/ChatWithUsers";
+import { NotFound } from "../components/account/NotFound";
+import { EditProfile } from "../components/user/EditProfile";
+import { Footer } from "../components/footer/Footer";
+import { Header } from "../components/header/Header";
 
 export const Router = () => {
   const [user] = useAuthState(auth);
 
   return (
     <BrowserRouter>
-      {/* {user ? (
-        <>
-          {" "}
-          <Header />
-          <Footer />
-        </>
-      ) : (
-        <></>
-      )} */}
+    
+        {user ? (<>
+        <Header />
+        <Footer />
+        </>) : (<></>)}
+
 
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
 
+
         {user ? (
           <>
+            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/detail/:id" element={<DetailRecruitment />} />
             <Route path="/post" element={<PostRecruitment />} />
             <Route path="/dialogues" element={<Dialogues />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/mypage/:id" element={<MyPage />} />
+            <Route path="/mypage/:id/chat" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
           </>
         ) : (
-          <Route element={<Navigate to="/login" />} />
+          <>
+          <Route path="/*" element={<Navigate to="/login" />} />
+          </>
         )}
+        <Route element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

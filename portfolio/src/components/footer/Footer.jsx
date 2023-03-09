@@ -6,8 +6,8 @@ export const Footer = () => {
 const id = auth.currentUser.uid;
 
   return (
-    <div className="footer">
-      <footer>
+    <div >
+      <footer className="footer">
         <Link to={"/home"}>
           {" "}
           <img src="../images/home-2.svg" alt="ホームアイコン" />

@@ -14,10 +14,10 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 
-export const EditProfile = ({ showEditPage, setShowEditPage }) => {
+export const EditProfile = () => {
   const [userName, setUserName] = useState("");
   const [level, setLevel] = useState("");
   const [age, setAge] = useState("");
@@ -27,6 +27,7 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   const [selectedResidence, setSelectedResidence] = useState("");
   const [image, setImage] = useState("../images/user-circle.svg");
   const [userData, setUserData] = useState([]);
+  const navigate = useNavigate();
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
   const docRef = query(
     collection(db, "usersData"),
@@ -71,10 +72,10 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setDoc(doc(db, "usersData", `${id}`), {
-      userName: userName == "" ? userData[0].userName : userName,
-      image: image == "" ? userData[0].image : image,
-      level: level == "" ? userData[0].level : level,
-      age: age == "" ? userData[0].age : age,
+      userName: userName === "" ? userData[0].userName : userName,
+      image: image === "" ? userData[0].image : image,
+      level: level === "" ? userData[0].level : level,
+      age: age === "" ? userData[0].age : age,
       residence:
         selectedResidence == "" ? userData[0].residence : selectedResidence,
       word: word == "" ? userData[0].word : word,
@@ -84,7 +85,7 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
       // residence
     })
       .then(() => {
-        setShowEditPage(false);
+        navigate(`/mypage/${id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +94,7 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
 
   // console.log(userData);
 
-  if (showEditPage) {
+
     return (
       <div
         className="edit-page__overlay"
@@ -236,11 +237,9 @@ export const EditProfile = ({ showEditPage, setShowEditPage }) => {
               <button>更新する</button>
             </form>
           )}
-          <button onClick={() => setShowEditPage(false)}>×</button>
+          <button onClick={() => navigate(`/mypage/${id}`)}>×</button>
         </div>
       </div>
     );
-  } else {
-    return null;
-  }
+  
 };
