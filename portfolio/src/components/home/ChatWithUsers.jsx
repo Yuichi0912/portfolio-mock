@@ -1,4 +1,4 @@
-import { getDoc, getDocs, updateDoc,limit, orderBy } from "firebase/firestore";
+import { getDoc, getDocs, updateDoc,limit, orderBy, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db, auth } from "../../firebase";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
@@ -40,25 +40,28 @@ export const ChatWithUsers = () => {
   };
 
   useEffect(() => {
-    getDocs(chatRef).then((querysnapshot) => {
-      setChats(querysnapshot.docs.map((doc) => doc.data()));
-    });
+    // getDocs(chatRef).then((querysnapshot) => {
+    //   setChats(querysnapshot.docs.map((doc) => doc.data()));
+    // });
+    onSnapshot(chatRef,(querysnapshot)=>{
+      setChats(querysnapshot.docs.map((doc) => doc.data()))
+    })
   }, []);
   return (
     <div className="chat-page">
-      <h2>チャット画面です</h2>
+      <h2 className="chat__header">メッセージ</h2>
       {chats.map(({message,id,image,name}) => {
         return (
-          <div key={id}>
+          <div className={id === `${userId}` ? "chat__send-side" : "chat__received-side"} key={id}>
             <p>{name}</p>
             <p>{message}</p>
             <img src={image}/>
           </div>
         );
       })}
-      <form onSubmit={handleSubmit}>
-        <input type="text" onChange={(e) => setMessage(e.target.value)} />
-        <button>送信する</button>
+      <form className="chat__form" onSubmit={handleSubmit}>
+        <input className="chat__input-space" type="text" onChange={(e) => setMessage(e.target.value)} />
+        <button className="chat__submit-button"><img src="../images/send.svg" alt="送信ボタン" />送る</button>
       </form>
     </div>
   );
