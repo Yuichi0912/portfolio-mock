@@ -1,5 +1,5 @@
 import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecruitmentList.scss";
@@ -8,18 +8,20 @@ import dayjs from "dayjs";
 export const RecruitmentList = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
   const detailData = collection(db, "recruitments");
-  const arrList = [];
+  const q = query(detailData,orderBy("timestamp","desc"))
   useEffect(() => {
-    getDocs(detailData).then((querySnapshot) => {
+    // getDocs(detailData).then((querySnapshot) => {
+    //   setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
+    // });
+    onSnapshot(q, (querySnapshot) => {
       setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const navigate = useNavigate();
-  // console.log(recruitmentsData);
 
   return (
-    <>
+    <div className="list-page">
       {recruitmentsData.map((data) => {
         return (
           <div
@@ -33,30 +35,18 @@ export const RecruitmentList = () => {
               alt="プロフィール画像"
               className="list__image"
             />
-            <p className="list__title">{data.title}</p>
-            <p className="list__detail">
-              {dayjs(data.date.toDate()).format("MM/DD")} | {data.place} |{data.number}人
-            </p>
-            <p className="list__tag">#{data.hashtag}</p>
-            <p className="list__deadline">あと7日</p>
+            <div className="list-center">
+              <p className="list-center__title">{data.title}</p>
+              <p className="list-center__detail">
+                {dayjs(data.date.toDate()).format("MM/DD")} | {data.place} |
+                {data.number}人
+              </p>
+              <p className="list-center__tag">#{data.hashtag}</p>
+            </div>
+            {/* <p className="list__deadline">あと7日</p> */}
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
-
-// useEffect(() => {
-//   getDocs(detailData).then((querySnapshot) => {
-//     querySnapshot.docs.map((doc) => {
-//       const docData = doc.data();
-//       docData.id = doc.id;
-//       arrList.push(docData)
-//       console.log(arrList);
-//       // console.log(arrList);
-//       setRecruitmentsData(arrList);
-//     });
-//     // setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
-//   });
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, []);
