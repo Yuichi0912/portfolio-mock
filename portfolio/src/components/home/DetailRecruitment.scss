@@ -3,6 +3,9 @@
 .detail-page {
   padding-top: 170px;
   text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 200px;
 
   .detail-page__title {
     font-weight: 800;
@@ -18,13 +21,72 @@
     border-radius: 20px;
     margin-left: auto;
     margin-right: auto;
+
+    .detail-usercard__image {
+      margin-top: 20px;
+      width: 60px;
+      height: 60px;
+      border: 1px solid #8e8e8e;
+      border-radius: 50%;
+    }
+
+    .detail-usercard__hostname {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+    }
+
+    .detail-usercard__level {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+    }
+
+    .detail-usercard__age-residence {
+      font-weight: 500;
+      font-size: 11px;
+      color: #8c8c8c;
+      margin-bottom: 10px;
+    }
   }
 
-  img {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #8e8e8e;
-    border-radius: 50%;
+  .detail-outline {
+    display: grid;
+    .detail-outline__place-svg {
+    }
+
+    .detail-outline__place {
+    }
+
+    .detail-outline__date-svg {
+    }
+
+    .detail-outline__date {
+    }
+
+    .detail-outline__number-svg {
+    }
+
+    .detail-outline__number {
+    }
+
+    .approved-user {
+      .approved-user__image {
+        width: 45px;
+        height: 45px;
+        border: 1px solid #8e8e8e;
+        border-radius: 50%;
+      }
+    }
+
+    .detail-outline__hashtag {
+    }
+
+    .detail-outline__description {
+      text-align: left;
+      border: 2px solid #d9d9d9;
+      border-radius: 5px;
+    }
   }
 
   .button__navigate-chat {
@@ -32,7 +94,7 @@
     width: 70px;
     height: 70px;
     right: 30px;
-    bottom: 159px;
+    bottom: 200px;
 
     background-color: #ffffff;
     border: none;
@@ -41,10 +103,14 @@
   }
 
   .button__request-join {
+    text-align: center;
     position: fixed;
-    bottom: 40px;
-    right: 30px;
-    left: 30px;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // bottom: 90px;
+    // right: 30px;
+    // left: 50px;
     // bottom: 40px;
     // left: 8.72%;
     // right: 8.72%;

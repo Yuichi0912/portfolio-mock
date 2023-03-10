@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { auth } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Signup.scss";
+import { useEffect } from "react";
 
 export const Signup = () => {
   const [user] = useAuthState(auth);
@@ -20,7 +21,9 @@ export const Signup = () => {
     }
   };
 
-  if (user) return navigate("/home");
+  useEffect(()=>{
+    if (user) return navigate("/home");
+  },[user])
 
   return (
     <div className="signup-page">

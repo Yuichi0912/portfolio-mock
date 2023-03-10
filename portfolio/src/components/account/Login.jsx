@@ -3,7 +3,7 @@ import { auth, googleProvider } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.scss";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +29,9 @@ export const Login = () => {
   };
 
   // ログイン中は/homeに遷移
-  if (user) return navigate("/home");
+  useEffect(()=>{
+    if (user) return navigate("/home");
+  },[user])
 
   return (
     <div className="login-page">
