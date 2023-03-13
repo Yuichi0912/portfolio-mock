@@ -14,6 +14,8 @@ import {
 import { useParams } from "react-router-dom";
 import { EditProfile } from "./EditProfile";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Header } from "../header/Header";
+import { Footer } from "../footer/Footer";
 
 export const MyPage = () => {
   const [userData, setUserData] = useState([]);
@@ -45,7 +47,8 @@ export const MyPage = () => {
 
   return (
     <div className="mypage">
-      {userData.length == 1 &&
+      <Header />
+      {userData.length == 1 ? (
         userData.map((data) => {
           return (
             <div key={data.userId} className="profile">
@@ -65,11 +68,15 @@ export const MyPage = () => {
               <p className="profile__introduction">{data.introduction}</p>
             </div>
           );
-        })}
+        })
+      ) : (
+        <><p>プロフィール情報を追加しよう！</p></>
+      )}
       <button onClick={() => navigate(`/mypage/${id}/chat`)}>
         プロフィールを編集する
       </button>
       <button onClick={handleLogout}>ログアウトする</button>
+      <Footer />
     </div>
   );
 };

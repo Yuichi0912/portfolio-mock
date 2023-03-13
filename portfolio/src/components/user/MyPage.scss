@@ -4,33 +4,34 @@
   padding-top: 200px;
   text-align: center;
   padding-bottom: 200px;
+  .profile {
+    .profile__image {
+      width: 134px;
+      height: 134px;
+      border-radius: 50%;
+      border: 1px solid #8e8e8e;
+    }
 
-  img {
-    width: 134px;
-    height: 134px;
-    border-radius: 50%;
-    border: 1px solid #8e8e8e;
-  }
+    .profile__level {
+      text-decoration: underline;
+      font-weight: bold;
+    }
 
-  .profile__level {
-    text-decoration: underline;
-    font-weight: bold;
-  }
+    .profile__word {
+      text-align: left;
 
-  .profile__word {
-    text-align: left;
+      margin: 0 auto;
+      border: solid 2px #d9d9d9;
+      border-radius: 5px;
+      width: fit-content;
+    }
 
-    margin: 0 auto;
-    border: solid 2px #d9d9d9;
-    border-radius: 5px;
-    width: fit-content;
-  }
-
-  .profile__introduction {
-    text-align: left;
-    margin: 0 auto;
-    width: 90%;
-    border: solid 2px #d9d9d9;
-    border-radius: 5px;
+    .profile__introduction {
+      text-align: left;
+      margin: 0 auto;
+      width: 90%;
+      border: solid 2px #d9d9d9;
+      border-radius: 5px;
+    }
   }
 }
