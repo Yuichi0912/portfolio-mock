@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { collection, addDoc, updateDoc, Timestamp, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  Timestamp,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db, auth } from "../../firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import axios from "axios";
 import { residenceKey } from "../../const";
-import { HashtagList } from "./HashtagLists";
+import { Header } from "../header/Header";
+import { Footer } from "../footer/Footer";
+import "./PostRecruitment.scss";
 
 export const PostRecruitment = () => {
   const navigate = useNavigate();
@@ -61,7 +68,7 @@ export const PostRecruitment = () => {
       hostName: userData.userName,
       hostAge: userData.age,
       hostResidence: userData.residence,
-      timestamp:serverTimestamp(),
+      timestamp: serverTimestamp(),
     })
       .then((docRef) => {
         updateDoc(docRef, {
@@ -75,18 +82,25 @@ export const PostRecruitment = () => {
   };
 
   return (
-    <div className="">
-      <h2>投稿画面</h2>
-      <form onSubmit={handleSubmit}>
-        <h3>投稿</h3>
-        <p>タイトル</p>
+    <div className="post-page">
+      <Header />
+      <h2>投稿する</h2>
+      <Link to="/home">戻る</Link>
+      <form className="post-form" onSubmit={handleSubmit}>
+        <label htmlFor="title">タイトル</label>{" "}
         <input
+          id="title"
+          className="post__title"
           type="text"
           placeholder="タイトルを入力してください"
           onChange={(e) => setTitle(e.target.value)}
         ></input>
-        <p>場所</p>
-        <select onChange={(e) => setSelectedPlace(e.target.value)}>
+        <label htmlFor="pref">場所</label>{" "}
+        <select
+          id="pref"
+          className="post__preflist"
+          onChange={(e) => setSelectedPlace(e.target.value)}
+        >
           {place.map((data) => {
             return (
               <option key={data.prefCode} value={data.prefName}>
@@ -95,32 +109,44 @@ export const PostRecruitment = () => {
             );
           })}
         </select>
-        <p>日時</p>
+        <label id="date">日時</label>{" "}
         <input
+          id="date"
+          className="post__datetime"
           type="datetime-local"
           onChange={(e) => setDate(e.target.value)}
         ></input>
-        <p>募集人数</p>
-        <p>{number}</p>
-        <input type="range" onChange={(e) => setNumber(e.target.value)}></input>
-        <p>タグの選択</p>
-        <select onChange={(e) => setHashtag(e.target.value)}>
-        <option value="▼選択する">▼選択する</option>
+        <label htmlFor="number">募集人数</label> <p>{number} 人</p>
+        <input
+          id="number"
+          className="post__number"
+          type="range"
+          onChange={(e) => setNumber(e.target.value)}
+        ></input>
+        <label htmlFor="tag">タグの選択</label>
+        <select
+          id="tag"
+          className="post__tag"
+          onChange={(e) => setHashtag(e.target.value)}
+        >
+          <option value="▼選択する">▼選択する</option>
           <option value="ワイワイしたい">ワイワイしたい</option>
           <option value="ガチ練したい">ガチ練したい</option>
           <option value="試合に出たい">試合に出たい</option>
           <option value="試合を見たい">試合を見たい</option>
           <option value="教えてほしい">教えてほしい</option>
         </select>
-        <p>説明文</p>
+        <label htmlFor="description">説明文</label>{" "}
         <textarea
+          id="description"
+          className="post__description"
           type="text"
           placeholder="説明文を入力してください"
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button>投稿する</button>
+        <button className="post__submit-button">投稿する</button>
       </form>
-      {/* <HashtagList /> */}
+      <Footer />
     </div>
   );
 };

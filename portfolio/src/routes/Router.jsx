@@ -27,7 +27,7 @@ export const Router = () => {
 
   return (
     <BrowserRouter>
-      {user ? (
+      {/* {user ? (
         <>
           {" "}
           <Header />
@@ -35,7 +35,7 @@ export const Router = () => {
         </>
       ) : (
         <></>
-      )}
+      )} */}
 
       <Routes>
         <Route path="/signup" element={<Signup />} />
@@ -54,7 +54,9 @@ export const Router = () => {
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
           </>
         ) : (
-          <>{/* <Route element={<Navigate to="/login" />} /> */}</>
+          <> 
+          {/* <Route path="/*" element={<Navigate to="/login" />} />  */}
+          </>
         )}
       </Routes>
     </BrowserRouter>

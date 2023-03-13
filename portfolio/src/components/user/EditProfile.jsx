@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
+import { Footer } from "../footer/Footer";
 
 export const EditProfile = () => {
   const [userName, setUserName] = useState("");
@@ -102,13 +103,11 @@ export const EditProfile = () => {
             {userData.map((userData) => {
               return (
                 <div key={userData.userId}>
-                  <p>更新後の画面</p>
-
-                  <img
+                  {/* <img
                     src={image}
                     alt="プロフィール画像"
                     className="list__image"
-                  />
+                  /> */}
                   <input
                     type="file"
                     accept=".png, .jpeg, .jpg"
@@ -233,6 +232,7 @@ export const EditProfile = () => {
           </form>
         )}
         <button onClick={() => navigate(`/mypage/${id}`)}>×</button>
+        <Footer />
       </div>
   );
 };

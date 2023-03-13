@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./DetailRecruitment.scss";
 import { Header } from "../header/Header";
+import { Footer } from "../footer/Footer";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
@@ -84,6 +85,7 @@ export const DetailRecruitment = () => {
 
   return (
     <div className="detail-page">
+      <Header />
       {recruitmentsData.map((data) => {
         return (
           <div key={data.id}>
@@ -158,6 +160,7 @@ export const DetailRecruitment = () => {
         {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
         参加リクエストを送る
       </button>
+      <Footer />
     </div>
   );
 };
