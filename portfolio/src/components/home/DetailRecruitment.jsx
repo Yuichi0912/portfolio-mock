@@ -100,7 +100,7 @@ export const DetailRecruitment = () => {
               <p className="detail-usercard__hostname">{data.hostName}</p>
               <p className="detail-usercard__level">Lv. {data.level}</p>
               <p className="detail-usercard__age-residence">
-                {data.hostAge} | {data.hostResidence}
+                {data.hostAge} 歳 | {data.hostResidence}
               </p>
             </div>
 
@@ -120,7 +120,7 @@ export const DetailRecruitment = () => {
                   src="../images/calendar.svg"
                   alt="日時アイコン"
                 />
-                {dayjs(data.date.toDate()).format("YYYY-MM-DD HH:mm")}
+                {dayjs(data.date.toDate()).format("YYYY/MM/DD HH:mm")}
               </p>
               <p className="detail-outline__number">
                 {" "}

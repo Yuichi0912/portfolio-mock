@@ -34,4 +34,30 @@
       border-radius: 5px;
     }
   }
+  .profile__edit-button{
+    margin-top: 50px;
+      width: 259px;
+      height: 62px;
+      background-color: #edb886;
+      border-radius: 30px;
+      border: none;
+
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 100%;
+      color: #ffffff;
+  }
+  .logout__button{
+    margin-top: 50px;
+      width: 259px;
+      height: 62px;
+      background-color: #ffffff;
+      border-radius: 30px;
+      border: none;
+      border: 3px solid #c2c2c2;
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 100%;
+      color: #ff3737;
+  }
 }

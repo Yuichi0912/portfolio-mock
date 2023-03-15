@@ -8,7 +8,7 @@ export const Dialogues =()=>{
     return(
         <div className="dialogues">
             <Header />
-        <h2>やりとり</h2>
+        <h2>やりとりがまだありません</h2>
         <Footer />
         </div>
     )

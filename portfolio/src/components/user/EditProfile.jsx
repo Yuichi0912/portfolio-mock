@@ -17,6 +17,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { Footer } from "../footer/Footer";
+import { DescriptionLevel } from "./DescriptionLevel";
 
 export const EditProfile = () => {
   const [userName, setUserName] = useState("");
@@ -28,6 +29,7 @@ export const EditProfile = () => {
   const [selectedResidence, setSelectedResidence] = useState("");
   const [image, setImage] = useState("");
   const [userData, setUserData] = useState([]);
+  const [showLevel, setShowLevel] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
   const docRef = query(
@@ -121,11 +123,13 @@ export const EditProfile = () => {
                     placeholder="名前"
                   />
                   <p>レベル</p>
+                  <button onClick={()=>setShowLevel(true)}>？</button>
+                  <DescriptionLevel showLevel={showLevel} setShowLevel={setShowLevel} />
                   {userData && <p>{userData.level}</p>}
-                  <p>{level}</p>
+                  <p>{level} </p>
                   <input
                     type="range"
-                    min="1"
+                    min="0"
                     max="10"
                     defaultValue={userData.level}
                     onChange={(e) => setLevel(e.target.value)}
