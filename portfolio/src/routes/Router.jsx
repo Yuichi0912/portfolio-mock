@@ -17,13 +17,21 @@ import { EditProfile } from "../components/user/EditProfile";
 import { useEffect, useState } from "react";
 
 export const Router = () => {
-  const [user] = useAuthState(auth);
+  const [user,loading] = useAuthState(auth);
   // const[loading,setLoading] = useState(false);
 
   // useEffect(()=>{
   //   if(!user) setLoading(true) //ログインしてない間loadingはtrue
   //   else setLoading(false)
   // },[])
+
+if (loading){
+  return(
+    <div>
+      読み込み中です。。。
+    </div>
+  )
+}
 
   return (
     <BrowserRouter>
@@ -55,7 +63,7 @@ export const Router = () => {
           </>
         ) : (
           <> 
-          {/* <Route path="/*" element={<Navigate to="/login" />} />  */}
+          <Route path="/*" element={<Navigate to="/login" />} /> 
           </>
         )}
       </Routes>

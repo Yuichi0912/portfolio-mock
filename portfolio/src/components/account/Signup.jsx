@@ -42,7 +42,7 @@ export const Signup = () => {
           type="password"
           placeholder="パスワード"
         />
-        <button className="signup__subumit-button">
+        <button type="submit" className="signup__subumit-button">
           <p>登録する</p>
         </button>
       </form>
