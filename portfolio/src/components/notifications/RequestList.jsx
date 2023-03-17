@@ -33,9 +33,9 @@ export const RequestList = () => {
     // getDocs(request).then((querySnapshot) => {
     //   setRequestedData(querySnapshot.docs.map((doc) => doc.data()));
     // });
-    onSnapshot(request,(querySnapshot) =>{
-      setRequestedData(querySnapshot.docs.map((doc) => doc.data())); 
-    })
+    onSnapshot(request, (querySnapshot) => {
+      setRequestedData(querySnapshot.docs.map((doc) => doc.data()));
+    });
   }, []);
 
   //　リクエストの投稿と、承認後のデータ削除
@@ -64,25 +64,32 @@ export const RequestList = () => {
 
   return (
     <div className="notification-page">
-      {requestedData?.map(
-        ({ title, name, postId, image, requestingId, docId }) => {
-          return (
-            <div key={requestingId}>
-              <p>
-                『{title}』に{name}さんから
-              </p>
-              <p>参加リクエストが届きました！</p>
-              <button
-                onClick={() =>
-                  onApproveJoin(name, image, postId, requestingId, docId)
-                }
-              >
-                承認する
-              </button>
-              <button onClick={() => onDeleteRequest(docId)}>×</button>
-            </div>
-          );
-        }
+      {requestedData.length != 0 ? (
+        <>
+          {" "}
+          {requestedData?.map(
+            ({ title, name, postId, image, requestingId, docId }) => {
+              return (
+                <div key={requestingId}>
+                  <p>
+                    『{title}』に{name}さんから
+                  </p>
+                  <p>参加リクエストが届きました！</p>
+                  <button
+                    onClick={() =>
+                      onApproveJoin(name, image, postId, requestingId, docId)
+                    }
+                  >
+                    承認する
+                  </button>
+                  <button onClick={() => onDeleteRequest(docId)}>×</button>
+                </div>
+              );
+            }
+          )}
+        </>
+      ) : (
+        <><p className="notification-no-exist">通知がまだありません</p></>
       )}
     </div>
   );

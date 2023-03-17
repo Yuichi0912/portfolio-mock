@@ -13,7 +13,7 @@ import { db, auth } from "../../firebase";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ChatWithUsers.scss";
-import { Header } from "../header/Header";
+import dayjs from "dayjs";
 
 export const ChatWithUsers = () => {
   const [message, setMessage] = useState("");
@@ -48,6 +48,9 @@ export const ChatWithUsers = () => {
           id: docRef.id,
         });
       })
+      .then(() => {
+        setMessage("");
+      })
       // .then(() => {
       //   setMessage("");
       // })
@@ -64,14 +67,13 @@ export const ChatWithUsers = () => {
   }, []);
   return (
     <div className="chat-page">
-      {/* <Header /> */}
-      <h2 className="chat__header">
+      <div className="chat__header">
         {" "}
-        <Link to={`/detail/${id}`}>
+        <Link className="chat__backward" to={`/detail/${id}`}>
           <img src="../../images/chevron-left.svg" alt="戻るボタン" />
         </Link>
-        メッセージ
-      </h2>
+        <h2>メッセージ</h2>
+      </div>
       <div className="chat__main-block">
         {chats.map(({ message, id, image, name, userId, timestamp }) => {
           return (
@@ -82,9 +84,14 @@ export const ChatWithUsers = () => {
               key={id}
             >
               {/* <p>{timestamp}</p> */}
-              <p>{name}</p>
-              <p>{message}</p>
-              <img src={image} />
+              {/* <div className="chat__detail"> */}
+              <p className="chat__username">{name}</p>
+              <p className="chat__message">{message}</p>
+              <img className="chat__userimage" src={image} />
+              <p className="chat__postdate">
+                {timestamp && dayjs(timestamp.toDate()).format("HH:mm")}
+              </p>
+              {/* </div> */}
             </div>
           );
         })}
@@ -93,6 +100,7 @@ export const ChatWithUsers = () => {
         <input
           className="chat__input-space"
           type="text"
+          value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button type="submit" className="chat__submit-button">

@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
+import {UsersList} from "../home/UsersList"
 // import { Navigate } from "react-router-dom";
 
 export const Home = () => {
@@ -26,7 +27,9 @@ export const Home = () => {
             <TabPanel className="tabpanel__recruitment-list">
               <RecruitmentList />
             </TabPanel>
-            <TabPanel className="tabpanel__user-list"></TabPanel>
+            <TabPanel className="tabpanel__user-list">
+              <UsersList />
+            </TabPanel>
           </Tabs>
 
           <button className="post-button" onClick={() => navigate("/post")}>

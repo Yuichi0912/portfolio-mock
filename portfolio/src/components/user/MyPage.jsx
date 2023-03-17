@@ -70,12 +70,25 @@ export const MyPage = () => {
           );
         })
       ) : (
-        <><p>プロフィール情報を追加しよう！</p></>
+        <>
+          <p>プロフィール情報を追加しよう！</p>
+          <button
+            className="profile__edit-button"
+            onClick={() => navigate(`/mypage/${id}/chat`)}
+          >
+            プロフィールを編集する
+          </button>
+        </>
       )}
-      <button className="profile__edit-button" onClick={() => navigate(`/mypage/${id}/chat`)}>
+      <button
+        className="profile__edit-button"
+        onClick={() => navigate(`/mypage/${id}/chat`)}
+      >
         プロフィールを編集する
       </button>
-      <button className="logout__button" onClick={handleLogout}>ログアウトする</button>
+      <button className="logout__button" onClick={handleLogout}>
+        ログアウトする
+      </button>
       <Footer />
     </div>
   );
