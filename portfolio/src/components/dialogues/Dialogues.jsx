@@ -2,13 +2,15 @@ import { Footer } from "../footer/Footer"
 import { Header } from "../header/Header"
 import { RecruitmentList } from "../home/RecruitmentList"
 import "./Dialogues.scss"
+import { OwnPostLists } from "./OwnPostLists"
 
 export const Dialogues =()=>{
 
     return(
         <div className="dialogues">
             <Header />
-        <h2>やりとりがまだありません</h2>
+        <p>やりとりがまだありません</p>
+        <OwnPostLists />
         <Footer />
         </div>
     )
