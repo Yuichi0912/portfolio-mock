@@ -21,8 +21,8 @@ export const ChatWithUsers = () => {
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams(); // 投稿に付与されているIDを出力
-  // const chatRef = query(collection(db, "chats", "container", `${id}`),orderBy("timestamp","desc"))
-  const chatRef = collection(db, "chats", "container", `${id}`); // チャットルームまでの階層構造
+  const chatRef = collection(db, "recruitments", `${id}`, "chats");
+  // const chatRef = collection(db, "chats", "container", `${id}`); // チャットルームまでの階層構造
   const loginUserId = auth.currentUser.uid; // ログインしているユーザーのID取得
   const userRef = doc(db, "usersData", `${loginUserId}`); // ユーザー情報までの階層構造
 

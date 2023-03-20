@@ -88,7 +88,7 @@ export const DetailRecruitment = () => {
       <Header />
       {recruitmentsData.map((data) => {
         return (
-          <div key={data.id}>
+          <div key={data.id} onClick={() => navigate(`/user/${data.userId}`)}>
             <h3 className="detail-page__title">{data.title}</h3>
 
             <div className="detail-usercard">

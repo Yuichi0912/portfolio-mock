@@ -1,35 +1,49 @@
-import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
+import dayjs from "dayjs";
+import {
+  collection,
+  collectionGroup,
+  doc,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../../firebase";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import "./OwnPostLists.scss";
-export const OwnPostLists = () => {
-  const [ownPosts, setOwnPosts] = useState([]);
+import { auth, db } from "../../firebase";
+
+export const ChattingPosts = () => {
   const navigate = useNavigate();
+  const [chattingPosts, setChattingPosts] = useState([]);
+
   // 現在ログインしているユーザーのID取得
   const [user] = useAuthState(auth);
 
-  // 自分が投稿した一覧の取得
-  const docRef = query(
+  // チャットを送信した投稿の取得
+  //   const roadToChats = doc(db, "recruitments", "chats");
+  const chatRef = query(
     collection(db, "recruitments"),
-    where("userId", "==", `${user.uid}`)
+    where((doc(db, "recruitments", "chats"), "userId"), "==", `${user.uid}`)
   );
+  //   const chatRef = query(
+  //     collectionGroup(db, "chats"),
+  //     where("userId", "==", `${user.uid}`)
+  //   );
   useEffect(() => {
-    onSnapshot(docRef, (querySnapshot) => {
-      setOwnPosts(querySnapshot.docs.map((doc) => doc.data()));
+    onSnapshot(chatRef, (querySnapshot) => {
+      setChattingPosts(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
 
+  console.log(chattingPosts);
+
   return (
     <div>
-      <h2>あなたの投稿</h2>
-
-      {ownPosts.length != 0 ? (
+      <h2>やりとり中</h2>
+      {chattingPosts.length != 0 ? (
         <>
           {" "}
-          {ownPosts.map((data) => {
+          {chattingPosts.map((data) => {
             return (
               <div
                 key={data.id}
@@ -57,7 +71,7 @@ export const OwnPostLists = () => {
         </>
       ) : (
         <>
-          <p>投稿がまだありません</p>
+          <p>やりとりがまだありません</p>
         </>
       )}
     </div>

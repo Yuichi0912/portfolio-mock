@@ -14,7 +14,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { Footer } from "../footer/Footer";
 import { DescriptionLevel } from "./DescriptionLevel";
@@ -44,7 +44,6 @@ export const EditProfile = () => {
     });
   }, []);
 
-  // console.log(userData[0].userId);
   // 都道府県の情報を取得
   useEffect(() => {
     axios
@@ -95,163 +94,258 @@ export const EditProfile = () => {
       });
   };
 
-  // console.log(userData);
+  const fileInput = useRef(null);
+
+  const handleUploadImage = (e) => {
+    e.preventDefault();
+    fileInput.current.click();
+  };
 
   return (
     <div className="edit-page__content">
-      <h2>編集画面</h2>
-      <Footer />
-      <button onClick={() => setShowLevel(true)}>レベルとは？</button>
-
+      <div className="edit-page__header">
+        <Link className="edit-page__header--cancel" to={`/mypage/${id}`}>
+          キャンセル
+        </Link>
+        <p className="edit-page__header--title">編集</p>
+        <button
+          type="submit"
+          className="edit-page__header--update-button"
+          onClick={handleSubmit}
+        >
+          更新する
+        </button>
+      </div>
       {userData.length == 1 ? (
-        <form onSubmit={handleSubmit}>
+        <>
           {userData.map((userData) => {
             return (
-              <div key={userData.userId}>
-                {/* <img
-                    src={image}
+              <div className="edit-page__form" key={userData.userId}>
+                <div className="edit-page__form--image">
+                  <img
+                    className="edit-page__form--image-now"
+                    src={userData.image}
                     alt="プロフィール画像"
-                    className="list__image"
-                  /> */}
+                  />
+                  {image === "" ? (
+                    <img
+                      src="../../images/camera-plus.svg"
+                      className="edit-page__form--image-default"
+                    />
+                  ) : (
+                    <img
+                      src={image}
+                      className="edit-page__form--image-changed"
+                    />
+                  )}
+                </div>
+                <button
+                  className="edit-page__form--image-uploader"
+                  onClick={handleUploadImage}
+                >
+                  ファイルを選択
+                </button>
                 <input
                   type="file"
+                  ref={fileInput}
                   accept=".png, .jpeg, .jpg"
                   onChange={onImageUpload}
+                  style={{ display: "none" }}
                 />
                 <label htmlFor="username">名前</label>
                 <input
+                  className="edit-page__form--username"
                   type="text"
                   id="username"
                   defaultValue={userData.userName}
                   onChange={(e) => setUserName(e.target.value)}
                   placeholder="名前"
                 />
-                <DescriptionLevel
-                  showLevel={showLevel}
-                  setShowLevel={setShowLevel}
-                />
-                {userData && <p>現在の設定: Lv. {userData.level}</p>}
-                <p>{level}</p>
                 <label htmlFor="level">レベル</label>
-                <input
-                  type="range"
-                  id="level"
-                  min="0"
-                  max="10"
-                  defaultValue={userData.level}
-                  onChange={(e) => setLevel(e.target.value)}
-                />
-                <p>現在の設定: {userData.age}歳</p>
-                <p>{age}歳</p>
+                <div className="edit-page__form--level">
+                  {userData && (
+                    <p className="edit-page__form--level-confirm">
+                      Lv. {userData.level} → Lv. {level}
+                    </p>
+                  )}
+                  <input
+                    className="edit-page__form--level-input"
+                    type="range"
+                    id="level"
+                    min="0"
+                    max="10"
+                    defaultValue={userData.level}
+                    onChange={(e) => setLevel(e.target.value)}
+                  />
+                  <button
+                    className="edit-page__header--aboutlevel"
+                    onClick={() => setShowLevel(true)}
+                  >
+                    レベルとは？
+                  </button>
+                  <DescriptionLevel
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
+                </div>
                 <label htmlFor="age">年齢</label>
-                <input
-                  type="range"
-                  id="age"
-                  defaultValue={userData.age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="年齢"
-                />
-                <p>現在の設定: {userData.residence}</p>
+                <div className="edit-page__form--age">
+                  <p>
+                    {userData.age}歳 → {age}歳
+                  </p>
+                  {/* <p>{age}歳</p> */}
+                  <input
+                    type="range"
+                    id="age"
+                    defaultValue={userData.age}
+                    onChange={(e) => setAge(e.target.value)}
+                    placeholder="年齢"
+                  />
+                </div>
                 <label htmlFor="residence">居住地</label>
-                <select
-                  id="residence"
-                  onChange={(e) => setSelectedResidence(e.target.value)}
-                >
-                  {residence.map((data) => {
-                    return (
-                      <option key={data.prefCode} value={data.prefName}>
-                        {data.prefName}
-                      </option>
-                    );
-                  })}
-                </select>
+                <div className="edit-page__form--residence">
+                  <p>{userData.residence}</p>
+                  <p>→</p>
+                  <select
+                    className="edit-page__form--select"
+                    id="residence"
+                    onChange={(e) => setSelectedResidence(e.target.value)}
+                  >
+                    {residence.map((data) => {
+                      return (
+                        <option key={data.prefCode} value={data.prefName}>
+                          {data.prefName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
                 {/* <p>フォローフォロワー</p> */}
                 <label htmlFor="word">ひとこと</label>
-                <input
-                  type="text"
-                  id="word"
-                  defaultValue={userData.word}
-                  onChange={(e) => setWord(e.target.value)}
-                />
+                <div className="edit-page__form--word">
+                  <input
+                    className="edit-page__form--word-input"
+                    type="text"
+                    id="word"
+                    defaultValue={userData.word}
+                    onChange={(e) => setWord(e.target.value)}
+                  />
+                </div>
                 <label htmlFor="introduction">自己紹介</label>
-                <textarea
-                  type="text"
-                  id="introduction"
-                  defaultValue={userData.introduction}
-                  onChange={(e) => setIntroduction(e.target.value)}
-                />
-                <button type="submit">更新する</button>
+                <div className="edit-page__form--introduction">
+                  <textarea
+                    className="edit-page__form--introduction-input"
+                    type="text"
+                    id="introduction"
+                    defaultValue={userData.introduction}
+                    onChange={(e) => setIntroduction(e.target.value)}
+                  />
+                </div>
               </div>
             );
           })}
-        </form>
+        </>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <img src={image} alt="プロフィール画像" className="list__image" />
+        <>
+          <div className="edit-page__form--image">
+            {image === "" ? (
+              <img
+                src="../../images/camera-plus.svg"
+                className="edit-page__form--image-default"
+              />
+            ) : (
+              <img src={image} className="edit-page__form--image-changed" />
+            )}
+          </div>
+          <button
+            className="edit-page__form--image-uploader"
+            onClick={handleUploadImage}
+          >
+            ファイルを選択
+          </button>
           <input
             type="file"
+            ref={fileInput}
             accept=".png, .jpeg, .jpg"
             onChange={onImageUpload}
+            style={{ display: "none" }}
           />
-          {/* <button onClick={onPhotoUpload}>画像アップロード</button> */}
+
           <label htmlFor="username">名前</label>
           <input
+            className="edit-page__form--username"
             type="text"
             id="username"
-            // defaultValue={userData.userName || ""}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="名前"
           />
-          {/* {userData && <p>{userData.level}</p>} */}
-          <p>Lv. {level}</p>
           <label htmlFor="level">レベル</label>
-          <input
-            type="range"
-            id="level"
-            min="1"
-            max="10"
-            // defaultValue={userData.level}
-            onChange={(e) => setLevel(e.target.value)}
-          />
-          <p>年齢|居住地</p>
-          {/* <p>{userData.age}</p> */}
-          <p>{age}歳</p>
-          <label htmlFor="age">年齢</label>
-          <input
-            type="range"
-            id="age"
-            // defaultValue={userData.age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="年齢"
-          />
-          {/* <p>{userData.residence}</p> */}
-          <select onChange={(e) => setSelectedResidence(e.target.value)}>
-            {residence.map((data) => {
-              return (
-                <option key={data.prefCode} value={data.prefName}>
-                  {data.prefName}
-                </option>
-              );
-            })}
-          </select>
-          {/* <p>フォローフォロワー</p> */}
-          <p>ひとこと</p>
-          <input
-            type="text"
-            // defaultValue={userData.word}
-            onChange={(e) => setWord(e.target.value)}
-          />
-          <p>自己紹介</p>
-          <input
-            type="text"
-            // defaultValue={userData.introduction}
-            onChange={(e) => setIntroduction(e.target.value)}
-          />
-          <button>更新する</button>
-        </form>
-      )}
+          <div className="edit-page__form--level">
+            <p>Lv. {level}</p>
+            <input
+              type="range"
+              id="level"
+              min="1"
+              max="10"
+              onChange={(e) => setLevel(e.target.value)}
+            />
+            <button
+              className="edit-page__header--aboutlevel"
+              onClick={() => setShowLevel(true)}
+            >
+              レベルとは？
+            </button>
+            <DescriptionLevel
+              showLevel={showLevel}
+              setShowLevel={setShowLevel}
+            />
+          </div>
 
-      <button onClick={() => navigate(`/mypage/${id}`)}>×</button>
+          <label htmlFor="age">年齢</label>
+          <div className="edit-page__form--age">
+            <p>{age}歳</p>
+            <input
+              type="range"
+              id="age"
+              onChange={(e) => setAge(e.target.value)}
+              placeholder="年齢"
+            />
+          </div>
+          <label htmlFor="residence">居住地</label>
+          <div className="edit-page__form--residence">
+            <select
+              className="edit-page__form--select"
+              onChange={(e) => setSelectedResidence(e.target.value)}
+            >
+              {residence.map((data) => {
+                return (
+                  <option key={data.prefCode} value={data.prefName}>
+                    {data.prefName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {/* <p>フォローフォロワー</p> */}
+          <label htmlFor="word">ひとこと</label>
+          <div className="edit-page__form--word">
+            <input
+              className="edit-page__form--word-input"
+              type="text"
+              onChange={(e) => setWord(e.target.value)}
+              placeholder="例：右利きのドライブマンです"
+            />
+          </div>
+          <label htmlFor="introduction">自己紹介</label>
+          <div className="edit-page__form--introduction">
+            <textarea
+              className="edit-page__form--introduction-input"
+              type="text"
+              onChange={(e) => setIntroduction(e.target.value)}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

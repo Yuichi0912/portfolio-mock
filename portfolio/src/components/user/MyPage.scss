@@ -4,6 +4,15 @@
   padding-top: 200px;
   text-align: center;
   padding-bottom: 200px;
+  clear: both;
+
+.mypage__settings{
+  display: block;
+  margin: 0 0 0 auto;
+  background-color: #ffffff;
+border: none;
+}
+
   .profile {
     .profile__image {
       width: 134px;

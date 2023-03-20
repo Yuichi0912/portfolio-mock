@@ -16,6 +16,7 @@ import { EditProfile } from "./EditProfile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
+import { Settings } from "./Settings";
 
 export const MyPage = () => {
   const [userData, setUserData] = useState([]);
@@ -30,9 +31,6 @@ export const MyPage = () => {
 
   // 登録したユーザー情報をブラウザに表示する (.lengthが0と1でreturn文の出しわけをするため)
   useEffect(() => {
-    // getDocs(docRef).then((querySnapshot) => {
-    //   setUserData(querySnapshot.docs.map((doc) => doc.data()))
-    // });
     onSnapshot(docRef, (querySnapshot) => {
       setUserData(querySnapshot.docs.map((doc) => doc.data()));
     });
@@ -48,6 +46,7 @@ export const MyPage = () => {
   return (
     <div className="mypage">
       <Header />
+      <Settings />
       {userData.length == 1 ? (
         userData.map((data) => {
           return (
@@ -71,7 +70,6 @@ export const MyPage = () => {
         })
       ) : (
         <>
-          <p>プロフィール情報を追加しよう！</p>
           <button
             className="profile__edit-button"
             onClick={() => navigate(`/mypage/${id}/chat`)}
@@ -80,7 +78,7 @@ export const MyPage = () => {
           </button>
         </>
       )}
-      <button
+      {/* <button
         className="profile__edit-button"
         onClick={() => navigate(`/mypage/${id}/chat`)}
       >
@@ -88,7 +86,7 @@ export const MyPage = () => {
       </button>
       <button className="logout__button" onClick={handleLogout}>
         ログアウトする
-      </button>
+      </button> */}
       <Footer />
     </div>
   );
