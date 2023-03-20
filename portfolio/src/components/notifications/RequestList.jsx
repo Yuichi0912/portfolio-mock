@@ -62,6 +62,7 @@ export const RequestList = () => {
     );
   };
 
+
   return (
     <div className="notification-page">
       {requestedData.length != 0 ? (

@@ -15,6 +15,7 @@ import { ChatWithUsers } from "../components/home/ChatWithUsers";
 import { NotFound } from "../components/account/NotFound";
 import { EditProfile } from "../components/user/EditProfile";
 import { useEffect, useState } from "react";
+import { User } from "../components/user/User";
 
 export const Router = () => {
   const [user,loading] = useAuthState(auth);
@@ -60,6 +61,7 @@ if (loading){
             <Route path="/mypage/:id" element={<MyPage />} />
             <Route path="/mypage/:id/chat" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
+            <Route path="/user/:id" element={<User />} />
           </>
         ) : (
           <> 
