@@ -12,7 +12,7 @@ export const Header = () => {
     <header className="header">
       <Link to="/home">
         {" "}
-        <h1>PinLoop</h1>
+        <h1 className="header-title">PinLoop</h1>
       </Link>
       {/* <div className="header__button-group"> */}
       {/* <button onClick={() => setShowSort(true)}>

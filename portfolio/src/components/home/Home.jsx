@@ -6,16 +6,28 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
-import {UsersList} from "../home/UsersList"
+import { UsersList } from "../home/UsersList";
+import { useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
 
 export const Home = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1025);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初期表示時に一度呼び出す
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
-    <Header />
+      <Header />
       {user ? (
         <main className="home">
           <Tabs className="tabs">
@@ -32,14 +44,25 @@ export const Home = () => {
             </TabPanel>
           </Tabs>
 
-          <button className="post-button" onClick={() => navigate("/post")}>
-            <img src="../images/pencil.svg" alt="投稿アイコン" />
-          </button>
+          {isSmallScreen ? (
+            <button
+              className="post-button-small"
+              onClick={() => navigate("/post")}
+            >
+              <img src="../images/pencil.svg" alt="投稿アイコン" />
+            </button>
+          ) : (
+            <button
+              className="post-button-large"
+              onClick={() => navigate("/post")}
+            >
+              <img src="../images/pencil.svg" alt="投稿アイコン" />
+              <p>投稿する</p>
+            </button>
+          )}
         </main>
       ) : (
-        <>
-          {/* <Navigate replace to="/login" />{" "} */}
-        </>
+        <></>
       )}
       <Footer />
     </>
