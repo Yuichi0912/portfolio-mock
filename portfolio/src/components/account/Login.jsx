@@ -3,7 +3,8 @@ import { auth, googleProvider } from "../../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./Login.scss";
 import { useNavigate } from "react-router";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -29,43 +30,42 @@ export const Login = () => {
   };
 
   // ログイン中は/homeに遷移
-  useEffect(()=>{
+  useEffect(() => {
     if (user) return navigate("/home");
-  },[user])
+  }, [user]);
 
   return (
-    <div className="login-page">
-      <h1 className="login__title">PinLoop</h1>
-      <h2 className="login__description">ログイン</h2>
-      <button className="login__google" onClick={loginWithGoogle}>
-        {" "}
-        <p>Googleでログイン</p>
-      </button>
-      <form className="login__form" onSubmit={handleSubmit}>
-        <input
-          className="login__email"
-          name="email"
-          type="email"
-          placeholder="メールアドレス"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          className="login__password"
-          name="password"
-          type="password"
-          placeholder="パスワード"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="login__subumit-button">
-          <p>ログインする</p>
+    <div className="background-image">
+      <div className="login-page">
+        <h1 className="login__title">PinLoop</h1>
+        <h2 className="login__description">ログイン</h2>
+        <button className="login__google" onClick={loginWithGoogle}>
+          {" "}
+          <p>Googleでログイン</p>
         </button>
-      </form>
-      <button
-        className="login__navigate-signup"
-        onClick={() => navigate("/signup")}
-      >
-        <p>アカウントの新規登録はこちら</p>
-      </button>
+        <form className="login__form" onSubmit={handleSubmit}>
+          <input
+            className="login__email"
+            name="email"
+            type="email"
+            placeholder="メールアドレス"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            className="login__password"
+            name="password"
+            type="password"
+            placeholder="パスワード"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="login__subumit-button">
+            <p>ログインする</p>
+          </button>
+        </form>
+        <Link className="login__navigate-signup" to="/signup">
+          アカウントの新規登録はこちら
+        </Link>
+      </div>
     </div>
   );
 };
