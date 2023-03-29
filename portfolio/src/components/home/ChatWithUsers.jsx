@@ -34,6 +34,10 @@ export const ChatWithUsers = () => {
   }, []);
 
   const handleSubmit = (e) => {
+    if (!userData) {
+      alert("プロフィールを登録してください！");
+    }
+
     e.preventDefault();
     addDoc(chatRef, {
       message: message,

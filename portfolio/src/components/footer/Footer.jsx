@@ -1,28 +1,30 @@
 import { Link } from "react-router-dom";
 import "./Footer.scss";
 import { auth } from "../../firebase";
+import { ReactComponent as HomeIcon } from "./home-2.svg";
+import { ReactComponent as MessageIcon } from "./message-2.svg";
+import { ReactComponent as AlertIcon } from "./bell.svg";
+import { ReactComponent as UserIcon } from "./user.svg";
+
 
 export const Footer = () => {
-const id = auth.currentUser.uid;
+  // 現在ログインしているユーザーのIDを取得
+  const id = auth.currentUser.uid;
 
   return (
     <div className="footer">
       <footer>
         <Link to={"/home"}>
-          {" "}
-          <img src="../images/home-2.svg" alt="ホームアイコン" />
+          <HomeIcon stroke="#edb886" />
         </Link>
         <Link to={"/dialogues"}>
-          {" "}
-          <img src="../images/message-2.svg" alt="メッセージアイコン" />
+        <MessageIcon stroke="#edb886" />
         </Link>
         <Link to={"/notifications"}>
-          {" "}
-          <img src="../images/bell.svg" alt="通知アイコン" />
+        <AlertIcon stroke="#edb886" />
         </Link>
         <Link to={`/mypage/${id}`}>
-          {" "}
-          <img src="../images/user.svg" alt="ユーザーアイコン" />
+        <UserIcon stroke="#edb886" />
         </Link>
       </footer>
     </div>

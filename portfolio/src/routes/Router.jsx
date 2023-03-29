@@ -16,9 +16,10 @@ import { NotFound } from "../components/account/NotFound";
 import { EditProfile } from "../components/user/EditProfile";
 import { useEffect, useState } from "react";
 import { User } from "../components/user/User";
+import { Loading } from "./Loading";
 
 export const Router = () => {
-  const [user,loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   // const[loading,setLoading] = useState(false);
 
   // useEffect(()=>{
@@ -26,13 +27,9 @@ export const Router = () => {
   //   else setLoading(false)
   // },[])
 
-if (loading){
-  return(
-    <div>
-      読み込み中です。。。
-    </div>
-  )
-}
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <BrowserRouter>
@@ -64,8 +61,8 @@ if (loading){
             <Route path="/user/:id" element={<User />} />
           </>
         ) : (
-          <> 
-          <Route path="/*" element={<Navigate to="/login" />} /> 
+          <>
+            <Route path="/*" element={<Navigate to="/login" />} />
           </>
         )}
       </Routes>
