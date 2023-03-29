@@ -53,6 +53,10 @@ export const PostRecruitment = () => {
   }, []);
 
   const handleSubmit = (e) => {
+    if (!userData) {
+      alert("プロフィールを登録してください！");
+    }
+
     e.preventDefault();
     addDoc(collection(db, "recruitments"), {
       title: title,

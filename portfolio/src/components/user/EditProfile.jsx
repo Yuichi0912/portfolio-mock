@@ -18,6 +18,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { db } from "../../firebase";
 import { Footer } from "../footer/Footer";
 import { DescriptionLevel } from "./DescriptionLevel";
+import Compressor from "compressorjs";
+
 
 export const EditProfile = () => {
   const [userName, setUserName] = useState("");
@@ -58,6 +60,31 @@ export const EditProfile = () => {
   // プロフィール画像のアップロード・URLの取得
   const onImageUpload = (e) => {
     const file = e.target.files[0];
+
+    // new Compressor(file, {
+    //   quality: 0.6,
+    //   success(result) {
+    //     const formData = new FormData();
+    //     formData.append("image",result);
+    //     console.log(formData.get("image"));
+
+    //     // console.log(file);
+    //     const storageRef = ref(storage, "images/" + formData.name);
+    //     uploadBytes(storageRef, formData).then((snapshot) => {
+    //       const url = snapshot.ref._location.path_;
+    //       getDownloadURL(ref(storage, `${url}`)).then((getUrl) => {
+    //         setImage(getUrl);
+    //         console.log(getUrl);
+    //       });
+    //       console.log(snapshot.ref._location.path_);
+    //       console.log("Uploaded a blob or file!");
+    //     });
+    
+
+    //   },
+    // });
+
+    console.log(file);
     const storageRef = ref(storage, "images/" + file.name);
     uploadBytes(storageRef, file).then((snapshot) => {
       const url = snapshot.ref._location.path_;

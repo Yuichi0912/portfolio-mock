@@ -63,6 +63,10 @@ export const DetailRecruitment = () => {
 
   // 参加リクエストの送信
   const onRequestJoin = () => {
+    if (!userData) {
+      alert("プロフィールを登録してください！");
+    }
+
     addDoc(collection(db, "joinRequest"), {
       hostUid: toJoinData.userId, // 投稿者のユーザーID
       title: toJoinData.title,

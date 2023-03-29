@@ -1,5 +1,9 @@
-import "./Loading.scss"
+import "./Loading.scss";
 
 export const Loading = () => {
-  return <div>ローディング中です、、、</div>;
+  return (
+    <div className="overlay">
+      <div className="spinner"></div>
+    </div>
+  );
 };
