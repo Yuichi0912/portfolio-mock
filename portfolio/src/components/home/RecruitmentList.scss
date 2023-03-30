@@ -1,5 +1,6 @@
 @charset "utf-8";
 .list-page {
+  background-color: #ffffff;
   .list {
     display: grid;
     padding-left: 20px;
@@ -66,8 +67,19 @@
   }
 }
 
-.list-page :hover{
-  background-color: #d3d2d226;
+.list-page :hover {
+  background-color: #c3c1c126;
   opacity: 0.8;
   transition: 0.1s ease-in-out;
+}
+
+@media screen and (min-width: 1020px) {
+  .list-page {
+    width: 500px;
+    margin-left: 40px;
+    margin-top: 30px;
+    .list {
+      border: 1px solid #bebebe;
+    }
+  }
 }
