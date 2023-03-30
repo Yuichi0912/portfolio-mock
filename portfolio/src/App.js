@@ -1,11 +1,13 @@
-import './App.scss';
-import { Router } from './routes/Router';
+import { BrowserRouter } from "react-router-dom";
+import "./App.scss";
+import { Router } from "./routes/Router";
 
-export const App=()=> {
+export const App = () => {
   return (
     <div className="App">
-      <Router />
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </div>
   );
-}
-
+};

@@ -19,6 +19,7 @@ import { Footer } from "../footer/Footer";
 import { Settings } from "./Settings";
 
 export const MyPage = () => {
+  const [isRendered, setIsRendered] = useState(false);
   const [userData, setUserData] = useState([]);
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -43,51 +44,50 @@ export const MyPage = () => {
     auth.signOut().then(() => navigate("/login"));
   };
 
-  return (
-    <div className="mypage">
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  return isRendered ? (
+    <>
       <Header />
-      <Settings />
-      {userData.length == 1 ? (
-        userData.map((data) => {
-          return (
-            <div key={data.userId} className="profile">
-              <img
-                src={data.image}
-                alt="プロフィール画像"
-                className="profile__image"
-              />
-              <p className="profile__username">{data.userName}</p>
-              <p className="profile__level">Lv. {data.level}</p>
-              <p className="profile__age-residence">
-                {data.age}歳 | {data.residence}
-              </p>
-              <p>ひとこと</p>
-              <p className="profile__word">{data.word}</p>
-              <p>自己紹介</p>
-              <p className="profile__introduction">{data.introduction}</p>
-            </div>
-          );
-        })
-      ) : (
-        <>
-          <button
-            className="profile__edit-button"
-            onClick={() => navigate(`/mypage/${id}/chat`)}
-          >
-            プロフィールを編集する
-          </button>
-        </>
-      )}
-      {/* <button
-        className="profile__edit-button"
-        onClick={() => navigate(`/mypage/${id}/chat`)}
-      >
-        プロフィールを編集する
-      </button>
-      <button className="logout__button" onClick={handleLogout}>
-        ログアウトする
-      </button> */}
+      <div className="mypage">
+        <Settings />
+        {userData.length == 1 ? (
+          userData.map((data) => {
+            return (
+              <div key={data.userId} className="profile">
+                <img
+                  src={data.image}
+                  alt="プロフィール画像"
+                  className="profile__image"
+                />
+                <p className="profile__username">{data.userName}</p>
+                <p className="profile__level">Lv. {data.level}</p>
+                <p className="profile__age-residence">
+                  {data.age}歳 | {data.residence}
+                </p>
+                <p>ひとこと</p>
+                <p className="profile__word">{data.word}</p>
+                <p>自己紹介</p>
+                <p className="profile__introduction">{data.introduction}</p>
+              </div>
+            );
+          })
+        ) : (
+          <>
+            <button
+              className="profile__edit-button"
+              onClick={() => navigate(`/mypage/${id}/edit`)}
+            >
+              プロフィールを編集する
+            </button>
+          </>
+        )}
+      </div>
       <Footer />
-    </div>
+    </>
+  ) : (
+    <></>
   );
 };

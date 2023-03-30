@@ -17,6 +17,7 @@ import { db, auth } from "../../firebase";
 import "./RequestList.scss";
 
 export const RequestList = () => {
+  const [isRendered, setIsRendered] = useState(false);
   const [requestedData, setRequestedData] = useState([]);
   const [requestUserId, setRequestUserId] = useState("");
   const [approvedUser, setApprovedUser] = useState("");
@@ -62,8 +63,11 @@ export const RequestList = () => {
     );
   };
 
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
 
-  return (
+  return isRendered ? (
     <div className="notification-page">
       {requestedData.length != 0 ? (
         <>
@@ -71,27 +75,40 @@ export const RequestList = () => {
           {requestedData?.map(
             ({ title, name, postId, image, requestingId, docId }) => {
               return (
-                <div key={requestingId}>
+                <div key={requestingId} className="request__list">
                   <p>
-                    『{title}』に{name}さんから
+                    <span className="request__title">『{title}』</span>に
+                    <span className="request__username">{name}</span>
                   </p>
-                  <p>参加リクエストが届きました！</p>
-                  <button
-                    onClick={() =>
-                      onApproveJoin(name, image, postId, requestingId, docId)
-                    }
-                  >
-                    承認する
-                  </button>
-                  <button onClick={() => onDeleteRequest(docId)}>×</button>
+                  <p>さんから参加リクエストが届きました！</p>
+                  <div className="button">
+                    <button
+                      className="approved-button"
+                      onClick={() =>
+                        onApproveJoin(name, image, postId, requestingId, docId)
+                      }
+                    >
+                      承認する
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={() => onDeleteRequest(docId)}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               );
             }
           )}
         </>
       ) : (
-        <><p className="notification-no-exist">通知がまだありません</p></>
+        <>
+          <p className="notification-no-exist">通知がまだありません</p>
+        </>
       )}
     </div>
+  ) : (
+    <></>
   );
 };

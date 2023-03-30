@@ -71,7 +71,7 @@ export const ChattingPosts = () => {
         </>
       ) : (
         <>
-          <p>やりとりがまだありません</p>
+          <p>やりとりがありません</p>
         </>
       )}
     </div>

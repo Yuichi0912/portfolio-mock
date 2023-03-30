@@ -88,8 +88,8 @@ export const PostRecruitment = () => {
   return (
     <div className="post-page">
       <Header />
+      <Link className="post__backward" to="/home">戻る</Link>
       <h2>投稿する</h2>
-      <Link to="/home">戻る</Link>
       <form className="post-form" onSubmit={handleSubmit}>
         <label htmlFor="title">タイトル</label>{" "}
         <input

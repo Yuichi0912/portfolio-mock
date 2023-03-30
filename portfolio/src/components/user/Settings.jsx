@@ -27,7 +27,7 @@ export const Settings = () => {
         <>
           <div className="overlay" onClick={handleMenuToggle} />
           <div className="settings__menu">
-            <Link className="settings__menu--edit-profile" to={`/mypage/${id}/chat`}>プロフィールを編集する</Link>
+            <Link className="settings__menu--edit-profile" to={`/mypage/${id}/edit`}>プロフィールを編集する</Link>
             <button className="settings__menu--logout" onClick={handleLogout}>
               ログアウトする
             </button>

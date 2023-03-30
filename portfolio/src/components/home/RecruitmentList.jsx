@@ -1,18 +1,22 @@
 import { db } from "../../firebase";
-import { collection, getDocs, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./RecruitmentList.scss";
 import dayjs from "dayjs";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const RecruitmentList = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
   const detailData = collection(db, "recruitments");
-  const q = query(detailData,orderBy("timestamp","desc"))
+  const q = query(detailData, orderBy("timestamp", "desc"));
   useEffect(() => {
-    // getDocs(detailData).then((querySnapshot) => {
-    //   setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
-    // });
     onSnapshot(q, (querySnapshot) => {
       setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
     });
@@ -21,7 +25,11 @@ export const RecruitmentList = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="list-page">
+    <motion.div
+      className="list-page"
+      animate={{ x: 0 }}
+      transition={{ ease: "easeOut", duration: 2 }}
+    >
       {recruitmentsData.map((data) => {
         return (
           <div
@@ -47,6 +55,6 @@ export const RecruitmentList = () => {
           </div>
         );
       })}
-    </div>
+    </motion.div>
   );
 };

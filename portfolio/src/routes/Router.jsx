@@ -1,4 +1,11 @@
-import { BrowserRouter, Route, Routes, Navigate, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Navigate,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import { Dialogues } from "../components/dialogues/Dialogues";
 import { Footer } from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
@@ -17,33 +24,19 @@ import { EditProfile } from "../components/user/EditProfile";
 import { useEffect, useState } from "react";
 import { User } from "../components/user/User";
 import { Loading } from "./Loading";
+import { AnimatePresence } from "framer-motion";
 
 export const Router = () => {
+  const location = useLocation();
   const [user, loading] = useAuthState(auth);
-  // const[loading,setLoading] = useState(false);
-
-  // useEffect(()=>{
-  //   if(!user) setLoading(true) //ログインしてない間loadingはtrue
-  //   else setLoading(false)
-  // },[])
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <BrowserRouter>
-      {/* {user ? (
-        <>
-          {" "}
-          <Header />
-          <Footer />
-        </>
-      ) : (
-        <></>
-      )} */}
-
-      <Routes>
+    <AnimatePresence>
+      <Routes location={location} key={location.pathname}>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
@@ -56,7 +49,7 @@ export const Router = () => {
             <Route path="/dialogues" element={<Dialogues />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/mypage/:id" element={<MyPage />} />
-            <Route path="/mypage/:id/chat" element={<EditProfile />} />
+            <Route path="/mypage/:id/edit" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
             <Route path="/user/:id" element={<User />} />
           </>
@@ -66,47 +59,7 @@ export const Router = () => {
           </>
         )}
       </Routes>
-    </BrowserRouter>
+    </AnimatePresence>
   );
 };
 
-// ルーティング記述候補1
-
-// {user ? (
-//   <>
-//     <Route
-//       path="/home"
-//       element={user ? <Home /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/detail/:id"
-//       element={user ? <DetailRecruitment /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/post"
-//       element={user ? <PostRecruitment /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/dialogues"
-//       element={user ? <Dialogues /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/notifications"
-//       element={user ? <Notifications /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/mypage/:id"
-//       element={user ? <MyPage /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/mypage/:id/chat"
-//       element={user ? <EditProfile /> : <Navigate to="/login" />}
-//     />
-//     <Route
-//       path="/detail/:id/chat"
-//       element={user ? <ChatWithUsers /> : <Navigate to="/login" />}
-//     />
-//   </>
-// ) : (
-//   <Route element={<NotFound />} />
-// )}

@@ -1,4 +1,4 @@
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+// import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { RecruitmentList } from "./RecruitmentList";
 import { useNavigate } from "react-router-dom";
 import "./Home.scss";
@@ -8,13 +8,35 @@ import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
 import { UsersList } from "../home/UsersList";
 import { useEffect, useState } from "react";
-// import { Navigate } from "react-router-dom";
+import "swiper/scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { AppBar } from "@mui/material";
 
 export const Home = () => {
+  const [isRendered, setIsRendered] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
+  const [swiper, setSwiper] = useState(null);
+  const [value, setValue] = useState(0);
 
+  const slideChange = (index) => {
+    setValue(index);
+  };
+
+  const tabChange = (event, newValue) => {
+    setValue(newValue);
+    swiper.slideTo(newValue);
+  };
+
+  useEffect(() => {
+    setIsRendered(true);
+  }, []);
+
+  // レスポンシブの状態管理（デスクトップサイズ）
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1020);
@@ -28,41 +50,64 @@ export const Home = () => {
   return (
     <>
       <Header />
-      {user ? (
-        <main className="home">
-          <Tabs className="tabs">
-            <TabList className="tablist">
-              <Tab className="tab__recruitment-list">募集一覧</Tab>
-              <Tab className="tab__user-list">ユーザー</Tab>
-            </TabList>
+      {isSmallScreen ? (
+        <>
+          {" "}
+          {isRendered ? (
+            <main className="home">
+              <AppBar
+                sx={{ width: "100%", bgcolor: "background.paper", mt: 13 }}
+                elevation={0}
+              >
+                <Tabs value={value} onChange={tabChange} variant="fullWidth">
+                  <Tab label="募集一覧" value={0} />
+                  <Tab label="ユーザー" value={1} />
+                </Tabs>
+              </AppBar>
 
-            <TabPanel className="tabpanel__recruitment-list">
-              <RecruitmentList />
-            </TabPanel>
-            <TabPanel className="tabpanel__user-list">
-              <UsersList />
-            </TabPanel>
-          </Tabs>
+              <Swiper
+                spaceBetween={50}
+                slidesPerView={1}
+                onSlideChange={(index) => slideChange(index.activeIndex)}
+                onSwiper={(swiper) => {
+                  const swiperInstance = swiper;
+                  setSwiper(swiperInstance);
+                }}
+              >
+                <SwiperSlide className="tab__recruitment-list">
+                  <RecruitmentList />
+                </SwiperSlide>
+                <SwiperSlide className="tab__user-list">
+                  <UsersList />
+                </SwiperSlide>
+              </Swiper>
 
-          {isSmallScreen ? (
-            <button
-              className="post-button-small"
-              onClick={() => navigate("/post")}
-            >
-              <img src="../images/pencil.svg" alt="投稿アイコン" />
-            </button>
+            
+                <button
+                  className="post-button-small"
+                  onClick={() => navigate("/post")}
+                >
+                  <img src="../images/pencil.svg" alt="投稿アイコン" />
+                </button>
+            
+             
+            </main>
           ) : (
-            <button
-              className="post-button-large"
-              onClick={() => navigate("/post")}
-            >
-              <img src="../images/pencil.svg" alt="投稿アイコン" />
-              <p>投稿する</p>
-            </button>
+            <></>
           )}
-        </main>
+        </>
       ) : (
-        <></>
+        <main className="home">
+          <RecruitmentList /> <UsersList />
+          <button
+            className="post-button-large"
+            onClick={() => navigate("/post")}
+          >
+            <img src="../images/pencil.svg" alt="投稿アイコン" />
+            <p>投稿する</p>
+          </button>
+          <p className="advertisement">広告</p>
+        </main>
       )}
       <Footer />
     </>
