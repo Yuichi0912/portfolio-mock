@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { User } from "../components/user/User";
 import { Loading } from "./Loading";
 import { AnimatePresence } from "framer-motion";
+import { SuggestRegistration } from "./SuggestRegistration";
 
 export const Router = () => {
   const location = useLocation();
@@ -40,10 +41,12 @@ export const Router = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/mypage" element={<SuggestRegistration />} />
 
         {user ? (
           <>
-            <Route path="/home" element={<Home />} />
+            {/* <Route path="/home" element={<Home />} /> */}
             <Route path="/detail/:id" element={<DetailRecruitment />} />
             <Route path="/post" element={<PostRecruitment />} />
             <Route path="/dialogues" element={<Dialogues />} />
