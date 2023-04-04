@@ -42,15 +42,15 @@ export const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/detail/:id" element={<DetailRecruitment />} />
+        <Route path="/dialogues" element={<Dialogues />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/mypage" element={<SuggestRegistration />} />
 
         {user ? (
           <>
             {/* <Route path="/home" element={<Home />} /> */}
-            <Route path="/detail/:id" element={<DetailRecruitment />} />
             <Route path="/post" element={<PostRecruitment />} />
-            <Route path="/dialogues" element={<Dialogues />} />
-            <Route path="/notifications" element={<Notifications />} />
             <Route path="/mypage/:id" element={<MyPage />} />
             <Route path="/mypage/:id/edit" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
@@ -65,4 +65,3 @@ export const Router = () => {
     </AnimatePresence>
   );
 };
-

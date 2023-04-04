@@ -30,7 +30,11 @@ export const DetailRecruitment = () => {
   const docRef = doc(db, "recruitments", `${id}`);
 
   // ログインしているユーザーのID取得
-  const uid = auth.currentUser.uid;
+
+  const [user] = useAuthState(auth);
+
+
+  const uid = auth.currentUser ? auth.currentUser.uid : [{}] ;
   const userRef = doc(db, "usersData", `${uid}`);
 
   // 登録したユーザー情報の取得
