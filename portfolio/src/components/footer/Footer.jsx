@@ -32,9 +32,9 @@ console.log(user);
         <AlertIcon stroke="#edb886" />
         </Link>
         {user ?(<></>) :(<></>)}
-        {/* <Link to={user ? `/mypage/${id}` : "/mypage"}>
+        <Link to={"/mypage"}>
         <UserIcon stroke="#edb886" />
-        </Link> */}
+        </Link>
       </footer>
     </div>
   );
