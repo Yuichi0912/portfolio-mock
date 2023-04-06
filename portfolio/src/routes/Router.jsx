@@ -43,18 +43,18 @@ export const Router = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/detail/:id" element={<DetailRecruitment />} />
+        <Route path="/user/:id" element={<User />} />
         <Route path="/dialogues" element={<Dialogues />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/mypage" element={<SuggestRegistration />} />
+        <Route path="/mypage" element={<MyPage />} />
 
         {user ? (
           <>
             {/* <Route path="/home" element={<Home />} /> */}
             <Route path="/post" element={<PostRecruitment />} />
-            <Route path="/mypage/:id" element={<MyPage />} />
-            <Route path="/mypage/:id/edit" element={<EditProfile />} />
+            {/* <Route path="/mypage/:id" element={<MyPage />} /> */}
+            <Route path="/mypage/edit" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
-            <Route path="/user/:id" element={<User />} />
           </>
         ) : (
           <>

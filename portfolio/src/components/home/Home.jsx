@@ -47,6 +47,14 @@ export const Home = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const onNavigatePost = () => {
+    if (!user) {
+      alert("プロフィールを登録してください！");
+    } else {
+      navigate("/post");
+    }
+  };
+
   return (
     <>
       <Header />
@@ -85,7 +93,7 @@ export const Home = () => {
             
                 <button
                   className="post-button-small"
-                  onClick={() => navigate("/post")}
+                  onClick={onNavigatePost}
                 >
                   <img src="../images/pencil.svg" alt="投稿アイコン" />
                 </button>
@@ -98,10 +106,11 @@ export const Home = () => {
         </>
       ) : (
         <main className="home">
-          <RecruitmentList /> <UsersList />
+          <RecruitmentList />
+           <UsersList />
           <button
             className="post-button-large"
-            onClick={() => navigate("/post")}
+            onClick={onNavigatePost}
           >
             <img src="../images/pencil.svg" alt="投稿アイコン" />
             <p>投稿する</p>

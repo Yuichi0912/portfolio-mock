@@ -33,8 +33,7 @@ export const DetailRecruitment = () => {
 
   const [user] = useAuthState(auth);
 
-
-  const uid = auth.currentUser ? auth.currentUser.uid : [{}] ;
+  const uid = auth.currentUser ? auth.currentUser.uid : [{}];
   const userRef = doc(db, "usersData", `${uid}`);
 
   // 登録したユーザー情報の取得
@@ -68,6 +67,14 @@ export const DetailRecruitment = () => {
   }, []);
 
   // ユーザーデータは取ってこれた。後は何も入っていない時の対処法
+
+  const onNavigateChat = () => {
+    if (!userData) {
+      alert("プロフィールを登録してください！");
+    } else {
+      navigate(`/detail/${id}/chat`);
+    }
+  };
 
   // 参加リクエストの送信
   const onRequestJoin = () => {
@@ -111,17 +118,19 @@ export const DetailRecruitment = () => {
           ease: [0, 0.71, 0.2, 1.01],
         }}
         exit={{ opacity: 0, scale: 0.5 }}
-
       >
         <Link className="detail__backward" to={`/home`}>
           <img src="../../images/chevron-left.svg" alt="戻るボタン" />
         </Link>
         {recruitmentsData.map((data) => {
           return (
-            <div key={data.id} >
+            <div key={data.id}>
               <h3 className="detail-page__title">{data.title}</h3>
 
-              <div className="detail-usercard" onClick={() => navigate(`/user/${data.userId}`)}>
+              <div
+                className="detail-usercard"
+                onClick={() => navigate(`/user/${data.userId}`)}
+              >
                 <img
                   className="detail-usercard__image"
                   src={data.image}
@@ -181,7 +190,7 @@ export const DetailRecruitment = () => {
               </div>
               <button
                 className="button__navigate-chat"
-                onClick={() => navigate(`/detail/${id}/chat`)}
+                onClick={onNavigateChat}
               >
                 <img
                   src="../images/message-circle-2.svg"
