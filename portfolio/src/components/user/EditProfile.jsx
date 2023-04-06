@@ -4,7 +4,7 @@ import { residenceKey } from "../../const";
 import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { storage } from "../../firebase";
+import { auth, storage } from "../../firebase";
 import {
   doc,
   setDoc,
@@ -33,7 +33,8 @@ export const EditProfile = () => {
   const [userData, setUserData] = useState([]);
   const [showLevel, setShowLevel] = useState(false);
   const navigate = useNavigate();
-  const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
+  // const { id } = useParams(); // Footerコンポーネントで渡された,ログインしているユーザーの🆔
+  const id = auth.currentUser ? auth.currentUser.uid : [{}];
   const docRef = query(
     collection(db, "usersData"),
     where("userId", "==", `${id}`)
@@ -131,7 +132,7 @@ export const EditProfile = () => {
   return (
     <div className="edit-page__content">
       <div className="edit-page__header">
-        <Link className="edit-page__header--cancel" to={`/mypage/${id}`}>
+        <Link className="edit-page__header--cancel" to={"/mypage"}>
           キャンセル
         </Link>
         <p className="edit-page__header--title">編集</p>

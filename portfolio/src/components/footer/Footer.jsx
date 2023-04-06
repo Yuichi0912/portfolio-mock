@@ -7,18 +7,16 @@ import { ReactComponent as AlertIcon } from "./bell.svg";
 import { ReactComponent as UserIcon } from "./user.svg";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-
 export const Footer = () => {
-// ログイン済の場合、user==trueになる
+  // ログイン済の場合、user==trueになる
   const [user] = useAuthState(auth);
-console.log(user);
+  console.log(user);
 
-  
   // 現在ログインしているユーザーのIDを取得
- 
-  // const id = auth.currentUser.uid;
-  
 
+  // const id = auth.currentUser.uid;
+  const id = auth.currentUser ? auth.currentUser.uid : [{}];
+console.log(id);
   return (
     <div className="footer">
       <footer>
@@ -26,14 +24,13 @@ console.log(user);
           <HomeIcon stroke="#edb886" />
         </Link>
         <Link to={"/dialogues"}>
-        <MessageIcon stroke="#edb886" />
+          <MessageIcon stroke="#edb886" />
         </Link>
         <Link to={"/notifications"}>
-        <AlertIcon stroke="#edb886" />
+          <AlertIcon stroke="#edb886" />
         </Link>
-        {user ?(<></>) :(<></>)}
-        <Link to={"/mypage"}>
-        <UserIcon stroke="#edb886" />
+        <Link to="/mypage">
+          <UserIcon stroke="#edb886" />
         </Link>
       </footer>
     </div>
