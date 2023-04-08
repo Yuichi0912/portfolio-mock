@@ -14,6 +14,8 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { AppBar } from "@mui/material";
+import { Sidebar } from "../sidebar/Sidebar";
+import { SideAd } from "../../routes/SideAd";
 
 export const Home = () => {
   const [isRendered, setIsRendered] = useState(false);
@@ -39,7 +41,7 @@ export const Home = () => {
   // レスポンシブの状態管理（デスクトップサイズ）
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1020);
+      setIsSmallScreen(window.innerWidth < 1024);
     };
 
     window.addEventListener("resize", handleResize);
@@ -57,12 +59,12 @@ export const Home = () => {
 
   return (
     <>
-      <Header />
       {isSmallScreen ? (
         <>
           {" "}
           {isRendered ? (
             <main className="home">
+                    <Header />
               <AppBar
                 sx={{ width: "100%", bgcolor: "background.paper", mt: 13 }}
                 elevation={0}
@@ -98,7 +100,7 @@ export const Home = () => {
                   <img src="../images/pencil.svg" alt="投稿アイコン" />
                 </button>
             
-             
+             <Footer />
             </main>
           ) : (
             <></>
@@ -106,6 +108,8 @@ export const Home = () => {
         </>
       ) : (
         <main className="home">
+          <Sidebar />
+          <SideAd />
           <RecruitmentList />
            <UsersList />
           <button
@@ -115,10 +119,9 @@ export const Home = () => {
             <img src="../images/pencil.svg" alt="投稿アイコン" />
             <p>投稿する</p>
           </button>
-          <p className="advertisement">広告</p>
+          {/* <p className="advertisement">広告</p> */}
         </main>
       )}
-      <Footer />
     </>
   );
 };

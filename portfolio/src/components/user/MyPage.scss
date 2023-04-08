@@ -2,7 +2,7 @@
 
 .mypage {
   padding-top: 200px;
-  text-align: center;
+  // text-align: center;
   padding-bottom: 200px;
   clear: both;
 
@@ -77,12 +77,12 @@ border: none;
   }
 }
 
-@media screen and (min-width: 1020px) {
+@media screen and (min-width: 1024px) {
   .mypage {
-    width: 500px;
+    // width: 500px;
     
-    margin-left: auto;
-    margin-right: auto;
+    // margin-left: auto;
+    // margin-right: auto;
 
     .profile{
       
