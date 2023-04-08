@@ -24,7 +24,7 @@ export const RecruitmentList = () => {
   const detailData = collection(db, "recruitments");
 
   // 投稿の取得（５個）
-  const q = query(detailData, orderBy("timestamp", "desc"), limit(5));
+  const q = query(detailData, orderBy("timestamp", "desc"));
   useEffect(() => {
     onSnapshot(q, (querySnapshot) => {
       setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
@@ -41,8 +41,9 @@ export const RecruitmentList = () => {
     startAfter(lastDoc),
     limit(5)
   );
-  
+
   const loadMoreData = () => {
+    console.log("test");
     if (!lastDoc || !hasMore) {
       setHasMore(false);
       return;
@@ -71,6 +72,7 @@ export const RecruitmentList = () => {
       animate={{ x: 0 }}
       transition={{ ease: "easeOut", duration: 2 }}
     >
+      {/* <div className="list-page"> */}
       <InfiniteScroll
         // pageStart={0}
         loadMore={loadMoreData}
@@ -80,6 +82,7 @@ export const RecruitmentList = () => {
             Loading ...
           </div>
         }
+        // useWindow={false}
       >
         {recruitmentsData.map((data) => {
           return (
@@ -107,6 +110,7 @@ export const RecruitmentList = () => {
           );
         })}
       </InfiniteScroll>
+      {/* </div> */}
     </motion.div>
   );
 };
