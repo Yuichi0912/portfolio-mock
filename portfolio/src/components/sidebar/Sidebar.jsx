@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "./home-2.svg";
 import { ReactComponent as MessageIcon } from "./message-2.svg";
 import { ReactComponent as AlertIcon } from "./bell.svg";
@@ -8,27 +8,59 @@ import "./Sidebar.scss";
 export const Sidebar = () => {
   return (
     <div className="sidebar">
-      <Link to="/home" className="sidebar-title">
+      <NavLink to="/home" className="sidebar-title">
         PinLoop
-      </Link>
+      </NavLink>
 
       <div className="sidebar-icons">
-        <Link to={"/home"} className="sidebar-homeicon">
-          <HomeIcon stroke="#edb886" width="40px" height="40px" />
-          <p>ホーム</p>
-        </Link>
-        <Link to={"/dialogues"} className="sidebar-messageicon">
-          <MessageIcon stroke="#edb886" width="40px" height="40px" />{" "}
-          <p>やりとり</p>
-        </Link>
-        <Link to={"/notifications"} className="sidebar-alerticon">
-          <AlertIcon stroke="#edb886" width="40px" height="40px" />
-          <p>お知らせ</p>
-        </Link>
-        <Link to="/mypage" className="sidebar-usericon">
-          <UserIcon stroke="#edb886" width="40px" height="40px" />
-          <p>プロフィール</p>
-        </Link>
+        <NavLink to={"/home"} className="sidebar-homeicon">
+          {({ isActive }) => (
+            <>
+              <HomeIcon
+                stroke={isActive ? "#edb886" : "#000000"}
+                width="40px"
+                height="40px"
+              />
+              <p style={{color: isActive ? "#edb886" : "#000000"}} >ホーム</p>
+            </>
+          )}
+        </NavLink>
+        <NavLink to={"/dialogues"} className="sidebar-messageicon">
+          {({ isActive }) => (
+            <>
+              <MessageIcon
+                stroke={isActive ? "#edb886" : "#000000"}
+                width="40px"
+                height="40px"
+              />
+              <p style={{color: isActive ? "#edb886" : "#000000"}} >やりとり</p>
+            </>
+          )}
+        </NavLink>
+        <NavLink to={"/notifications"} className="sidebar-alerticon">
+          {({ isActive }) => (
+            <>
+              <AlertIcon
+                stroke={isActive ? "#edb886" : "#000000"}
+                width="40px"
+                height="40px"
+              />
+              <p style={{color: isActive ? "#edb886" : "#000000"}}>お知らせ</p>
+            </>
+          )}
+        </NavLink>
+        <NavLink to="/mypage" className="sidebar-usericon">
+          {({ isActive }) => (
+            <>
+              <UserIcon
+                stroke={isActive ? "#edb886" : "#000000"}
+                width="40px"
+                height="40px"
+              />
+              <p style={{color: isActive ? "#edb886" : "#000000"}}>マイページ</p>
+            </>
+          )}
+        </NavLink>
       </div>
     </div>
   );

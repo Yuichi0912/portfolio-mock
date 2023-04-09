@@ -34,12 +34,12 @@ export const Dialogues = () => {
           {" "}
           <Header />
           {user ? (
-            <>
+            <div className="loggedin-lists">
               {" "}
               <OwnPostLists />
               <ChattingPosts />
               <ApprovedJoinPosts />
-            </>
+            </div>
           ) : (
             <SuggestRegistration />
           )}
@@ -48,15 +48,16 @@ export const Dialogues = () => {
       ) : (
         <>
           {" "}
+          <Header />
           <Sidebar />
           <SideAd />
           {user ? (
-            <>
+            <div className="loggedin-lists">
               {" "}
               <OwnPostLists />
               <ChattingPosts />
               <ApprovedJoinPosts />
-            </>
+            </div>
           ) : (
             <SuggestRegistration />
           )}

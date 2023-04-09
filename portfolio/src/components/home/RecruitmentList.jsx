@@ -35,36 +35,36 @@ export const RecruitmentList = () => {
   }, []);
 
   // 最初の5個以降を取得
-  const newQ = query(
-    detailData,
-    orderBy("timestamp", "desc"),
-    startAfter(lastDoc),
-    limit(5)
-  );
+  // const newQ = query(
+  //   detailData,
+  //   orderBy("timestamp", "desc"),
+  //   startAfter(lastDoc),
+  //   limit(5)
+  // );
 
-  const loadMoreData = () => {
-    console.log("test");
-    if (!lastDoc || !hasMore) {
-      setHasMore(false);
-      return;
-    }
+  // const loadMoreData = () => {
+  //   console.log("test");
+  //   if (!lastDoc || !hasMore) {
+  //     setHasMore(false);
+  //     return;
+  //   }
 
-    onSnapshot(newQ, (querySnapshot) => {
-      // if (querySnapshot.docs.length === 0) {
-      //   setHasMore(false);
-      // } else {
-      setRecruitmentsData((prevState) => [
-        ...prevState,
-        ...querySnapshot.docs.map((doc) => doc.data()),
-      ]);
-      console.log((prevState) => [
-        ...prevState,
-        ...querySnapshot.docs.map((doc) => doc.data()),
-      ]);
-      setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-      // }
-    });
-  };
+  //   onSnapshot(newQ, (querySnapshot) => {
+  //     // if (querySnapshot.docs.length === 0) {
+  //     //   setHasMore(false);
+  //     // } else {
+  //     setRecruitmentsData((prevState) => [
+  //       ...prevState,
+  //       ...querySnapshot.docs.map((doc) => doc.data()),
+  //     ]);
+  //     console.log((prevState) => [
+  //       ...prevState,
+  //       ...querySnapshot.docs.map((doc) => doc.data()),
+  //     ]);
+  //     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+  //     // }
+  //   });
+  // };
 
   return (
     <motion.div
@@ -73,7 +73,7 @@ export const RecruitmentList = () => {
       transition={{ ease: "easeOut", duration: 2 }}
     >
       {/* <div className="list-page"> */}
-      <InfiniteScroll
+      {/* <InfiniteScroll
         // pageStart={0}
         loadMore={loadMoreData}
         hasMore={hasMore}
@@ -83,7 +83,7 @@ export const RecruitmentList = () => {
           </div>
         }
         // useWindow={false}
-      >
+      > */}
         {recruitmentsData.map((data) => {
           return (
             <div
@@ -109,7 +109,7 @@ export const RecruitmentList = () => {
             </div>
           );
         })}
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
       {/* </div> */}
     </motion.div>
   );

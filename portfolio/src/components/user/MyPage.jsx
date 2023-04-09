@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { EditProfile } from "./EditProfile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Header } from "../header/Header";
@@ -72,27 +72,40 @@ export const MyPage = () => {
             <Header />
             {user ? (
               <>
-                <Settings />
+                {/* <Settings /> */}
                 {userData.length == 1 ? (
                   userData.map((data) => {
                     return (
                       <div key={data.userId} className="profile">
+                        <p className="profile__level">Lv. {data.level}</p>
                         <img
                           src={data.image}
                           alt="プロフィール画像"
                           className="profile__image"
                         />
+                        <br />
+                        <Link
+                          className="settings__menu--edit-profile"
+                          to={"/mypage/edit"}
+                        >
+                          プロフィールを編集する
+                        </Link>
+
                         <p className="profile__username">{data.userName}</p>
-                        <p className="profile__level">Lv. {data.level}</p>
                         <p className="profile__age-residence">
                           {data.age}歳 | {data.residence}
                         </p>
-                        <p>ひとこと</p>
                         <p className="profile__word">{data.word}</p>
-                        <p>自己紹介</p>
+                        <p className="profile__introduction-title">自己紹介</p>
                         <p className="profile__introduction">
                           {data.introduction}
                         </p>
+                        <button
+                          className="settings__menu--logout"
+                          onClick={handleLogout}
+                        >
+                          ログアウトする
+                        </button>
                       </div>
                     );
                   })
@@ -115,31 +128,46 @@ export const MyPage = () => {
         ) : (
           <>
             {" "}
+            <Header />
             <Sidebar />
             <SideAd />
             {user ? (
               <>
-                <Settings />
+                {/* <Settings /> */}
                 {userData.length == 1 ? (
                   userData.map((data) => {
                     return (
                       <div key={data.userId} className="profile">
+                        <p className="profile__level">Lv. {data.level}</p>
+
                         <img
                           src={data.image}
                           alt="プロフィール画像"
                           className="profile__image"
                         />
+                        <br />
+                        <Link
+                          className="settings__menu--edit-profile"
+                          to={"/mypage/edit"}
+                        >
+                          プロフィールを編集する
+                        </Link>
+
                         <p className="profile__username">{data.userName}</p>
-                        <p className="profile__level">Lv. {data.level}</p>
                         <p className="profile__age-residence">
                           {data.age}歳 | {data.residence}
                         </p>
-                        <p>ひとこと</p>
                         <p className="profile__word">{data.word}</p>
-                        <p>自己紹介</p>
+                        <p className="profile__introduction-title">自己紹介</p>
                         <p className="profile__introduction">
                           {data.introduction}
                         </p>
+                        <button
+                          className="settings__menu--logout"
+                          onClick={handleLogout}
+                        >
+                          ログアウトする
+                        </button>
                       </div>
                     );
                   })

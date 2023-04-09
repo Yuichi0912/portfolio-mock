@@ -3,7 +3,7 @@ import { db } from "../../firebase";
 import { getDocs, collection, onSnapshot } from "firebase/firestore";
 import "./UsersList.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/scss";
+import "swiper/scss";
 import { useNavigate } from "react-router-dom";
 
 export const UsersList = () => {
@@ -31,9 +31,7 @@ export const UsersList = () => {
   }, []);
 
   return (
-    <div
-      className="userslist"
-    >
+    <div className="userslist">
       {isSmallScreen ? (
         <>
           {" "}
@@ -46,12 +44,12 @@ export const UsersList = () => {
                 spaceBetween: 20,
               },
               // when window width is >= 480px
-              480: {
+              560: {
                 slidesPerView: 3,
                 spaceBetween: 30,
               },
               // when window width is >= 640px
-              640: {
+              780: {
                 slidesPerView: 4,
                 spaceBetween: 40,
               },
@@ -66,17 +64,20 @@ export const UsersList = () => {
                   className="usersinfo"
                   onClick={() => navigate(`/user/${data.userId}`)}
                 >
-                  <img
-                    src={data.image}
-                    alt="プロフィール画像"
-                    className="usersinfo__image"
-                  />
-                  <p className="usersinfo__username">{data.userName}</p>
-                  <p className="usersinfo__level">Lv. {data.level}</p>
-                  <p className="userinfo__word">{data.word}</p>
-                  <p className="usersinfo__age-residence">
-                    {data.age}歳 | {data.residence}
-                  </p>
+                  <div className="userinfo__card">
+                    <p className="usersinfo__level">Lv. {data.level}</p>
+                    <img
+                      src={data.image}
+                      alt="プロフィール画像"
+                      className="usersinfo__image"
+                    />
+                    <p className="usersinfo__username">{data.userName}</p>
+                    <p className="usersinfo__age-residence">
+                      {data.age}歳 | {data.residence}
+                    </p>
+
+                    <p className="userinfo__word">{data.word}</p>
+                  </div>
                 </SwiperSlide>
               );
             })}
@@ -92,17 +93,20 @@ export const UsersList = () => {
                 className="usersinfo"
                 onClick={() => navigate(`/user/${data.userId}`)}
               >
-                <img
-                  src={data.image}
-                  alt="プロフィール画像"
-                  className="usersinfo__image"
-                />
-                <p className="usersinfo__username">{data.userName}</p>
-                <p className="usersinfo__level">Lv. {data.level}</p>
-                <p className="userinfo__word">{data.word}</p>
-                <p className="usersinfo__age-residence">
-                  {data.age}歳 | {data.residence}
-                </p>
+                <div className="userinfo__card">
+                  <p className="usersinfo__level">Lv. {data.level}</p>
+                  <img
+                    src={data.image}
+                    alt="プロフィール画像"
+                    className="usersinfo__image"
+                  />
+                  <p className="usersinfo__username">{data.userName}</p>
+                  <p className="usersinfo__age-residence">
+                    {data.age}歳 | {data.residence}
+                  </p>
+
+                  <p className="userinfo__word">{data.word}</p>
+                </div>
               </div>
             );
           })}

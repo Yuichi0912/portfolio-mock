@@ -26,6 +26,7 @@ import { User } from "../components/user/User";
 import { Loading } from "./Loading";
 import { AnimatePresence } from "framer-motion";
 import { SuggestRegistration } from "./SuggestRegistration";
+import { ApprovedUsers } from "../components/home/ApprovedUsers";
 
 export const Router = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ export const Router = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/detail/:id" element={<DetailRecruitment />} />
+        <Route path="/detail/:id/users" element={<ApprovedUsers />} />
         <Route path="/user/:id" element={<User />} />
         <Route path="/dialogues" element={<Dialogues />} />
         <Route path="/notifications" element={<Notifications />} />
@@ -50,15 +52,14 @@ export const Router = () => {
 
         {user ? (
           <>
-            {/* <Route path="/home" element={<Home />} /> */}
+            {" "}
             <Route path="/post" element={<PostRecruitment />} />
-            {/* <Route path="/mypage/:id" element={<MyPage />} /> */}
             <Route path="/mypage/edit" element={<EditProfile />} />
             <Route path="/detail/:id/chat" element={<ChatWithUsers />} />
           </>
         ) : (
           <>
-            <Route path="/*" element={<Navigate to="/login" />} />
+            <Route path="/*" element={<Navigate to="/home" />} />
           </>
         )}
       </Routes>

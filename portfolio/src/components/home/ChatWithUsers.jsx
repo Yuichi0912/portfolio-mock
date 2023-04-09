@@ -14,6 +14,8 @@ import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./ChatWithUsers.scss";
 import dayjs from "dayjs";
+import { Sidebar } from "../sidebar/Sidebar";
+import { SideAd } from "../../routes/SideAd";
 
 export const ChatWithUsers = () => {
   const [message, setMessage] = useState("");
@@ -25,6 +27,18 @@ export const ChatWithUsers = () => {
   // const chatRef = collection(db, "chats", "container", `${id}`); // チャットルームまでの階層構造
   const loginUserId = auth.currentUser.uid; // ログインしているユーザーのID取得
   const userRef = doc(db, "usersData", `${loginUserId}`); // ユーザー情報までの階層構造
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  // レスポンシブの状態管理（デスクトップサイズ）
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初期表示時に一度呼び出す
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // ユーザー情報の取得
   useEffect(() => {
@@ -69,48 +83,100 @@ export const ChatWithUsers = () => {
       setChats(querysnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
+
   return (
     <div className="chat-page">
-      <div className="chat__header">
-        {" "}
-        <Link className="chat__backward" to={`/detail/${id}`}>
-          <img src="../../images/chevron-left.svg" alt="戻るボタン" />
-        </Link>
-        <h2>メッセージ</h2>
-      </div>
-      <div className="chat__main-block">
-        {chats.map(({ message, id, image, name, userId, timestamp }) => {
-          return (
-            <div
-              className={`chat__exchange ${
-                userId === `${loginUserId}` ? "send-side" : "received-side"
-              }`}
-              key={id}
-            >
-              {/* <p>{timestamp}</p> */}
-              {/* <div className="chat__detail"> */}
-              <p className="chat__username">{name}</p>
-              <p className="chat__message">{message}</p>
-              <img className="chat__userimage" src={image} />
-              <p className="chat__postdate">
-                {timestamp && dayjs(timestamp.toDate()).format("HH:mm")}
-              </p>
-              {/* </div> */}
-            </div>
-          );
-        })}
-      </div>
-      <form className="chat__form" onSubmit={handleSubmit}>
-        <input
-          className="chat__input-space"
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <button type="submit" className="chat__submit-button">
-          <img src="../../images/send.svg" alt="送信ボタン" />
-        </button>
-      </form>
+      {isSmallScreen ? (
+        <>
+          {" "}
+          <div className="chat__header">
+            {" "}
+            <Link className="chat__backward" to={`/detail/${id}`}>
+              <img src="../../images/chevron-left.svg" alt="戻るボタン" />
+            </Link>
+            <h2>メッセージ</h2>
+          </div>
+          <div className="chat__main-block">
+            {chats.map(({ message, id, image, name, userId, timestamp }) => {
+              return (
+                <div
+                  className={`chat__exchange ${
+                    userId === `${loginUserId}` ? "send-side" : "received-side"
+                  }`}
+                  key={id}
+                >
+                  {/* <p>{timestamp}</p> */}
+                  {/* <div className="chat__detail"> */}
+                  <p className="chat__username">{name}</p>
+                  <p className="chat__message">{message}</p>
+                  <img className="chat__userimage" src={image} />
+                  <p className="chat__postdate">
+                    {timestamp && dayjs(timestamp.toDate()).format("HH:mm")}
+                  </p>
+                  {/* </div> */}
+                </div>
+              );
+            })}
+          </div>
+          <form className="chat__form" onSubmit={handleSubmit}>
+            <input
+              className="chat__input-space"
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button type="submit" className="chat__submit-button">
+              <img src="../../images/send.svg" alt="送信ボタン" />
+            </button>
+          </form>
+        </>
+      ) : (
+        <>
+        <Sidebar />
+        <SideAd />
+          {" "}
+          <div className="chat__header">
+            {" "}
+            <Link className="chat__backward" to={`/detail/${id}`}>
+              <img src="../../images/chevron-left.svg" alt="戻るボタン" />
+            </Link>
+            <h2>メッセージ</h2>
+          </div>
+          <div className="chat__main-block">
+            {chats.map(({ message, id, image, name, userId, timestamp }) => {
+              return (
+                <div
+                  className={`chat__exchange ${
+                    userId === `${loginUserId}` ? "send-side" : "received-side"
+                  }`}
+                  key={id}
+                >
+                  {/* <p>{timestamp}</p> */}
+                  {/* <div className="chat__detail"> */}
+                  <p className="chat__username">{name}</p>
+                  <p className="chat__message">{message}</p>
+                  <img className="chat__userimage" src={image} />
+                  <p className="chat__postdate">
+                    {timestamp && dayjs(timestamp.toDate()).format("HH:mm")}
+                  </p>
+                  {/* </div> */}
+                </div>
+              );
+            })}
+          </div>
+          <form className="chat__form" onSubmit={handleSubmit}>
+            <input
+              className="chat__input-space"
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button type="submit" className="chat__submit-button">
+              <img src="../../images/send.svg" alt="送信ボタン" />
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

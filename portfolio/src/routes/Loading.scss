@@ -9,12 +9,17 @@
   // background: black;
   // opacity: 0.5;
   z-index: 999;
+  background-color: #ffffff;
 }
 
 .spinner {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 45%;
+  top: 45%;
+  // left: 40%;
+  // transform: translate(-50%, -50%);
+  // -webkit-transform: translate(-50%, -50%);
+  // -ms-transform: translate(-50%, -50%);
   height: 60px;
   width: 60px;
   margin: 0px auto;
@@ -30,36 +35,35 @@
   z-index: 999;
 }
 
-
 @-webkit-keyframes rotation {
-    from {
-      -webkit-transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(359deg);
-    }
+  from {
+    -webkit-transform: rotate(0deg);
   }
-  @-moz-keyframes rotation {
-    from {
-      -moz-transform: rotate(0deg);
-    }
-    to {
-      -moz-transform: rotate(359deg);
-    }
+  to {
+    -webkit-transform: rotate(359deg);
   }
-  @-o-keyframes rotation {
-    from {
-      -o-transform: rotate(0deg);
-    }
-    to {
-      -o-transform: rotate(359deg);
-    }
+}
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
   }
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
+  to {
+    -moz-transform: rotate(359deg);
   }
+}
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
