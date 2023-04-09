@@ -59,68 +59,71 @@ export const Home = () => {
 
   return (
     <>
-      {isSmallScreen ? (
+      {isRendered ? (
         <>
-          {" "}
-          {isRendered ? (
-            <main className="home">
-                    <Header />
-              <AppBar
-                sx={{ width: "100%", bgcolor: "background.paper", mt: 13 }}
-                elevation={0}
-              >
-                <Tabs value={value} onChange={tabChange} variant="fullWidth">
-                  <Tab label="募集一覧" value={0} />
-                  <Tab label="ユーザー" value={1} />
-                </Tabs>
-              </AppBar>
-
-              <Swiper
-                spaceBetween={50}
-                slidesPerView={1}
-                onSlideChange={(index) => slideChange(index.activeIndex)}
-                onSwiper={(swiper) => {
-                  const swiperInstance = swiper;
-                  setSwiper(swiperInstance);
-                }}
-              >
-                <SwiperSlide className="tab__recruitment-list">
-                  <RecruitmentList />
-                </SwiperSlide>
-                <SwiperSlide className="tab__user-list">
-                  <UsersList />
-                </SwiperSlide>
-              </Swiper>
-
-            
-                <button
-                  className="post-button-small"
-                  onClick={onNavigatePost}
+          {isSmallScreen ? (
+            <>
+              {" "}
+              <main className="home">
+                <Header />
+                <AppBar
+                  sx={{ width: "100%", bgcolor: "background.paper", mt: 13 }}
+                  elevation={0}
                 >
+                  <Tabs value={value} onChange={tabChange} variant="fullWidth">
+                    <Tab label="募集一覧" value={0} />
+                    <Tab label="ユーザー" value={1} />
+                  </Tabs>
+                </AppBar>
+
+                <Swiper
+                  spaceBetween={50}
+                  slidesPerView={1}
+                  onSlideChange={(index) => slideChange(index.activeIndex)}
+                  onSwiper={(swiper) => {
+                    const swiperInstance = swiper;
+                    setSwiper(swiperInstance);
+                  }}
+                >
+                  <SwiperSlide className="tab__recruitment-list">
+                    <RecruitmentList />
+                  </SwiperSlide>
+                  <SwiperSlide className="tab__user-list">
+                    <UsersList />
+                  </SwiperSlide>
+                </Swiper>
+
+                <button className="post-button-small" onClick={onNavigatePost}>
                   <img src="../images/pencil.svg" alt="投稿アイコン" />
                 </button>
-            
-             <Footer />
-            </main>
+
+                <Footer />
+              </main>
+            </>
           ) : (
-            <></>
+            <main className="home">
+              <Header />
+              <Sidebar />
+              {/* <SideAd /> */}
+              <div className="recruitment-bar">
+                <p className="recruitment-bar-title">募集一覧</p>
+                <RecruitmentList />
+              </div>
+              <div className="user-bar">
+                <p className="user-bar-title">ユーザー</p>
+                <UsersList />
+              </div>
+
+              <button className="post-button-large" onClick={onNavigatePost}>
+                <img src="../images/pencil.svg" alt="投稿アイコン" />
+                <p>投稿する</p>
+              </button>
+              {/* <p className="advertisement">広告</p> */}
+            </main>
           )}
         </>
       ) : (
-        <main className="home">
-          <Sidebar />
-          <SideAd />
-          <RecruitmentList />
-           <UsersList />
-          <button
-            className="post-button-large"
-            onClick={onNavigatePost}
-          >
-            <img src="../images/pencil.svg" alt="投稿アイコン" />
-            <p>投稿する</p>
-          </button>
-          {/* <p className="advertisement">広告</p> */}
-        </main>
+        <></>
       )}
     </>
   );

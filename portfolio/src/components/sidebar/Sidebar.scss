@@ -2,10 +2,11 @@
 
 .sidebar {
   background-color: #ffffff;
-  border-right: 1px solid #b32121;
+  border-right: 1px solid #bebebe;
   position: fixed;
   top: 0;
-  width: 250px;
+  left: 0;
+  width: 230px;
   height: 100%;
   z-index: 200;
   .sidebar-title {

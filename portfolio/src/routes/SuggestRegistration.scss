@@ -1,14 +1,16 @@
 @charset "utf-8";
 
 .suggest-registration-page {
-    text-align: center;
-    margin-top: 100px;
-    p{
-        text-align: left;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
+  padding-top: 250px;
+  text-align: center;
+  background-color: #ffffff;
+  height: 100vh;
+  p {
+    text-align: left;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .navigate__registration-button {
     margin-top: 50px;
     width: 259px;
@@ -22,7 +24,13 @@
     line-height: 100%;
     letter-spacing: 0.3em;
     color: #ffffff;
+  }
+}
 
-
+@media screen and (min-width: 1024px) {
+  .suggest-registration-page {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

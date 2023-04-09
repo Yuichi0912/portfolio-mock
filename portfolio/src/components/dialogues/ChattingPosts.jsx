@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase";
+import "./ChattingPosts.scss"
 
 export const ChattingPosts = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export const ChattingPosts = () => {
   console.log(chattingPosts);
 
   return (
-    <div>
+    <div className="chattingpost-lists">
       <h2>やりとり中</h2>
       {chattingPosts.length != 0 ? (
         <>

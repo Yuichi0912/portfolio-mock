@@ -18,6 +18,9 @@ import { Footer } from "../footer/Footer";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loading } from "../../routes/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Sidebar } from "../sidebar/Sidebar";
+import { SideAd } from "../../routes/SideAd";
+import { ReactComponent as BackIcon } from "./chevron-left.svg";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
@@ -28,6 +31,7 @@ export const DetailRecruitment = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // 投稿に付与されている🆔を出力
   const docRef = doc(db, "recruitments", `${id}`);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   // ログインしているユーザーのID取得
 
@@ -106,105 +110,227 @@ export const DetailRecruitment = () => {
     setIsRendered(true);
   }, []);
 
+  // レスポンシブの状態管理（デスクトップサイズ）
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初期表示時に一度呼び出す
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <>
+    <div>
       <Header />
-      <motion.div
-        className="detail-page"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          // duration: 0.8,
-          ease: [0, 0.71, 0.2, 1.01],
-        }}
-        exit={{ opacity: 0, scale: 0.5 }}
-      >
-        <Link className="detail__backward" to={`/home`}>
-          <img src="../../images/chevron-left.svg" alt="戻るボタン" />
-        </Link>
-        {recruitmentsData.map((data) => {
-          return (
-            <div key={data.id}>
-              <h3 className="detail-page__title">{data.title}</h3>
+      {isSmallScreen ? (
+        <>
+          <motion.div
+            className="detail-page"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              // duration: 0.8,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+            exit={{ opacity: 0, scale: 0.5 }}
+          >
+            {recruitmentsData.map((data) => {
+              return (
+                <div key={data.id}>
+                  <Link className="detail__backward" to={`/home`}>
+                    <BackIcon width="35px" height="35px" />
+                  </Link>
 
-              <div
-                className="detail-usercard"
-                onClick={() => navigate(`/user/${data.userId}`)}
-              >
-                <img
-                  className="detail-usercard__image"
-                  src={data.image}
-                  alt="プロフィール画像"
-                />
-                <p className="detail-usercard__hostname">{data.hostName}</p>
-                <p className="detail-usercard__level">Lv. {data.level}</p>
-                <p className="detail-usercard__age-residence">
-                  {data.hostAge} 歳 | {data.hostResidence}
-                </p>
-              </div>
+                  <h3 className="detail-page__title">{data.title}</h3>
 
-              <div className="detail-outline">
-                <p className="detail-outline__place">
-                  {" "}
-                  <img
-                    className="detail-outline__place-svg"
-                    src="../images/map-pin.svg"
-                    alt="場所アイコン"
-                  />
-                  {data.place}
-                </p>
-                <p className="detail-outline__date">
-                  <img
-                    className="detail-outline__date-svg"
-                    src="../images/calendar.svg"
-                    alt="日時アイコン"
-                  />
-                  {dayjs(data.date.toDate()).format("YYYY/MM/DD HH:mm")}
-                </p>
-                <p className="detail-outline__number">
-                  {" "}
-                  <img
-                    className="detail-outline__number-svg"
-                    src="../images/users.svg"
-                    alt="参加者一覧アイコン"
-                  />
-                  {approvedUserData.length}/{data.number}人
-                </p>
+                  <div
+                    className="detail-usercard"
+                    onClick={() => navigate(`/user/${data.userId}`)}
+                  >
+                    <p className="detail-usercard__level">Lv. {data.level}</p>
 
-                {approvedUserData.map((data) => {
-                  return (
-                    <div className="approved-user" key={data.requestingId}>
+                    <img
+                      className="detail-usercard__image"
+                      src={data.image}
+                      alt="プロフィール画像"
+                    />
+                    <p className="detail-usercard__hostname">{data.hostName}</p>
+                    <p className="detail-usercard__age-residence">
+                      {data.hostAge} 歳 | {data.hostResidence}
+                    </p>
+                  </div>
+
+                  <div className="detail-outline">
+                    <p className="detail-outline__place">
+                      {" "}
                       <img
-                        className="approved-user__image"
-                        src={data.image}
-                        alt="参加者のアイコン"
-                        onClick={() => navigate(`/user/${data.requestingId}`)}
+                        className="detail-outline__place-svg"
+                        src="../images/map-pin.svg"
+                        alt="場所アイコン"
                       />
-                    </div>
-                  );
-                })}
-                <p className="detail-outline__hashtag">#{data.hashtag}</p>
-                <p className="detail-outline__description">
-                  {data.description}
-                </p>
-              </div>
-              <button
-                className="button__navigate-chat"
-                onClick={onNavigateChat}
-              >
-                <img
-                  src="../images/message-circle-2.svg"
-                  alt="チャットアイコン"
-                />
-              </button>
-              <button className="button__request-join" onClick={onRequestJoin}>
-                {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
-                参加リクエストを送る
-              </button>
-            </div>
-          );
-        })}
-      </motion.div>
-    </>
+                      {data.place}
+                    </p>
+                    <p className="detail-outline__date">
+                      <img
+                        className="detail-outline__date-svg"
+                        src="../images/calendar.svg"
+                        alt="日時アイコン"
+                      />
+                      {dayjs(data.date.toDate()).format("YYYY/MM/DD HH:mm")}
+                    </p>
+                    <p className="detail-outline__number">
+                      {" "}
+                      <img
+                        className="detail-outline__number-svg"
+                        src="../images/users.svg"
+                        alt="参加者一覧アイコン"
+                      />
+                      {approvedUserData.length}/{data.number}人
+                    </p>
+                    <Link to={`/detail/${id}/users`} className="approved-user__list">参加者一覧を表示する</Link>
+                    {approvedUserData.map((data) => {
+                      return (
+                        <div className="approved-user" key={data.requestingId}>
+                          <img
+                            className="approved-user__image"
+                            src={data.image}
+                            alt="参加者のアイコン"
+                            onClick={() =>
+                              navigate(`/user/${data.requestingId}`)
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    <p className="detail-outline__hashtag">#{data.hashtag}</p>
+                    <p className="detail-outline__description">
+                      {data.description}
+                    </p>
+                  </div>
+                  <button
+                    className="button__navigate-chat"
+                    onClick={onNavigateChat}
+                  >
+                    <img
+                      src="../images/message-circle-2.svg"
+                      alt="チャットアイコン"
+                    />
+                  </button>
+                  <button
+                    className="button__request-join"
+                    onClick={onRequestJoin}
+                  >
+                    {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
+                    参加リクエストを送る
+                  </button>
+                </div>
+              );
+            })}
+          </motion.div>
+        </>
+      ) : (
+        <>
+          <Sidebar />
+          <SideAd />{" "}
+          <div className="detail-page">
+            {recruitmentsData.map((data) => {
+              return (
+                <div key={data.id}>
+                  <Link className="detail__backward" to={`/home`}>
+                    <BackIcon width="35px" height="35px" />
+                  </Link>
+
+                  <h3 className="detail-page__title">{data.title}</h3>
+
+                  <div
+                    className="detail-usercard"
+                    onClick={() => navigate(`/user/${data.userId}`)}
+                  >
+                    <p className="detail-usercard__level">Lv. {data.level}</p>
+
+                    <img
+                      className="detail-usercard__image"
+                      src={data.image}
+                      alt="プロフィール画像"
+                    />
+                    <p className="detail-usercard__hostname">{data.hostName}</p>
+                    <p className="detail-usercard__age-residence">
+                      {data.hostAge} 歳 | {data.hostResidence}
+                    </p>
+                  </div>
+
+                  <div className="detail-outline">
+                    <p className="detail-outline__place">
+                      {" "}
+                      <img
+                        className="detail-outline__place-svg"
+                        src="../images/map-pin.svg"
+                        alt="場所アイコン"
+                      />
+                      {data.place}
+                    </p>
+                    <p className="detail-outline__date">
+                      <img
+                        className="detail-outline__date-svg"
+                        src="../images/calendar.svg"
+                        alt="日時アイコン"
+                      />
+                      {dayjs(data.date.toDate()).format("YYYY/MM/DD HH:mm")}
+                    </p>
+                    <p className="detail-outline__number">
+                      {" "}
+                      <img
+                        className="detail-outline__number-svg"
+                        src="../images/users.svg"
+                        alt="参加者一覧アイコン"
+                      />
+                      {approvedUserData.length}/{data.number}人
+                    </p>
+                    <Link to={`/detail/${id}/users`} className="approved-user__list">参加者一覧を表示する</Link>
+
+                    {approvedUserData.map((data) => {
+                      return (
+                        <div className="approved-user" key={data.requestingId}>
+                          <img
+                            className="approved-user__image"
+                            src={data.image}
+                            alt="参加者のアイコン"
+                            onClick={() =>
+                              navigate(`/user/${data.requestingId}`)
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    <p className="detail-outline__hashtag">#{data.hashtag}</p>
+                    <p className="detail-outline__description">
+                      {data.description}
+                    </p>
+                  </div>
+                  <button
+                    className="button__navigate-chat"
+                    onClick={onNavigateChat}
+                  >
+                    <img
+                      src="../images/message-circle-2.svg"
+                      alt="チャットアイコン"
+                    />
+                  </button>
+                  <button
+                    className="button__request-join"
+                    onClick={onRequestJoin}
+                  >
+                    {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
+                    参加リクエストを送る
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
   );
 };

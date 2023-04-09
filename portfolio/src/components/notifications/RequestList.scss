@@ -10,11 +10,11 @@
     margin-top: 60px;
     text-align: center;
     font-size: 14px;
-    border-radius: 30px;
     padding-bottom: 10px;
     .request__title {
       font-size: 20px;
       font-weight: 600;
+      
     }
 
     .request__username {
@@ -34,6 +34,8 @@
         background-color: #edb886;
         background-color: #edb886;
         border-radius: 30px;
+        color: #ffffff;
+        letter-spacing: 0.2em;
       }
 
       .reject-button {
@@ -53,12 +55,20 @@
     height: 100vh;
     .request__list {
       background-color: #ffffff;
-      width: 500px;
+      width: 550px;
       // height: 600px;
       margin-left: auto;
       margin-right: auto;
-      border: 1px solid #bebebe;
 
+      .button {
+      .approved-button {
+        float: right;
+      }
+
+      .reject-button {
+        float: left;
+      }
+    }
     }
   }
 }

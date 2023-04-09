@@ -79,9 +79,17 @@ export const RequestList = () => {
                   <p>
                     <span className="request__title">『{title}』</span>に
                     <span className="request__username">{name}</span>
+                    
                   </p>
                   <p>さんから参加リクエストが届きました！</p>
                   <div className="button">
+                    <button
+                      className="reject-button"
+                      onClick={() => onDeleteRequest(docId)}
+                    >
+                      ×
+                    </button>
+
                     <button
                       className="approved-button"
                       onClick={() =>
@@ -89,12 +97,6 @@ export const RequestList = () => {
                       }
                     >
                       承認する
-                    </button>
-                    <button
-                      className="reject-button"
-                      onClick={() => onDeleteRequest(docId)}
-                    >
-                      ×
                     </button>
                   </div>
                 </div>
