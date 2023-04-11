@@ -47,7 +47,6 @@
       font-weight: 800;
       font-size: 22px;
       letter-spacing: 0.2em;
-
     }
 
     .profile__word {
@@ -95,7 +94,10 @@
     }
   }
   .profile__edit-button {
-    margin-top: 50px;
+    display: block;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
     width: 259px;
     height: 62px;
     background-color: #edb886;
@@ -122,15 +124,16 @@
   }
 
   .settings__menu--logout {
+    display: block;
     color: #da0606;
     font-size: 20px;
     border: none;
     background-color: #ffffff;
     margin-top: 100px;
     cursor: pointer;
-
+    margin-left: auto;
+    margin-right: auto;
   }
-
 }
 
 @media screen and (min-width: 1024px) {
@@ -141,7 +144,6 @@
     // margin-right: auto;
 
     .profile {
-
       .profile__introduction {
         width: 50%;
       }

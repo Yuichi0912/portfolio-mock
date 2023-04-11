@@ -6,7 +6,7 @@ export const SuggestRegistration = () => {
   return (
     <div className="suggest-registration-page">
         <div className="suggest-registration-text">
-      <p>この機能を使うにはログインが必要です。<br/>        ログイン後、再度お試しください。会員登録がまだの方は、新規会員登録を行ってください。
+      <p>この機能を利用するにはログインが必要です。<br/>        ログイン後、再度お試しください。会員登録がまだの方は、新規会員登録を行ってください。
 </p>
       </div>
       <button className="navigate__registration-button" onClick={()=>navigate("/login")}>

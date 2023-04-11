@@ -117,7 +117,7 @@ export const EditProfile = () => {
       // residence
     })
       .then(() => {
-        navigate(`/mypage/${id}`);
+        navigate("/mypage/");
       })
       .catch((err) => {
         console.log(err);

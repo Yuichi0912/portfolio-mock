@@ -21,7 +21,6 @@ export const Header = () => {
     handleResize(); // 初期表示時に一度呼び出す
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
 
   return (
     <header className="header">
@@ -36,9 +35,9 @@ export const Header = () => {
             {location.pathname === "/dialogues" && <h2>やりとり</h2>}
             {location.pathname === "/notifications" && <h2>通知</h2>}
             {location.pathname === "/mypage" && <h2>マイページ</h2>}
+            {location.pathname === "/post" && <h2>投稿</h2>}
             {location.pathname === `/detail/${id}` && <h2>詳細</h2>}
             {location.pathname === `/detail/${id}/users` && <h2>参加者一覧</h2>}
-
           </div>
           {/* {state && <h2>やりとり</h2>}
       {state && <h2>通知</h2>} */}
@@ -68,6 +67,7 @@ export const Header = () => {
             {location.pathname === "/dialogues" && <h2>やりとり</h2>}
             {location.pathname === "/notifications" && <h2>通知</h2>}
             {location.pathname === "/mypage" && <h2>マイページ</h2>}
+            {location.pathname === "/post" && <h2>投稿</h2>}
             {location.pathname === `/detail/${id}` && <h2>詳細</h2>}
             {location.pathname === `/detail/${id}/users` && <h2>参加者一覧</h2>}
           </div>

@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+.suggest__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  .suggest__content {
+    z-index:110;
+  width:70%;
+  padding: 1em;
+background-color: #ffffff;
+border-radius: 20px;
+display: flex;
+flex-direction: column;
+text-align: center;
+
+    .suggest__add--profile {
+        width: 240px;
+        height: 62px;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #edb886;
+        border-radius: 30px;
+        border: none;
+    
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 100%;
+        color: #ffffff;
+    
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    .suggest__login {
+        color: inherit;
+        margin-top: 20px;
+    }
+  }
+}

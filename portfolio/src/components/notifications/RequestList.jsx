@@ -49,6 +49,7 @@ export const RequestList = () => {
     })
       .then(() => deleteDoc(doc(db, "joinRequest", docId)))
       .then(() => {
+        alert("リクエストを承認しました")
         console.log("Document successfully deleted!");
       })
       .catch((err) => {
@@ -59,7 +60,7 @@ export const RequestList = () => {
   // リクエストの拒否
   const onDeleteRequest = (docId) => {
     deleteDoc(doc(db, "joinRequest", docId)).then(() =>
-      alert("削除しました！")
+      alert("リクエストを削除しました")
     );
   };
 

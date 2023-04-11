@@ -10,3 +10,10 @@
     font-size: 30px;
   }
 }
+
+@media screen and (min-width: 1024px) {
+  .notifications {
+    height: 100vh;
+    margin-bottom: 0;
+  }
+}
