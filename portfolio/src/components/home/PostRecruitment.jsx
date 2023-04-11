@@ -15,6 +15,8 @@ import { residenceKey } from "../../const";
 import { Header } from "../header/Header";
 import { Footer } from "../footer/Footer";
 import "./PostRecruitment.scss";
+import { Sidebar } from "../sidebar/Sidebar";
+import { SideAd } from "../../routes/SideAd";
 
 export const PostRecruitment = () => {
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ export const PostRecruitment = () => {
   const [place, setPlace] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState("");
   const [hashtag, setHashtag] = useState("");
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const id = auth.currentUser.uid;
   const userRef = doc(db, "usersData", `${id}`);
 
@@ -85,72 +88,163 @@ export const PostRecruitment = () => {
     navigate("/home");
   };
 
+  // レスポンシブの状態管理（デスクトップサイズ）
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初期表示時に一度呼び出す
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="post-page">
-      <Header />
-      <Link className="post__backward" to="/home">戻る</Link>
-      <h2>投稿する</h2>
-      <form className="post-form" onSubmit={handleSubmit}>
-        <label htmlFor="title">タイトル</label>{" "}
-        <input
-          id="title"
-          className="post__title"
-          type="text"
-          placeholder="タイトルを入力してください"
-          onChange={(e) => setTitle(e.target.value)}
-        ></input>
-        <label htmlFor="pref">場所</label>{" "}
-        <select
-          id="pref"
-          className="post__preflist"
-          onChange={(e) => setSelectedPlace(e.target.value)}
-        >
-          {place.map((data) => {
-            return (
-              <option key={data.prefCode} value={data.prefName}>
-                {data.prefName}
-              </option>
-            );
-          })}
-        </select>
-        <label id="date">日時</label>{" "}
-        <input
-          id="date"
-          className="post__datetime"
-          type="datetime-local"
-          onChange={(e) => setDate(e.target.value)}
-        ></input>
-        <label htmlFor="number">募集人数</label> <p>{number} 人</p>
-        <input
-          id="number"
-          className="post__number"
-          type="range"
-          onChange={(e) => setNumber(e.target.value)}
-        ></input>
-        <label htmlFor="tag">タグの選択</label>
-        <select
-          id="tag"
-          className="post__tag"
-          onChange={(e) => setHashtag(e.target.value)}
-        >
-          <option value="▼選択する">▼選択する</option>
-          <option value="ワイワイしたい">ワイワイしたい</option>
-          <option value="ガチ練したい">ガチ練したい</option>
-          <option value="試合に出たい">試合に出たい</option>
-          <option value="試合を見たい">試合を見たい</option>
-          <option value="教えてほしい">教えてほしい</option>
-        </select>
-        <label htmlFor="description">説明文</label>{" "}
-        <textarea
-          id="description"
-          className="post__description"
-          type="text"
-          placeholder="説明文を入力してください"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <button className="post__submit-button">投稿する</button>
-      </form>
-      <Footer />
+    <div>
+      {isSmallScreen ? (
+        <div className="post-page">
+          {" "}
+          <Header />
+          <Link className="post__backward" to="/home">
+            戻る
+          </Link>
+          {/* <h2>投稿する</h2> */}
+          <form className="post-form" onSubmit={handleSubmit}>
+            <label htmlFor="title">タイトル</label>{" "}
+            <input
+              id="title"
+              className="post__title"
+              type="text"
+              placeholder="タイトルを入力してください"
+              onChange={(e) => setTitle(e.target.value)}
+            ></input>
+            <label htmlFor="pref">場所</label>{" "}
+            <select
+              id="pref"
+              className="post__preflist"
+              onChange={(e) => setSelectedPlace(e.target.value)}
+            >
+              {place.map((data) => {
+                return (
+                  <option key={data.prefCode} value={data.prefName}>
+                    {data.prefName}
+                  </option>
+                );
+              })}
+            </select>
+            <label id="date">日時</label>{" "}
+            <input
+              id="date"
+              className="post__datetime"
+              type="datetime-local"
+              onChange={(e) => setDate(e.target.value)}
+            ></input>
+            <label htmlFor="number">募集人数</label> <p>{number} 人</p>
+            <input
+              id="number"
+              className="post__number"
+              type="range"
+              onChange={(e) => setNumber(e.target.value)}
+            ></input>
+            <label htmlFor="tag">タグの選択</label>
+            <select
+              id="tag"
+              className="post__tag"
+              onChange={(e) => setHashtag(e.target.value)}
+            >
+              <option value="▼選択する">▼選択する</option>
+              <option value="ワイワイしたい">ワイワイしたい</option>
+              <option value="ガチ練したい">ガチ練したい</option>
+              <option value="試合に出たい">試合に出たい</option>
+              <option value="試合を見たい">試合を見たい</option>
+              <option value="教えてほしい">教えてほしい</option>
+            </select>
+            <label htmlFor="description">説明文</label>{" "}
+            <textarea
+              id="description"
+              className="post__description"
+              type="text"
+              placeholder="説明文を入力してください"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <button className="post__submit-button">投稿する</button>
+          </form>
+          <Footer />
+        </div>
+      ) : (
+        <>
+          <Header />
+          <Sidebar />
+          <SideAd />
+          <div className="post-page">
+            {" "}
+            <Link className="post__backward" to="/home">
+              戻る
+            </Link>
+            {/* <h2>投稿する</h2> */}
+            <form className="post-form" onSubmit={handleSubmit}>
+              <label htmlFor="title">タイトル</label>{" "}
+              <input
+                id="title"
+                className="post__title"
+                type="text"
+                placeholder="タイトルを入力してください"
+                onChange={(e) => setTitle(e.target.value)}
+              ></input>
+              <label htmlFor="pref">場所</label>{" "}
+              <select
+                id="pref"
+                className="post__preflist"
+                onChange={(e) => setSelectedPlace(e.target.value)}
+              >
+                {place.map((data) => {
+                  return (
+                    <option key={data.prefCode} value={data.prefName}>
+                      {data.prefName}
+                    </option>
+                  );
+                })}
+              </select>
+              <label id="date">日時</label>{" "}
+              <input
+                id="date"
+                className="post__datetime"
+                type="datetime-local"
+                onChange={(e) => setDate(e.target.value)}
+              ></input>
+              <label htmlFor="number">募集人数</label> <p>{number} 人</p>
+              <input
+                id="number"
+                className="post__number"
+                type="range"
+                onChange={(e) => setNumber(e.target.value)}
+              ></input>
+              <label htmlFor="tag">タグの選択</label>
+              <select
+                id="tag"
+                className="post__tag"
+                onChange={(e) => setHashtag(e.target.value)}
+              >
+                <option value="▼選択する">▼選択する</option>
+                <option value="ワイワイしたい">ワイワイしたい</option>
+                <option value="ガチ練したい">ガチ練したい</option>
+                <option value="試合に出たい">試合に出たい</option>
+                <option value="試合を見たい">試合を見たい</option>
+                <option value="教えてほしい">教えてほしい</option>
+              </select>
+              <label htmlFor="description">説明文</label>{" "}
+              <textarea
+                id="description"
+                className="post__description"
+                type="text"
+                placeholder="説明文を入力してください"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <button className="post__submit-button">投稿する</button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 };

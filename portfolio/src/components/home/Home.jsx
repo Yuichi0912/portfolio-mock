@@ -16,10 +16,12 @@ import Tab from "@mui/material/Tab";
 import { AppBar } from "@mui/material";
 import { Sidebar } from "../sidebar/Sidebar";
 import { SideAd } from "../../routes/SideAd";
+import { SuggestAddProfile } from "../../routes/SuggestAddProfile";
 
 export const Home = () => {
   const [isRendered, setIsRendered] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [showLevel, setShowLevel] = useState(false);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [swiper, setSwiper] = useState(null);
@@ -51,7 +53,7 @@ export const Home = () => {
 
   const onNavigatePost = () => {
     if (!user) {
-      alert("プロフィールを登録してください！");
+      setShowLevel(true);
     } else {
       navigate("/post");
     }
@@ -96,30 +98,45 @@ export const Home = () => {
                 <button className="post-button-small" onClick={onNavigatePost}>
                   <img src="../images/pencil.svg" alt="投稿アイコン" />
                 </button>
-
+                <SuggestAddProfile
+                  showLevel={showLevel}
+                  setShowLevel={setShowLevel}
+                />
                 <Footer />
               </main>
             </>
           ) : (
-            <main className="home">
-              <Header />
-              <Sidebar />
-              {/* <SideAd /> */}
-              <div className="recruitment-bar">
-                <p className="recruitment-bar-title">募集一覧</p>
-                <RecruitmentList />
-              </div>
-              <div className="user-bar">
-                <p className="user-bar-title">ユーザー</p>
-                <UsersList />
-              </div>
+            <>
+              <main className="home">
+                <Header />
+                <Sidebar />
+                <div className="home-contents">
+                  <div className="recruitment-bar">
+                    <p className="recruitment-bar-title">募集一覧</p>
+                    <RecruitmentList />
+                  </div>
+                  <div className="user-bar">
+                    <p className="user-bar-title">ユーザー</p>
+                    <UsersList />
+                  </div>
 
-              <button className="post-button-large" onClick={onNavigatePost}>
-                <img src="../images/pencil.svg" alt="投稿アイコン" />
-                <p>投稿する</p>
-              </button>
-              {/* <p className="advertisement">広告</p> */}
-            </main>
+                  <button
+                    className="post-button-large"
+                    onClick={onNavigatePost}
+                  >
+                    <img src="../images/pencil.svg" alt="投稿アイコン" />
+                    <p>投稿する</p>
+                  </button>
+                  <SuggestAddProfile
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
+                  <div className="advertisement">
+                    <SideAd />
+                  </div>
+                </div>
+              </main>
+            </>
           )}
         </>
       ) : (

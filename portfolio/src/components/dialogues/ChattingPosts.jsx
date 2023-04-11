@@ -72,7 +72,7 @@ export const ChattingPosts = () => {
         </>
       ) : (
         <>
-          <p>やりとりがありません</p>
+          <p className="no-dialogs">やりとりがありません</p>
         </>
       )}
     </div>

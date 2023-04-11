@@ -59,13 +59,21 @@
         font-size: 14px;
         margin-top: 5px;
       }
+
     }
 
     // .list__deadline {
     //   grid-row: 3/4;
     //   grid-column: 3/4;
     // }
+
   }
+
+  .no-dialogs{
+    text-align: center;
+    color: rgb(147, 147, 147);
+  }
+
 
   @media screen and (min-width: 1020px) {
     .ownlist{

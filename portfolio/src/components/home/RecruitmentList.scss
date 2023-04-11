@@ -76,13 +76,16 @@
   transition: 0.1s ease-in-out;
 }
 
-@media screen and (min-width: 1020px) {
+@media screen and (min-width: 1024px) {
   .list-page {
-    width: 60%;
-    margin-left: 260px;
-    margin-top: 30px;
+    width: 100%;
+    margin-left: 10px;
+    // margin-top: 30px;
+    
     .list {
       border: 1px solid #bebebe;
+      // width: 80%;
+
     }
   }
 }

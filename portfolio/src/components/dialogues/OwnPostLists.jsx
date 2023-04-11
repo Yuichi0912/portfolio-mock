@@ -57,7 +57,7 @@ export const OwnPostLists = () => {
         </>
       ) : (
         <>
-          <p>投稿がありません</p>
+          <p className="no-dialogs" >投稿がありません</p>
         </>
       )}
     </div>

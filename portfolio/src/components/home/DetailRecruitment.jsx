@@ -21,6 +21,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Sidebar } from "../sidebar/Sidebar";
 import { SideAd } from "../../routes/SideAd";
 import { ReactComponent as BackIcon } from "./chevron-left.svg";
+import { SuggestAddProfile } from "../../routes/SuggestAddProfile";
 
 export const DetailRecruitment = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
@@ -28,6 +29,8 @@ export const DetailRecruitment = () => {
   const [userData, setUserData] = useState("");
   const [approvedUserData, setApprovedUserData] = useState([]);
   const [isRendered, setIsRendered] = useState(false);
+  const [showLevel, setShowLevel] = useState(false);
+
   const navigate = useNavigate();
   const { id } = useParams(); // 投稿に付与されている🆔を出力
   const docRef = doc(db, "recruitments", `${id}`);
@@ -74,7 +77,7 @@ export const DetailRecruitment = () => {
 
   const onNavigateChat = () => {
     if (!userData) {
-      alert("プロフィールを登録してください！");
+      setShowLevel(true);
     } else {
       navigate(`/detail/${id}/chat`);
     }
@@ -83,7 +86,7 @@ export const DetailRecruitment = () => {
   // 参加リクエストの送信
   const onRequestJoin = () => {
     if (!userData) {
-      alert("プロフィールを登録してください！");
+      setShowLevel(true);
     }
 
     addDoc(collection(db, "joinRequest"), {
@@ -189,7 +192,6 @@ export const DetailRecruitment = () => {
                       />
                       {approvedUserData.length}/{data.number}人
                     </p>
-                    <Link to={`/detail/${id}/users`} className="approved-user__list">参加者一覧を表示する</Link>
                     {approvedUserData.map((data) => {
                       return (
                         <div className="approved-user" key={data.requestingId}>
@@ -204,6 +206,13 @@ export const DetailRecruitment = () => {
                         </div>
                       );
                     })}
+                    <Link
+                      to={`/detail/${id}/users`}
+                      className="approved-user__list"
+                    >
+                      参加者一覧を表示する
+                    </Link>
+
                     <p className="detail-outline__hashtag">#{data.hashtag}</p>
                     <p className="detail-outline__description">
                       {data.description}
@@ -218,6 +227,11 @@ export const DetailRecruitment = () => {
                       alt="チャットアイコン"
                     />
                   </button>
+                  <SuggestAddProfile
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
+
                   <button
                     className="button__request-join"
                     onClick={onRequestJoin}
@@ -225,6 +239,10 @@ export const DetailRecruitment = () => {
                     {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
                     参加リクエストを送る
                   </button>
+                  <SuggestAddProfile
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
                 </div>
               );
             })}
@@ -288,7 +306,6 @@ export const DetailRecruitment = () => {
                       />
                       {approvedUserData.length}/{data.number}人
                     </p>
-                    <Link to={`/detail/${id}/users`} className="approved-user__list">参加者一覧を表示する</Link>
 
                     {approvedUserData.map((data) => {
                       return (
@@ -304,6 +321,13 @@ export const DetailRecruitment = () => {
                         </div>
                       );
                     })}
+                    <Link
+                      to={`/detail/${id}/users`}
+                      className="approved-user__list"
+                    >
+                      参加者一覧を表示する
+                    </Link>
+
                     <p className="detail-outline__hashtag">#{data.hashtag}</p>
                     <p className="detail-outline__description">
                       {data.description}
@@ -318,6 +342,10 @@ export const DetailRecruitment = () => {
                       alt="チャットアイコン"
                     />
                   </button>
+                  <SuggestAddProfile
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
                   <button
                     className="button__request-join"
                     onClick={onRequestJoin}
@@ -325,6 +353,10 @@ export const DetailRecruitment = () => {
                     {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
                     参加リクエストを送る
                   </button>
+                  <SuggestAddProfile
+                    showLevel={showLevel}
+                    setShowLevel={setShowLevel}
+                  />
                 </div>
               );
             })}

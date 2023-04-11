@@ -8,13 +8,12 @@ import { Header } from "../header/Header";
 import { Sidebar } from "../sidebar/Sidebar";
 import { ReactComponent as BackIcon } from "./chevron-left.svg";
 
+export const ApprovedUsers = () => {
+  const [approvedUserData, setApprovedUserData] = useState([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const { id } = useParams(); // 投稿に付与されている🆔を出力
 
-export const ApprovedUsers =()=>{
-    const [approvedUserData, setApprovedUserData] = useState([]);
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const { id } = useParams(); // 投稿に付与されている🆔を出力
-
-      // レスポンシブの状態管理（デスクトップサイズ）
+  // レスポンシブの状態管理（デスクトップサイズ）
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1024);
@@ -36,22 +35,26 @@ export const ApprovedUsers =()=>{
     });
   }, []);
 
+  return (
+    <div className="approved-users-page">
+      {isSmallScreen ? (
+        <>
+          <Header />
+          <Link className="detail__backward" to={`/detail/${id}`}>
+            <BackIcon width="35px" height="35px" />
+          </Link>
+          <h1>工事中です</h1>
 
-    return(
-        <div className="approved-users-page">
-            {isSmallScreen ?(<>
-            <Header />
-            <Link className="detail__backward" to={`/detail/${id}`}>
-                    <BackIcon width="35px" height="35px" />
-                  </Link>
-
-            <Footer />
-            </>) :(<>
-            <Header />
-            <Sidebar />
-            <SideAd />
-            </>)}
-
-        </div>
-    )
-}
+          <Footer />
+        </>
+      ) : (
+        <>
+          <Header />
+          <Sidebar />
+          <SideAd />
+          <h1>工事中です</h1>
+        </>
+      )}
+    </div>
+  );
+};

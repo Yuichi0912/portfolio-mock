@@ -104,7 +104,7 @@ export const MyPage = () => {
                           className="settings__menu--logout"
                           onClick={handleLogout}
                         >
-                          ログアウトする
+                          ログアウト
                         </button>
                       </div>
                     );
@@ -117,6 +117,13 @@ export const MyPage = () => {
                     >
                       プロフィールを編集する
                     </button>
+                    <button
+                          className="settings__menu--logout"
+                          onClick={handleLogout}
+                        >
+                          ログアウト
+                        </button>
+
                   </>
                 )}
               </>
@@ -166,7 +173,7 @@ export const MyPage = () => {
                           className="settings__menu--logout"
                           onClick={handleLogout}
                         >
-                          ログアウトする
+                          ログアウト
                         </button>
                       </div>
                     );
@@ -179,6 +186,13 @@ export const MyPage = () => {
                     >
                       プロフィールを編集する
                     </button>
+                    <button
+                          className="settings__menu--logout"
+                          onClick={handleLogout}
+                        >
+                          ログアウト
+                        </button>
+
                   </>
                 )}
               </>
