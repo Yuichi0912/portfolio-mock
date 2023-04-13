@@ -42,7 +42,7 @@ export const MyPage = () => {
       setUserData(querySnapshot.docs.map((doc) => doc.data()));
     });
   }, []);
-
+console.log(userData);
   // ログアウト
   const handleLogout = () => {
     auth.signOut().then(() => navigate("/login"));

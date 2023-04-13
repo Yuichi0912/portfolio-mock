@@ -1,6 +1,6 @@
 // import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { RecruitmentList } from "./RecruitmentList";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Home.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
@@ -26,7 +26,6 @@ export const Home = () => {
   const [user] = useAuthState(auth);
   const [swiper, setSwiper] = useState(null);
   const [value, setValue] = useState(0);
-
   const slideChange = (index) => {
     setValue(index);
   };
@@ -58,6 +57,7 @@ export const Home = () => {
       navigate("/post");
     }
   };
+
 
   return (
     <>
@@ -111,26 +111,38 @@ export const Home = () => {
                 <Header />
                 <Sidebar />
                 <div className="home-contents">
-                  <div className="recruitment-bar">
-                    <p className="recruitment-bar-title">募集一覧</p>
-                    <RecruitmentList />
+                  <div className="home-contents__leftside">
+                    <div className="recruitment-bar">
+                      <p className="recruitment-bar-title">募集一覧</p>
+                      <RecruitmentList />
+                    </div>
                   </div>
-                  <div className="user-bar">
-                    <p className="user-bar-title">ユーザー</p>
-                    <UsersList />
-                  </div>
-
-                  <button
-                    className="post-button-large"
-                    onClick={onNavigatePost}
+                  <div
+                    className="home-contents__rightside"
                   >
-                    <img src="../images/pencil.svg" alt="投稿アイコン" />
-                    <p>投稿する</p>
-                  </button>
-                  <SuggestAddProfile
-                    showLevel={showLevel}
-                    setShowLevel={setShowLevel}
-                  />
+                    <div className="user-bar">
+                      <p className="user-bar__title">ユーザー</p>
+                      <Link
+                        to="/home/people"
+                        className="user-bar__link-userpage"
+                      >
+                        すべて表示する
+                      </Link>
+                    </div>
+                    <UsersList />
+
+                    <button
+                      className="post-button-large"
+                      onClick={onNavigatePost}
+                    >
+                      <img src="../images/pencil.svg" alt="投稿アイコン" />
+                      <p>投稿する</p>
+                    </button>
+                    <SuggestAddProfile
+                      showLevel={showLevel}
+                      setShowLevel={setShowLevel}
+                    />
+                  </div>
                   <div className="advertisement">
                     <SideAd />
                   </div>
