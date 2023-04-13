@@ -78,13 +78,14 @@
 
 @media screen and (min-width: 1024px) {
   .list-page {
-    width: 100%;
-    margin-left: 10px;
+    // width: 100%;
+    // margin-left: 10px;
     // margin-top: 30px;
-    
+
     .list {
       border: 1px solid #bebebe;
-      // width: 80%;
+      width: 330px;
+
 
     }
   }

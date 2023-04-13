@@ -27,6 +27,7 @@ import { Loading } from "./Loading";
 import { AnimatePresence } from "framer-motion";
 import { SuggestRegistration } from "./SuggestRegistration";
 import { ApprovedUsers } from "../components/home/ApprovedUsers";
+import { People } from "../components/home/People";
 
 export const Router = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ export const Router = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/home/people" element={<People />} />
         <Route path="/detail/:id" element={<DetailRecruitment />} />
         <Route path="/detail/:id/users" element={<ApprovedUsers />} />
         <Route path="/user/:id" element={<User />} />
