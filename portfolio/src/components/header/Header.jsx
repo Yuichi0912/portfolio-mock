@@ -64,6 +64,7 @@ export const Header = () => {
           </Link>
           <div className="page-titles">
             {location.pathname === "/home" && <h2>ホーム</h2>}
+            {location.pathname === "/home/people" && <h2>ユーザー</h2>}
             {location.pathname === "/dialogues" && <h2>やりとり</h2>}
             {location.pathname === "/notifications" && <h2>通知</h2>}
             {location.pathname === "/mypage" && <h2>マイページ</h2>}

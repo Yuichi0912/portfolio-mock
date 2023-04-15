@@ -40,6 +40,8 @@ text-align: center;
     
         margin-top: 15px;
         margin-bottom: 10px;
+        z-index: 10000;
+        cursor: pointer;
     }
 
     .suggest__login {
