@@ -1,1 +1,22 @@
 @charset "utf-8";
+
+.peoplelists {
+  margin-top: 200px;
+  .peoplelists__select {
+    text-align: center;
+    margin: 40px auto;
+
+    .peoplelists__select-box {
+      border: none;
+      background-color: #ffffff;
+      font-size: 22px;
+    }
+
+    .peoplelists__select-box--pref {
+      border: none;
+      background-color: #ffffff;
+      font-size: 22px;
+      margin-left: 30px;
+    }
+  }
+}

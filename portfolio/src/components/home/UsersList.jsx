@@ -18,6 +18,7 @@ export const UsersList = () => {
   const [residence, setResidence] = useState([]);
   const [usersData, setUsersData] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [selectedResidence, setSelectedResidence] = useState("");
   const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
@@ -52,33 +53,41 @@ export const UsersList = () => {
       });
   }, []);
 
-  console.log(residence);
-
   return (
     <div className="userslist">
       {isSmallScreen ? (
         <>
           {" "}
-          <select onChange={(e) => setSelectedUser(e.target.value)}>
-            <option value="おすすめ">おすすめ</option>
-            {/* <option value="新規登録">新規登録</option> */}
-            <option value="都道府県">都道府県</option>
-          </select>
-
+          <div className="userslist__select">
+            <select
+              className="userslist__select-box"
+              onChange={(e) => setSelectedUser(e.target.value)}
+            >
+              <option  value="おすすめ">おすすめ</option>
+              {/* <option value="新規登録">新規登録</option> */}
+              <option value="都道府県">都道府県</option>
+            </select>
+            {selectedUser == "都道府県" && (
+              <select
+                className="userslist__select-box--pref"
+                onChange={(e) => setSelectedResidence(e.target.value)}
+              >
+                {residence.map((data) => {
+                  return (
+                    <option key={data.prefCode} value={data.prefName}>
+                      {data.prefName}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
+          </div>
           {selectedUser == "" && <DefaultUsers />}
           {selectedUser == "おすすめ" && <DefaultUsers />}
-
-          {selectedUser == "都道府県" && (
-            <select>
-              {residence.map((data) => {
-                <option key={data.prefCode} value={data.prefName}>
-                  {data.prefName}
-                </option>;
-              })}
-            </select>
-          )}
           {/* {selectedUser == "新規登録" && <NewUsers />}        */}
-          {selectedUser == "都道府県" && <PrefectureUsers />}
+          {selectedUser == "都道府県" && (
+            <PrefectureUsers selectedResidence={selectedResidence} />
+          )}
         </>
       ) : (
         <>

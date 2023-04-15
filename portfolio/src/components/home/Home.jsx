@@ -17,6 +17,7 @@ import { AppBar } from "@mui/material";
 import { Sidebar } from "../sidebar/Sidebar";
 import { SideAd } from "../../routes/SideAd";
 import { SuggestAddProfile } from "../../routes/SuggestAddProfile";
+import { createPortal } from "react-dom";
 
 export const Home = () => {
   const [isRendered, setIsRendered] = useState(false);
@@ -57,7 +58,6 @@ export const Home = () => {
       navigate("/post");
     }
   };
-
 
   return (
     <>
@@ -107,9 +107,10 @@ export const Home = () => {
             </>
           ) : (
             <>
+              <Header />
+              <Sidebar />
+
               <main className="home">
-                <Header />
-                <Sidebar />
                 <div className="home-contents">
                   <div className="home-contents__leftside">
                     <div className="recruitment-bar">
@@ -117,9 +118,7 @@ export const Home = () => {
                       <RecruitmentList />
                     </div>
                   </div>
-                  <div
-                    className="home-contents__rightside"
-                  >
+                  <div className="home-contents__rightside">
                     <div className="user-bar">
                       <p className="user-bar__title">ユーザー</p>
                       <Link
@@ -130,7 +129,6 @@ export const Home = () => {
                       </Link>
                     </div>
                     <UsersList />
-
                     <button
                       className="post-button-large"
                       onClick={onNavigatePost}
@@ -138,10 +136,16 @@ export const Home = () => {
                       <img src="../images/pencil.svg" alt="投稿アイコン" />
                       <p>投稿する</p>
                     </button>
-                    <SuggestAddProfile
-                      showLevel={showLevel}
-                      setShowLevel={setShowLevel}
-                    />
+                    {createPortal(
+                      <>
+                        {" "}
+                        <SuggestAddProfile
+                          showLevel={showLevel}
+                          setShowLevel={setShowLevel}
+                        />
+                      </>,
+                      document.body
+                    )}
                   </div>
                   <div className="advertisement">
                     <SideAd />
