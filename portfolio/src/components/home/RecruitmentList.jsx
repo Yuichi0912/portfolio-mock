@@ -24,47 +24,52 @@ export const RecruitmentList = () => {
   const detailData = collection(db, "recruitments");
 
   // 投稿の取得（５個）
-  const q = query(detailData, orderBy("timestamp", "desc"));
+  const initialQuery = query(
+    detailData,
+    orderBy("timestamp", "desc"),
+    limit(5)
+  );
   useEffect(() => {
-    onSnapshot(q, (querySnapshot) => {
+    getDocs(initialQuery).then((querySnapshot) => {
       setRecruitmentsData(querySnapshot.docs.map((doc) => doc.data()));
       setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-      // console.log(querySnapshot.docs[querySnapshot.docs.length - 1]);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  const loadMoreData = async(page) => {
+    console.log("test");
+    if (lastDoc === null) {
+      console.log("lastDoc is null");
+      setHasMore(false);
+      return;
+    }      console.log(page);
+
   // 最初の5個以降を取得
-  // const newQ = query(
-  //   detailData,
-  //   orderBy("timestamp", "desc"),
-  //   startAfter(lastDoc),
-  //   limit(5)
-  // );
+  const nextQuery = query(
+    detailData,
+    orderBy("timestamp", "desc"),
+    startAfter(lastDoc),
+    limit(5)
+  );
 
-  // const loadMoreData = () => {
-  //   console.log("test");
-  //   if (!lastDoc || !hasMore) {
-  //     setHasMore(false);
-  //     return;
-  //   }
 
-  //   onSnapshot(newQ, (querySnapshot) => {
-  //     // if (querySnapshot.docs.length === 0) {
-  //     //   setHasMore(false);
-  //     // } else {
-  //     setRecruitmentsData((prevState) => [
-  //       ...prevState,
-  //       ...querySnapshot.docs.map((doc) => doc.data()),
-  //     ]);
-  //     console.log((prevState) => [
-  //       ...prevState,
-  //       ...querySnapshot.docs.map((doc) => doc.data()),
-  //     ]);
-  //     setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-  //     // }
-  //   });
-  // };
+      console.log("scroll");
+      getDocs(nextQuery).then((querySnapshot) => {
+        if (querySnapshot.docs.length === 0) {
+          setHasMore(false);
+        } else {
+          setRecruitmentsData((prevState) => [
+            ...prevState,
+            ...querySnapshot.docs.map((doc) => doc.data()),
+          ]);
+          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+        }
+      });
+    
+  };
+
 
   return (
     <motion.div
@@ -73,7 +78,7 @@ export const RecruitmentList = () => {
       transition={{ ease: "easeOut", duration: 2 }}
     >
       {/* <div className="list-page"> */}
-      {/* <InfiniteScroll
+      <InfiniteScroll
         // pageStart={0}
         loadMore={loadMoreData}
         hasMore={hasMore}
@@ -83,7 +88,7 @@ export const RecruitmentList = () => {
           </div>
         }
         // useWindow={false}
-      > */}
+      >
         {recruitmentsData.map((data) => {
           return (
             <div
@@ -109,7 +114,7 @@ export const RecruitmentList = () => {
             </div>
           );
         })}
-      {/* </InfiniteScroll> */}
+      </InfiniteScroll>
       {/* </div> */}
     </motion.div>
   );

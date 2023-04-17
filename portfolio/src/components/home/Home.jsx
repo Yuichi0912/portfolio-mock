@@ -18,11 +18,15 @@ import { Sidebar } from "../sidebar/Sidebar";
 import { SideAd } from "../../routes/SideAd";
 import { SuggestAddProfile } from "../../routes/SuggestAddProfile";
 import { createPortal } from "react-dom";
+import { SearchModal } from "../header/SearchModal";
+import { SortModal } from "../header/SortModal";
 
 export const Home = () => {
   const [isRendered, setIsRendered] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showLevel, setShowLevel] = useState(false);
+  const [showSort, setShowSort] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [swiper, setSwiper] = useState(null);
@@ -91,7 +95,7 @@ export const Home = () => {
                     <RecruitmentList />
                   </SwiperSlide>
                   <SwiperSlide className="tab__user-list">
-                    <UsersList />
+                    {/* <UsersList /> */}
                   </SwiperSlide>
                 </Swiper>
 
@@ -115,6 +119,39 @@ export const Home = () => {
                   <div className="home-contents__leftside">
                     <div className="recruitment-bar">
                       <p className="recruitment-bar-title">募集一覧</p>
+                      <div className="recruitment-bar__button-group">
+                        <button onClick={() => setShowSort(true)}>
+                          {" "}
+                          <img
+                            src="../images/sort-descending.svg"
+                            alt="ソートアイコン"
+                          />
+                        </button>
+                        {createPortal(
+                          <>
+                            {" "}
+                            <SortModal
+                              showSort={showSort}
+                              setShowSort={setShowSort}
+                            />
+                          </>,
+                          document.body
+                        )}
+                        <button onClick={() => setShowSearch(true)}>
+                          {" "}
+                          <img src="../images/search.svg" alt="検索アイコン" />
+                        </button>
+                        {createPortal(
+                          <>
+                            {" "}
+                            <SearchModal
+                              showSearch={showSearch}
+                              setShowSearch={setShowSearch}
+                            />
+                          </>,
+                          document.body
+                        )}
+                      </div>
                       <RecruitmentList />
                     </div>
                   </div>

@@ -6,7 +6,7 @@ export const SortModal = ({showSort,setShowSort}) => {
       <div className="sort__overlay" onClick={()=>setShowSort(false)}>
         <div className="sort__content">
           <h2>モーダル画面</h2>
-          <p>ソート</p>
+          <p>工事中</p>
         </div>
       </div>
     );
