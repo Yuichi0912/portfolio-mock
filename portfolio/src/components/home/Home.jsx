@@ -13,13 +13,48 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { AppBar } from "@mui/material";
+import { AppBar, SwipeableDrawer, Typography } from "@mui/material";
 import { Sidebar } from "../sidebar/Sidebar";
 import { SideAd } from "../../routes/SideAd";
 import { SuggestAddProfile } from "../../routes/SuggestAddProfile";
 import { createPortal } from "react-dom";
 import { SearchModal } from "../header/SearchModal";
 import { SortModal } from "../header/SortModal";
+// import { TabPanel } from "react-tabs";
+// import PropTypes from "prop-types";
+
+// function TabPanel(props) {
+//   const { children, value, index, ...other } = props;
+
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && (
+//         <Box sx={{ p: 3 }}>
+//           <Typography>{children}</Typography>
+//         </Box>
+//       )}
+//     </div>
+//   );
+// }
+
+// TabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.number.isRequired,
+//   value: PropTypes.number.isRequired,
+// };
+
+// function a11yProps(index) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     "aria-controls": `simple-tabpanel-${index}`,
+//   };
+// }
 
 export const Home = () => {
   const [isRendered, setIsRendered] = useState(false);
@@ -31,6 +66,7 @@ export const Home = () => {
   const [user] = useAuthState(auth);
   const [swiper, setSwiper] = useState(null);
   const [value, setValue] = useState(0);
+
   const slideChange = (index) => {
     setValue(index);
   };
@@ -77,28 +113,30 @@ export const Home = () => {
                   elevation={0}
                 >
                   <Tabs value={value} onChange={tabChange} variant="fullWidth">
-                    <Tab label="募集一覧" value={0} />
-                    <Tab label="ユーザー" value={1} />
+                    <Tab label="募集一覧" value={0}  />
+                    <Tab label="ユーザー" value={1}  />
                   </Tabs>
                 </AppBar>
-
                 <Swiper
                   spaceBetween={50}
                   slidesPerView={1}
                   onSlideChange={(index) => slideChange(index.activeIndex)}
                   onSwiper={(swiper) => {
-                    const swiperInstance = swiper;
-                    setSwiper(swiperInstance);
+                    setSwiper(swiper);
                   }}
                 >
                   <SwiperSlide className="tab__recruitment-list">
-                    <RecruitmentList />
+                    {/* <TabPanel value={value} index={0}> */}
+                      <RecruitmentList />
+                    {/* </TabPanel> */}
                   </SwiperSlide>
+
                   <SwiperSlide className="tab__user-list">
-                    {/* <UsersList /> */}
+                    {/* <TabPanel value={value} index={0}> */}
+                      <UsersList />
+                    {/* </TabPanel> */}
                   </SwiperSlide>
                 </Swiper>
-
                 <button className="post-button-small" onClick={onNavigatePost}>
                   <img src="../images/pencil.svg" alt="投稿アイコン" />
                 </button>

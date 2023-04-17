@@ -3,6 +3,7 @@
 .userslist {
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 80px;
   .userslist__select {
     text-align: center;
     margin: 40px auto;
@@ -105,7 +106,7 @@
     overflow: auto;
     overflow-x: hidden;
     background-color: #f0f0f0;
-
+    padding-bottom:initial;
     .usersinfo {
       width: 250px;
       margin-bottom: 30px;

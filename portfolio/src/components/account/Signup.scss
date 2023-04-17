@@ -13,7 +13,7 @@
       font-size: 32px;
       line-height: 39px;
       letter-spacing: 0.3em;
-      padding-bottom: 30px;
+      margin-bottom: 30px;
     }
 
     .signup__description {
@@ -26,6 +26,14 @@
       margin-left: auto;
       margin-right: auto;
       gap: 40px;
+
+      .error-message{
+        color: red;
+        text-align: left;
+        margin-bottom: -40px;
+        font-size: 12px;
+      }
+      
       .signup__email {
         height: 36px;
         background-color: #ffffff;

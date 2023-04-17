@@ -14,6 +14,7 @@ import "./RecruitmentList.scss";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import InfiniteScroll from "react-infinite-scroller";
+import { ListLoading } from "./ListLoading";
 
 export const RecruitmentList = () => {
   const [recruitmentsData, setRecruitmentsData] = useState([]);
@@ -37,39 +38,34 @@ export const RecruitmentList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const loadMoreData = (page) => {
+    console.log(page);
 
-  const loadMoreData = async(page) => {
-    console.log("test");
-    if (lastDoc === null) {
-      console.log("lastDoc is null");
-      setHasMore(false);
-      return;
-    }      console.log(page);
+    // 最初の5個以降を取得
+    const nextQuery = query(
+      detailData,
+      orderBy("timestamp", "desc"),
+      startAfter(lastDoc),
+      limit(5)
+    );
 
-  // 最初の5個以降を取得
-  const nextQuery = query(
-    detailData,
-    orderBy("timestamp", "desc"),
-    startAfter(lastDoc),
-    limit(5)
-  );
-
-
-      console.log("scroll");
-      getDocs(nextQuery).then((querySnapshot) => {
-        if (querySnapshot.docs.length === 0) {
-          setHasMore(false);
-        } else {
-          setRecruitmentsData((prevState) => [
-            ...prevState,
-            ...querySnapshot.docs.map((doc) => doc.data()),
-          ]);
-          setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
-        }
-      });
-    
+    console.log("scroll");
+    getDocs(nextQuery).then((querySnapshot) => {
+      setRecruitmentsData((prevState) => [
+        ...prevState,
+        ...querySnapshot.docs.map((doc) => doc.data()),
+      ]);
+      setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
+    });
   };
 
+  const hasMoreItems = !!lastDoc;
+
+  const loading = (
+    <div key={0}>
+<ListLoading />
+    </div>
+  );
 
   return (
     <motion.div
@@ -81,12 +77,8 @@ export const RecruitmentList = () => {
       <InfiniteScroll
         // pageStart={0}
         loadMore={loadMoreData}
-        hasMore={hasMore}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
+        hasMore={hasMoreItems}
+        loader={loading}
         // useWindow={false}
       >
         {recruitmentsData.map((data) => {
