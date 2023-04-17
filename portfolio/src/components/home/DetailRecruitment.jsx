@@ -306,21 +306,22 @@ export const DetailRecruitment = () => {
                       />
                       {approvedUserData.length}/{data.number}人
                     </p>
-
-                    {approvedUserData.map((data) => {
-                      return (
-                        <div className="approved-user" key={data.requestingId}>
-                          <img
-                            className="approved-user__image"
-                            src={data.image}
-                            alt="参加者のアイコン"
-                            onClick={() =>
-                              navigate(`/user/${data.requestingId}`)
-                            }
-                          />
-                        </div>
-                      );
-                    })}
+                    <div className="approved-user">
+                      {approvedUserData.map((data) => {
+                        return (
+                          <div key={data.requestingId}>
+                            <img
+                              className="approved-user__image"
+                              src={data.image}
+                              alt="参加者のアイコン"
+                              onClick={() =>
+                                navigate(`/user/${data.requestingId}`)
+                              }
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
                     <Link
                       to={`/detail/${id}/users`}
                       className="approved-user__list"

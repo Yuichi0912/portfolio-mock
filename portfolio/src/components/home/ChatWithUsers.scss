@@ -53,8 +53,7 @@
       .chat__username {
         grid-row: 1/2;
         grid-column: 2/3;
-        text-align: left;
-        margin-left: 3px;
+        text-align: center;
         margin-bottom: 0;
       }
 
@@ -69,6 +68,7 @@
         margin-bottom: 50px;
         align-items: center;
         background-color: #edb886;
+        max-width: 250px;
 
         grid-row: 2/3;
         grid-column: 1/2;
@@ -80,17 +80,16 @@
         height: 50px;
         border-radius: 50%;
         border: 1px solid #8e8e8e;
-        text-align: left;
-        margin-left: 0;
         grid-row: 2/3;
         grid-column: 2/3;
+        margin-left: 3px;
       }
 
       .chat__postdate {
         margin-top: 60px;
         grid-row: 2/3;
         grid-column: 2/3;
-        text-align: left;
+        text-align: center;
       }
 
 
@@ -100,7 +99,6 @@
 
     .received-side {
       float: left;
-      background-color: #ffffff;
       // padding: 20px 20px 0 10px;
       margin-left: 5%;
       // text-align: end;
@@ -110,6 +108,7 @@
         grid-row: 1/2;
         grid-column: 1/2;
         text-align: center;
+        margin-bottom: 0;
       }
 
       .chat__message {
@@ -137,9 +136,10 @@
       }
 
       .chat__postdate {
-        margin-top: 70px;
+        margin-top: 60px;
         grid-row: 2/3;
         grid-column: 1/2;
+        text-align: center;
       }
 
       // width: 50%;
