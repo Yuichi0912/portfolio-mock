@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation, useParams } from "react-router-dom";
 import "./Header.scss";
 import { SearchModal } from "./SearchModal";
@@ -39,21 +40,35 @@ export const Header = () => {
             {location.pathname === `/detail/${id}` && <h2>詳細</h2>}
             {location.pathname === `/detail/${id}/users` && <h2>参加者一覧</h2>}
           </div>
-          {/* {state && <h2>やりとり</h2>}
-      {state && <h2>通知</h2>} */}
-          {/* {state && <h2>マイページ</h2>} */}
-          {/* <div className="header__button-group">
-        <button onClick={() => setShowSort(true)}>
-          {" "}
-          <img src="../images/sort-descending.svg" alt="ソートアイコン" />
-        </button>
-        <SortModal showSort={showSort} setShowSort={setShowSort} />
-        <button onClick={() => setShowSearch(true)}>
-          {" "}
-          <img src="../images/search.svg" alt="検索アイコン" />
-        </button>
-        <SearchModal showSearch={showSearch} setShowSearch={setShowSearch} />
-      </div> */}
+          {location.pathname === "/home" && (
+            <div className="header__button-group">
+              <button onClick={() => setShowSort(true)}>
+                {" "}
+                <img src="../images/sort-descending.svg" alt="ソートアイコン" />
+              </button>
+              {createPortal(
+                <>
+                  {" "}
+                  <SortModal showSort={showSort} setShowSort={setShowSort} />
+                </>,
+                document.body
+              )}
+              <button onClick={() => setShowSearch(true)}>
+                {" "}
+                <img src="../images/search.svg" alt="検索アイコン" />
+              </button>
+              {createPortal(
+                <>
+                  {" "}
+                  <SearchModal
+                    showSearch={showSearch}
+                    setShowSearch={setShowSearch}
+                  />
+                </>,
+                document.body
+              )}
+            </div>
+          )}
         </>
       ) : (
         <>
@@ -72,21 +87,6 @@ export const Header = () => {
             {location.pathname === `/detail/${id}` && <h2>詳細</h2>}
             {location.pathname === `/detail/${id}/users` && <h2>参加者一覧</h2>}
           </div>
-          {/* {state && <h2>やりとり</h2>}
-      {state && <h2>通知</h2>} */}
-          {/* {state && <h2>マイページ</h2>} */}
-          {/* <div className="header__button-group">
-        <button onClick={() => setShowSort(true)}>
-          {" "}
-          <img src="../images/sort-descending.svg" alt="ソートアイコン" />
-        </button>
-        <SortModal showSort={showSort} setShowSort={setShowSort} />
-        <button onClick={() => setShowSearch(true)}>
-          {" "}
-          <img src="../images/search.svg" alt="検索アイコン" />
-        </button>
-        <SearchModal showSearch={showSearch} setShowSearch={setShowSearch} />
-      </div> */}
         </>
       )}
     </header>

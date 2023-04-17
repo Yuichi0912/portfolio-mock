@@ -26,23 +26,25 @@
     line-height: 29px;
     letter-spacing: 0.3em;
   }
-  // .header__button-group {
-  //   display: flex;
-  // justify-content: flex-end;
-  // background-color: aqua;
-
-.page-titles{
-  text-align: center;
-  .header__detail{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-      .detail__backward {
+  .header__button-group {
     display: block;
-    margin-left: 0;
-  }}
-
-}
+    margin-left: 10%;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+  .page-titles {
+    text-align: center;
+    .header__detail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .detail__backward {
+        display: block;
+        margin-left: 0;
+      }
+    }
+  }
 
   button {
     background-color: #ffffff;
