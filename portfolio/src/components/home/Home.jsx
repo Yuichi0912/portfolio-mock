@@ -113,8 +113,8 @@ export const Home = () => {
                   elevation={0}
                 >
                   <Tabs value={value} onChange={tabChange} variant="fullWidth">
-                    <Tab label="募集一覧" value={0}  />
-                    <Tab label="ユーザー" value={1}  />
+                    <Tab label="募集一覧" value={0} />
+                    <Tab label="ユーザー" value={1} />
                   </Tabs>
                 </AppBar>
                 <Swiper
@@ -127,13 +127,13 @@ export const Home = () => {
                 >
                   <SwiperSlide className="tab__recruitment-list">
                     {/* <TabPanel value={value} index={0}> */}
-                      <RecruitmentList />
+                    <RecruitmentList />
                     {/* </TabPanel> */}
                   </SwiperSlide>
 
                   <SwiperSlide className="tab__user-list">
                     {/* <TabPanel value={value} index={0}> */}
-                      <UsersList />
+                    <UsersList />
                     {/* </TabPanel> */}
                   </SwiperSlide>
                 </Swiper>
@@ -158,6 +158,20 @@ export const Home = () => {
                     <div className="recruitment-bar">
                       <p className="recruitment-bar-title">募集一覧</p>
                       <div className="recruitment-bar__button-group">
+                        <button onClick={() => setShowSearch(true)}>
+                          {" "}
+                          <img src="../images/search.svg" alt="検索アイコン" />
+                        </button>
+                        {createPortal(
+                          <>
+                            {" "}
+                            <SearchModal
+                              showSearch={showSearch}
+                              setShowSearch={setShowSearch}
+                            />
+                          </>,
+                          document.body
+                        )}
                         <button onClick={() => setShowSort(true)}>
                           {" "}
                           <img
@@ -171,20 +185,6 @@ export const Home = () => {
                             <SortModal
                               showSort={showSort}
                               setShowSort={setShowSort}
-                            />
-                          </>,
-                          document.body
-                        )}
-                        <button onClick={() => setShowSearch(true)}>
-                          {" "}
-                          <img src="../images/search.svg" alt="検索アイコン" />
-                        </button>
-                        {createPortal(
-                          <>
-                            {" "}
-                            <SearchModal
-                              showSearch={showSearch}
-                              setShowSearch={setShowSearch}
                             />
                           </>,
                           document.body
