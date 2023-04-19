@@ -131,13 +131,16 @@ export const DetailRecruitment = () => {
         <>
           <motion.div
             className="detail-page"
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 1, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              // duration: 0.8,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-            exit={{ opacity: 0, scale: 0.5 }}
+            // transition={
+            //   {
+            //     // duration: 0.8,
+            //     // ease: [0, 0.71, 0.2, 1.01],
+            //   }
+            // }
+            exit={{ x: -600,opacity: 0 }}
+            // animate={{ x: -200 }}
           >
             {recruitmentsData.map((data) => {
               return (
@@ -192,20 +195,22 @@ export const DetailRecruitment = () => {
                       />
                       {approvedUserData.length}/{data.number}人
                     </p>
-                    {approvedUserData.map((data) => {
-                      return (
-                        <div className="approved-user" key={data.requestingId}>
-                          <img
-                            className="approved-user__image"
-                            src={data.image}
-                            alt="参加者のアイコン"
-                            onClick={() =>
-                              navigate(`/user/${data.requestingId}`)
-                            }
-                          />
-                        </div>
-                      );
-                    })}
+                    <div className="approved-user">
+                      {approvedUserData.map((data) => {
+                        return (
+                          <div key={data.requestingId}>
+                            <img
+                              className="approved-user__image"
+                              src={data.image}
+                              alt="参加者のアイコン"
+                              onClick={() =>
+                                navigate(`/user/${data.requestingId}`)
+                              }
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
                     <Link
                       to={`/detail/${id}/users`}
                       className="approved-user__list"
@@ -235,6 +240,7 @@ export const DetailRecruitment = () => {
                   <button
                     className="button__request-join"
                     onClick={onRequestJoin}
+                    // disabled={approvedUserData.length === data.number}
                   >
                     {/* <img src="../images/send (1).svg" alt="リクエストアイコン" /> */}
                     参加リクエストを送る
